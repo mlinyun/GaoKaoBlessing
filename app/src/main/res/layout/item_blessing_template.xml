@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/glass_card_bg"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="16dp">
+
+    <!-- 模板图标 -->
+    <ImageView
+        android:id="@+id/iv_template_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/template_icon_bg"
+        android:padding="8dp"
+        android:src="@drawable/ic_blessing_template"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/blessing_gold"
+        tools:ignore="ContentDescription" />    <!-- 模板标题 -->
+    <TextView
+        android:id="@+id/tv_template_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="金榜题名"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btn_use_template"
+        app:layout_constraintStart_toEndOf="@+id/iv_template_icon"
+        app:layout_constraintTop_toTopOf="@+id/iv_template_icon" />
+
+    <!-- 模板内容预览 -->
+    <TextView
+        android:id="@+id/tv_template_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="愿你在高考的战场上勇敢拼搏，用智慧和汗水书写青春的华章..."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_use_template"
+        app:layout_constraintStart_toEndOf="@+id/iv_template_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_template_title" />    <!-- 使用按钮 -->
+    <TextView
+        android:id="@+id/btn_use_template"
+        android:layout_width="60dp"
+        android:layout_height="32dp"
+        android:background="@drawable/use_template_bg"
+        android:gravity="center"
+        android:text="使用"
+        android:textColor="@color/blessing_gold"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_template_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_template_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

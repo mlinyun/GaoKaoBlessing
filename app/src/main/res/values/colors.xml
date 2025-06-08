@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 基础颜色 -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- 高考祈福品牌色彩 - 基于UI原型的紫蓝渐变和金色系统 -->
+    <!-- 主要品牌色 - 紫蓝渐变 -->
+    <color name="brand_primary">#6366F1</color>
+    <color name="brand_primary_variant">#4F46E5</color>
+    <color name="brand_secondary">#8B5CF6</color>
+
+    <!-- 金色系统 - 祈福元素 -->
+    <color name="blessing_gold">#FFD700</color>
+    <color name="blessing_gold_light">#FFF8DC</color>
+    <color name="blessing_gold_dark">#DAA520</color>
+    <color name="gold_primary">#FFD700</color>
+    <color name="gold_accent">#FF8C42</color>
+
+    <!-- 背景色系 - 深色主题 -->
+    <color name="background_primary">#0F0F23</color>
+    <color name="background_secondary">#1A1A3A</color>
+    <color name="background_card">#252547</color>
+    <color name="background_dark">#0F0F23</color>
+
+    <!-- 表面色系 -->
+    <color name="surface_primary">#1E1E42</color>
+    <color name="surface_variant">#2A2A52</color>
+
+    <!-- 文本色系 -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B8B8CC</color>
+    <color name="text_tertiary">#8888AA</color>
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_dark">#99FFFFFF</color>
+    <color name="text_tertiary_dark">#66FFFFFF</color>
+
+    <!-- 状态色系 -->
+    <color name="success">#10B981</color>
+    <color name="warning">#F59E0B</color>
+    <color name="error">#EF4444</color>
+    <color name="info">#3B82F6</color>
+
+    <!-- 透明度色彩 -->
+    <color name="overlay_dark">#80000000</color>
+    <color name="overlay_light">#80FFFFFF</color>
+    <color name="glass_background">#33FFFFFF</color>
+</resources>

@@ -1,0 +1,45 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.GaoKaoBlessing" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 品牌主色调配置 -->
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryVariant">@color/brand_primary_variant</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+
+        <!-- 背景色配置 -->
+        <item name="android:windowBackground">@color/background_primary</item>
+        <item name="colorSurface">@color/surface_primary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+
+        <!-- 文本色配置 -->
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- 状态栏和导航栏配置 -->
+        <item name="android:statusBarColor">@color/background_primary</item>
+        <item name="android:navigationBarColor">@color/background_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Material Design 3 组件自定义 -->
+        <item name="materialCardViewStyle">@style/Theme.GaoKaoBlessing.Card</item>
+        <item name="bottomNavigationStyle">@style/Theme.GaoKaoBlessing.BottomNavigation</item>
+    </style>
+
+    <style name="Theme.GaoKaoBlessing" parent="Base.Theme.GaoKaoBlessing" />
+
+    <!-- 卡片样式 -->
+    <style name="Theme.GaoKaoBlessing.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/background_card</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+
+    <!-- 底部导航栏样式 -->
+    <style name="Theme.GaoKaoBlessing.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/surface_primary</item>
+        <item name="itemIconTint">@color/blessing_gold</item>
+        <item name="itemTextColor">@color/text_secondary</item>
+        <item name="elevation">16dp</item>
+    </style>
+</resources>
