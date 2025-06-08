@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+
+    <!-- 按钮淡入动画 -->
+    <alpha
+        android:duration="1000"
+        android:fromAlpha="0.0"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:startOffset="2500"
+        android:toAlpha="1.0" />
+
+    <!-- 按钮从下方滑入 -->
+    <translate
+        android:duration="800"
+        android:fromYDelta="50%"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:startOffset="2500"
+        android:toYDelta="0%" />
+
+    <!-- 按钮弹性缩放 -->
+    <scale
+        android:duration="800"
+        android:fromXScale="0.8"
+        android:fromYScale="0.8"
+        android:interpolator="@android:anim/overshoot_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:startOffset="2700"
+        android:toXScale="1.0"
+        android:toYScale="1.0" />
+
+</set>

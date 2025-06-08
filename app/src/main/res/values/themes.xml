@@ -42,4 +42,17 @@
         <item name="itemTextColor">@color/text_secondary</item>
         <item name="elevation">16dp</item>
     </style>
+
+    <!-- 启动页全屏主题 -->
+    <style name="Theme.GaoKaoBlessing.FullScreen" parent="Base.Theme.GaoKaoBlessing">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/bg_startup_gradient</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="p">shortEdges</item>
+    </style>
 </resources>

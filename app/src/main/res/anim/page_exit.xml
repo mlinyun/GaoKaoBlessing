@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 页面整体淡出 -->
+    <alpha
+        android:duration="800"
+        android:fromAlpha="1.0"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toAlpha="0.0" />
+
+    <!-- 页面向上滑出 -->
+    <translate
+        android:duration="800"
+        android:fromYDelta="0%"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toYDelta="-20%" />
+
+    <!-- 页面轻微缩放 -->
+    <scale
+        android:duration="800"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="0.95"
+        android:toYScale="0.95" />
+
+</set>

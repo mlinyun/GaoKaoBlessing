@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+
+    <!-- 毕业帽主体阴影 -->
+    <path
+        android:fillColor="#1a1a2e"
+        android:pathData="M64,21.33L10.67,42.67l10.67,6.67v21.33L64,85.33l42.67,-14.67v-21.33l10.67,-6.67L64,21.33z"/>
+
+    <!-- 毕业帽顶部 -->
+    <path
+        android:fillColor="#16213e"
+        android:pathData="M21.33,49.33L64,66.67l42.67,-17.33v13.33L64,77.33L21.33,62.67z"/>
+
+    <!-- 流苏线 -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M101.33,48l5.33,0l0,26.67l-5.33,0z"/>
+
+    <!-- 流苏球 -->
+    <path
+        android:fillColor="#FF8C42"
+        android:pathData="M100,77.33a4,4 0 1,0 8,0a4,4 0 1,0 -8,0"/>
+
+    <!-- 帽檐高光效果 -->
+    <path
+        android:fillColor="#33FFFFFF"
+        android:pathData="M26.67,44L64,28l37.33,16l-37.33,10.67z"/>
+
+    <!-- 立体感边缘 -->
+    <path
+        android:fillColor="#0f0f23"
+        android:pathData="M16,45.33L64,64l48,-18.67l-5.33,-2.67L64,61.33L16,42.67z"/>
+</vector>

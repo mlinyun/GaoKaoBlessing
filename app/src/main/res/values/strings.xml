@@ -33,4 +33,14 @@
     <string name="edit_student">编辑学生</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 启动页专用颜色 -->
+    <color name="accent_gold">#FFD700</color>
+    <color name="accent_orange">#FF8C42</color>
+    <color name="accent_gold_dark">#DAA520</color>
+    <color name="accent_orange_dark">#E67E22</color>
+    <color name="logo_icon_color">#0F0F23</color>
+    <color name="text_primary_light">#FFFFFF</color>
+    <color name="text_secondary_light">#CCFFFFFF</color>
+    <color name="text_hint_light">#66FFFFFF</color>
 </resources>
