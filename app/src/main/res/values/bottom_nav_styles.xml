@@ -16,19 +16,5 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="android:lineSpacingMultiplier">0.9</item>
-    </style>
-
-    <!-- 保留原有样式以兼容性 -->
-    <style name="BottomNavTextActive" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/golden_yellow</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="BottomNavTextInactive" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/white_60</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
+        <item name="android:lineSpacingMultiplier">0.9</item>    </style>
 </resources>

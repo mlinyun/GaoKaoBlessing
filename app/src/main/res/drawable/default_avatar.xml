@@ -10,7 +10,7 @@
                 android:type="linear" />
         </shape>
     </item>
-
+    
     <!-- 用户图标 -->
     <item android:gravity="center">
         <vector
