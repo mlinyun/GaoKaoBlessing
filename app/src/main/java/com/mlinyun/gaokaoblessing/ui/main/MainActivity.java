@@ -107,6 +107,30 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     /**
+     * 切换到个人中心页面
+     */
+    public void switchToProfile() {
+        mBinding.bottomNavigation.setSelectedItemId(R.id.nav_profile);
+        switchFragment(R.id.nav_profile);
+    }
+
+    /**
+     * 切换到学生管理页面
+     */
+    public void switchToStudent() {
+        mBinding.bottomNavigation.setSelectedItemId(R.id.nav_student);
+        switchFragment(R.id.nav_student);
+    }
+
+    /**
+     * 切换到祈福墙页面
+     */
+    public void switchToWall() {
+        mBinding.bottomNavigation.setSelectedItemId(R.id.nav_wall);
+        switchFragment(R.id.nav_wall);
+    }
+
+    /**
      * 占位Fragment，用于显示未实现的页面
      */
     public static class PlaceholderFragment extends Fragment {

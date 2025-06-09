@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Repository 基类
+ * Repository基类
  * 提供数据层基础功能和线程管理
  */
 public abstract class BaseRepository {
@@ -22,7 +22,7 @@ public abstract class BaseRepository {
     }
 
     /**
-     * 创建 Resource 包装类，用于封装网络请求状态
+     * 创建Resource包装类，用于封装网络请求状态
      */
     public static class Resource<T> {
         public enum Status {
@@ -65,35 +65,38 @@ public abstract class BaseRepository {
     }
 
     /**
-     * 创建 LiveData 包装的 Resource
+     * 创建LiveData包装的Resource
      */
     protected <T> MutableLiveData<Resource<T>> createResourceLiveData() {
         return new MutableLiveData<>();
     }
 
     /**
-     * 在 Resource 中设置加载状态
+     * 在Resource中设置加载状态
+     * 使用postValue()确保线程安全
      */
     protected <T> void setLoading(MutableLiveData<Resource<T>> liveData) {
-        liveData.setValue(Resource.loading(null));
+        liveData.postValue(Resource.loading(null));
     }
 
     /**
-     * 在 Resource 中设置成功状态
+     * 在Resource中设置成功状态
+     * 使用postValue()确保线程安全
      */
     protected <T> void setSuccess(MutableLiveData<Resource<T>> liveData, T data) {
-        liveData.setValue(Resource.success(data));
+        liveData.postValue(Resource.success(data));
     }
 
     /**
-     * 在 Resource 中设置错误状态
+     * 在Resource中设置错误状态
+     * 使用postValue()确保线程安全
      */
     protected <T> void setError(MutableLiveData<Resource<T>> liveData, String message) {
-        liveData.setValue(Resource.error(message, null));
+        liveData.postValue(Resource.error(message, null));
     }
 
     /**
-     * 在 Resource 中设置错误状态
+     * 在Resource中设置错误状态
      */
     protected <T> void setError(MutableLiveData<Resource<T>> liveData, Throwable throwable) {
         String message = throwable.getMessage();

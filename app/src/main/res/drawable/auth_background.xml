@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 认证页面背景 - 精确匹配register.html原型的深色渐变 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 主要背景渐变 - 匹配HTML原型的linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f0f23 100%) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#0F0F23"
+                android:centerColor="#1A1A2E"
+                android:endColor="#0F0F23"
+                android:angle="135"
+                android:type="linear" />
+        </shape>
+    </item>
+    
+    <!-- 中间色调叠加 - 模拟30%-60%的#16213e -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#00000000"
+                android:centerColor="#4016213E"
+                android:endColor="#00000000"
+                android:angle="135"
+                android:type="linear" />
+        </shape>
+    </item>
+    
+    <!-- 动态粒子层 - 模拟HTML原型的金色粒子效果 -->
+    <item android:drawable="@drawable/floating_particles" />
+</layer-list>

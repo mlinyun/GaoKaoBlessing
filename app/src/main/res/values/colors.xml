@@ -10,6 +10,12 @@
     <color name="brand_primary_variant">#4F46E5</color>
     <color name="brand_secondary">#8B5CF6</color>
 
+    <!-- UI原型深色主题渐变背景 -->
+    <color name="prototype_bg_start">#0F0F23</color>
+    <color name="prototype_bg_mid1">#1A1A2E</color>
+    <color name="prototype_bg_mid2">#16213E</color>
+    <color name="prototype_bg_end">#0F0F23</color>
+
     <!-- 金色系统 - 祈福元素 -->
     <color name="blessing_gold">#FFD700</color>
     <color name="blessing_gold_light">#FFF8DC</color>
@@ -27,13 +33,22 @@
     <color name="surface_primary">#1E1E42</color>
     <color name="surface_variant">#2A2A52</color>
 
-    <!-- 文本色系 -->
+    <!-- 文本色系 - 适配深色主题 -->
     <color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#B8B8CC</color>
     <color name="text_tertiary">#8888AA</color>
+    <color name="text_hint">#66FFFFFF</color>
     <color name="text_primary_dark">#FFFFFF</color>
     <color name="text_secondary_dark">#99FFFFFF</color>
     <color name="text_tertiary_dark">#66FFFFFF</color>
+
+    <!-- UI原型文本透明度 -->
+    <color name="text_white_90">#E6FFFFFF</color>
+    <color name="text_white_80">#CCFFFFFF</color>
+    <color name="text_white_70">#B3FFFFFF</color>
+    <color name="text_white_60">#99FFFFFF</color>
+    <color name="text_white_50">#80FFFFFF</color>
+    <color name="text_white_40">#66FFFFFF</color>
 
     <!-- 状态色系 -->
     <color name="success">#10B981</color>
@@ -45,4 +60,117 @@
     <color name="overlay_dark">#80000000</color>
     <color name="overlay_light">#80FFFFFF</color>
     <color name="glass_background">#33FFFFFF</color>
+
+    <!-- 启动页专用颜色 -->
+    <color name="accent_gold">#FFD700</color>
+    <color name="accent_orange">#FF8C42</color>
+    <color name="accent_gold_dark">#DAA520</color>
+    <color name="accent_orange_dark">#E67E22</color>
+    <color name="logo_icon_color">#0F0F23</color>
+    <color name="text_primary_light">#FFFFFF</color>
+    <color name="text_secondary_light">#CCFFFFFF</color>
+    <color name="text_hint_light">#66FFFFFF</color>
+
+    <!-- 认证界面相关颜色 -->
+    <color name="dark_background">#0F0F23</color>
+    <color name="primary_gradient_start">#FFD700</color>
+    <color name="primary_gradient_end">#FF8C42</color>
+    <color name="primary_gold">#FFD700</color>
+
+    <!-- 白色透明度变种 -->
+    <color name="white_90">#E6FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="white_40">#66FFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+
+    <!-- 认证页面背景 - 与UI原型保持一致的深色主题 -->
+    <color name="auth_background">#0F0F23</color>
+    <color name="auth_background_secondary">#1A1A2E</color>
+    <color name="auth_background_card">#16213E</color>
+
+    <!-- 表单相关颜色 - 优化为深色主题 -->
+    <color name="form_card_background">#0DFFFFFF</color>
+    <color name="form_card_background_dark">#14FFFFFF</color>
+    <color name="input_background">#14FFFFFF</color>
+    <color name="input_background_focused">#1AFFFFFF</color>
+    <color name="input_border">#26FFFFFF</color>
+    <color name="input_border_focused">#FFD700</color>
+    <color name="input_stroke_color">@color/selector_input_stroke</color>
+
+    <!-- 主色调定义 -->
+    <color name="primary">#FFD700</color>
+    <color name="primary_start">#FFD700</color>
+    <color name="primary_end">#FF8C42</color>
+
+    <!-- 按钮颜色 -->
+    <color name="auth_button_start">#FFD700</color>
+    <color name="auth_button_end">#FF8C42</color>
+    <color name="auth_button_pressed_start">#E6C200</color>
+    <color name="auth_button_pressed_end">#E67E22</color>
+
+    <!-- 密码强度颜色 -->
+    <color name="password_strength_weak">#FF6B6B</color>
+    <color name="password_strength_fair">#FFA726</color>
+    <color name="password_strength_good">#42A5F5</color>
+    <color name="password_strength_strong">#66BB6A</color>
+    <color name="password_strength_very_strong">#26C6DA</color>
+
+    <!-- 第三方平台品牌色 - 与HTML原型一致 -->
+    <color name="wechat_green">#07C160</color>
+    <color name="wechat_green_border">#4D07C160</color>
+    <color name="wechat_green_background">#1A07C160</color>
+    <color name="qq_blue">#12B7F5</color>
+    <color name="qq_blue_border">#4D12B7F5</color>
+    <color name="qq_blue_background">#1A12B7F5</color>
+
+    <!-- 玻璃态效果颜色 -->
+    <color name="glass_overlay">#1AFFFFFF</color>
+    <color name="glass_border">#33FFFFFF</color>
+    <color name="glass_shadow">#4D000000</color>
+
+    <!-- 祈福主页特殊颜色 -->
+    <color name="glass_card_bg">#20FFFFFF</color>
+    <color name="golden_yellow">#FFD700</color>
+    <color name="golden_yellow_20">#33FFD700</color>
+    <color name="countdown_number">#FFD700</color>
+    <color name="welcome_card_bg">#15FFFFFF</color>
+    <color name="action_bg_start">#FFD700</color>
+    <color name="action_bg_end">#FF8C00</color>
+
+    <!-- 快速操作卡片背景色 -->
+    <color name="action_card_bg">#25FFFFFF</color>
+
+    <!-- 渐变色系 -->
+    <color name="gradient_gold_start">#FFD700</color>
+    <color name="gradient_gold_end">#FFA500</color>
+    <color name="gradient_orange_start">#FF8C00</color>
+    <color name="gradient_orange_end">#FF6347</color>
+    <color name="gradient_blue_start">#4A90E2</color>
+    <color name="gradient_blue_end">#357ABD</color>
+    <color name="gradient_purple_start">#8B5CF6</color>
+    <color name="gradient_purple_end">#6366F1</color>
+
+    <!-- 空状态背景 -->
+    <color name="empty_state_bg">#18FFFFFF</color>
+
+    <!-- FAB颜色 -->
+    <color name="fab_background">#FFD700</color>
+    <color name="fab_ripple">#66FFD700</color>
+
+    <!-- 输入框和按钮颜色 -->
+    <color name="input_bg">#F8F9FA</color>
+    <color name="border_light">#E1E5E9</color>
+    <color name="button_secondary_bg">#F1F3F4</color>
+    <color name="button_secondary_pressed">#E8EAED</color>
+    <color name="card_pressed">#F5F5F5</color>
+    <color name="card_bg">#FFFFFF</color>
+
+    <!-- Material Design颜色 -->
+    <color name="primary_material">#6366F1</color>
+    <color name="primary_variant">#4F46E5</color>
+    <color name="primary_light">#A5B4FC</color>
+    <color name="primary_dark">#3730A3</color>
 </resources>

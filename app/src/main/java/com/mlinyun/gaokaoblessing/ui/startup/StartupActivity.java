@@ -16,7 +16,7 @@ import android.view.animation.AnimationUtils;
 import com.mlinyun.gaokaoblessing.R;
 import com.mlinyun.gaokaoblessing.base.BaseActivity;
 import com.mlinyun.gaokaoblessing.databinding.ActivityStartupBinding;
-import com.mlinyun.gaokaoblessing.ui.main.MainActivity;
+import com.mlinyun.gaokaoblessing.ui.auth.AuthActivity;
 import com.mlinyun.gaokaoblessing.utils.StartupPerformanceMonitor;
 
 /**
@@ -106,7 +106,6 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
     protected Class<StartupViewModel> getViewModelClass() {
         return StartupViewModel.class;
     }
-
     @Override
     protected void initView() {
         // 初始化性能监控
@@ -174,7 +173,7 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
         mViewModel.getNavigateToMain().observe(this, shouldNavigate -> {
             if (shouldNavigate != null && shouldNavigate) {
                 Log.d(TAG, "接收到导航信号，准备跳转到主页面");
-                navigateToMainActivity();
+                navigateToAuthActivity();
             }
         });
 
@@ -220,7 +219,6 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
             }
         }).start();
     }
-
     /**
      * 检测设备性能等级
      */
@@ -261,8 +259,7 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
 
     /**
      * 安全执行Handler延迟任务
-     *
-     * @param runnable    要执行的任务
+     * @param runnable 要执行的任务
      * @param delayMillis 延迟时间（毫秒）
      */
     private void safePostDelayed(Runnable runnable, long delayMillis) {
@@ -432,7 +429,6 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
             }
         }, blessingDelay);
     }
-
     /**
      * 按钮动画
      */
@@ -584,7 +580,6 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
 
         starTwinkle.start();
     }
-
     /**
      * 开始祈福之旅按钮点击
      */
@@ -668,9 +663,9 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
     }
 
     /**
-     * 跳转到主页面
+     * 跳转到认证页面
      */
-    private void navigateToMainActivity() {
+    private void navigateToAuthActivity() {
         // 检查Activity是否还在有效状态
         if (isFinishing() || isDestroyed()) {
             Log.w(TAG, "Activity已经被销毁或正在销毁，取消导航");
@@ -696,7 +691,7 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
                 }
 
                 // 动画结束后进行页面跳转
-                Intent intent = new Intent(StartupActivity.this, MainActivity.class);
+                Intent intent = new Intent(StartupActivity.this, AuthActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -712,7 +707,6 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
         // 对主容器应用退出动画
         findViewById(android.R.id.content).startAnimation(exitAnimation);
     }
-
     /**
      * 停止所有动画
      */

@@ -1,25 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.GaoKaoBlessing" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- 品牌主色调配置 -->
-        <item name="colorPrimary">@color/brand_primary</item>
-        <item name="colorPrimaryVariant">@color/brand_primary_variant</item>
-        <item name="colorSecondary">@color/brand_secondary</item>
+        <!-- 品牌主色调配置 - 金色系统 -->
+        <item name="colorPrimary">@color/blessing_gold</item>
+        <item name="colorPrimaryVariant">@color/blessing_gold_dark</item>
+        <item name="colorSecondary">@color/gold_accent</item>
+        <item name="colorAccent">@color/blessing_gold</item>
 
-        <!-- 背景色配置 -->
+        <!-- 背景色配置 - 深色主题 -->
         <item name="android:windowBackground">@color/background_primary</item>
         <item name="colorSurface">@color/surface_primary</item>
         <item name="colorSurfaceVariant">@color/surface_variant</item>
 
-        <!-- 文本色配置 -->
-        <item name="colorOnPrimary">@color/text_primary</item>
+        <!-- 文本色配置 - 适配深色主题 -->
+        <item name="colorOnPrimary">@color/prototype_bg_start</item>
         <item name="colorOnSecondary">@color/text_primary</item>
         <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
 
         <!-- 状态栏和导航栏配置 -->
         <item name="android:statusBarColor">@color/background_primary</item>
         <item name="android:navigationBarColor">@color/background_primary</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
 
         <!-- Material Design 3 组件自定义 -->
         <item name="materialCardViewStyle">@style/Theme.GaoKaoBlessing.Card</item>
@@ -35,12 +40,20 @@
         <item name="cardElevation">8dp</item>
     </style>
 
-    <!-- 底部导航栏样式 -->
+    <!-- 底部导航栏样式 - 优化颜色匹配 -->
     <style name="Theme.GaoKaoBlessing.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
         <item name="android:background">@color/surface_primary</item>
-        <item name="itemIconTint">@color/blessing_gold</item>
-        <item name="itemTextColor">@color/text_secondary</item>
+        <item name="itemIconTint">@color/bottom_nav_item_color</item>
+        <item name="itemTextColor">@color/bottom_nav_item_color</item>
+        <item name="itemActiveIndicatorStyle">
+            @style/Theme.GaoKaoBlessing.BottomNavigation.ActiveIndicator
+        </item>
         <item name="elevation">16dp</item>
+    </style>
+
+    <!-- 底部导航活跃指示器 -->
+    <style name="Theme.GaoKaoBlessing.BottomNavigation.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/blessing_gold</item>
     </style>
 
     <!-- 启动页全屏主题 -->
@@ -54,5 +67,30 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="p">shortEdges</item>
+    </style>
+
+    <!-- 认证页面主题 - 深色主题以匹配UI原型 -->
+    <style name="Theme.GaoKaoBlessing.Auth" parent="Base.Theme.GaoKaoBlessing">
+        <item name="android:windowBackground">@drawable/auth_background</item>
+        <item name="android:statusBarColor">@color/prototype_bg_start</item>
+        <item name="android:navigationBarColor">@color/prototype_bg_start</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <!-- 文本颜色适配深色主题 -->
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <!-- 对话框样式 -->
+    <style name="Theme.GaoKaoBlessing.Dialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="colorPrimary">@color/primary_material</item>
+        <item name="colorAccent">@color/primary_material</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>
 </resources>

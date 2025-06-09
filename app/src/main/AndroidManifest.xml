@@ -26,6 +26,14 @@
             </intent-filter>
         </activity>
 
+        <!-- 认证Activity -->
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GaoKaoBlessing.Auth"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- 主Activity -->
         <activity
             android:name=".ui.main.MainActivity"

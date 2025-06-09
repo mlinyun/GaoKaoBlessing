@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 主背景 - 深色半透明 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#CC000000" />
+        </shape>
+    </item>
+    
+    <!-- 顶部边界线 -->
+    <item android:top="0dp" android:height="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#1AFFFFFF" />
+        </shape>
+    </item>
+    
+    <!-- 毛玻璃效果背景 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:startColor="#1A000000"
+                android:centerColor="#33000000"
+                android:endColor="#4D000000" />
+        </shape>
+    </item>
+</layer-list>

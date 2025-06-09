@@ -9,14 +9,14 @@ import androidx.room.RoomDatabase;
 import com.mlinyun.gaokaoblessing.data.dao.StudentDao;
 import com.mlinyun.gaokaoblessing.data.dao.UserDao;
 import com.mlinyun.gaokaoblessing.data.entity.Student;
-import com.mlinyun.gaokaoblessing.data.entity.User;
+import com.mlinyun.gaokaoblessing.data.model.User;
 
 /**
  * 高考祈福应用数据库
  */
 @Database(
         entities = {User.class, Student.class},
-        version = 1,
+        version = 2,  // 增加版本号，因为User表结构发生了变化
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -25,12 +25,12 @@ public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
 
     /**
-     * 获取用户 DAO
+     * 获取用户DAO
      */
     public abstract UserDao userDao();
 
     /**
-     * 获取学生 DAO
+     * 获取学生DAO
      */
     public abstract StudentDao studentDao();
 

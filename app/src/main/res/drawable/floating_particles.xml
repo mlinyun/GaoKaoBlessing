@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 动态粒子背景效果 - 模拟HTML原型中的金色粒子 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="393dp"
+    android:height="852dp"
+    android:viewportWidth="393"
+    android:viewportHeight="852">
+
+    <!-- 粒子1 -->
+    <group
+        android:name="particle1"
+        android:translateX="59"
+        android:translateY="300">
+        <path
+            android:fillColor="#66FFD700"
+            android:pathData="M0,0 C1.1,0 2,0.9 2,2 C2,3.1 1.1,4 0,4 C-1.1,4 -2,3.1 -2,2 C-2,0.9 -1.1,0 0,0 Z" />
+    </group>
+
+    <!-- 粒子2 -->
+    <group
+        android:name="particle2"
+        android:translateX="177"
+        android:translateY="450">
+        <path
+            android:fillColor="#66FF8C42"
+            android:pathData="M0,0 C1.65,0 3,1.35 3,3 C3,4.65 1.65,6 0,6 C-1.65,6 -3,4.65 -3,3 C-3,1.35 -1.65,0 0,0 Z" />
+    </group>
+
+    <!-- 粒子3 -->
+    <group
+        android:name="particle3"
+        android:translateX="295"
+        android:translateY="200">
+        <path
+            android:fillColor="#66FFD700"
+            android:pathData="M0,0 C1.1,0 2,0.9 2,2 C2,3.1 1.1,4 0,4 C-1.1,4 -2,3.1 -2,2 C-2,0.9 -1.1,0 0,0 Z" />
+    </group>
+
+    <!-- 粒子4 -->
+    <group
+        android:name="particle4"
+        android:translateX="98"
+        android:translateY="600">
+        <path
+            android:fillColor="#66FF8C42"
+            android:pathData="M0,0 C2.2,0 4,1.8 4,4 C4,6.2 2.2,8 0,8 C-2.2,8 -4,6.2 -4,4 C-4,1.8 -2.2,0 0,0 Z" />
+    </group>
+</vector>

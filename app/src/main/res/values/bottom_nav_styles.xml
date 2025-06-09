@@ -1,0 +1,15 @@
+<resources>
+    <!-- 底部导航激活状态文字样式 -->
+    <style name="BottomNavTextActive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/golden_yellow</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- 底部导航非激活状态文字样式 -->
+    <style name="BottomNavTextInactive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/white_60</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+</resources>
