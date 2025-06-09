@@ -4,20 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/blessing_main_background"
     android:fitsSystemWindows="true"
     tools:context=".ui.blessing.BlessingFragment">
 
+    <!-- 3D背景浮动粒子效果 -->
+    <RelativeLayout
+        android:id="@+id/background_particles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4">
+        <!-- 浮动粒子元素将在代码中动态添加 -->
+    </RelativeLayout>
+
     <!-- 顶部导航栏 -->
     <LinearLayout
-        android:id="@+id/header_layout"
+        android:id="@+id/top_nav"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        android:background="@color/transparent"
         android:paddingHorizontal="24dp"
-        android:gravity="center_vertical">
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp">
 
-        <!-- 个人头像 -->
+        <!-- 个人头像容器 -->
         <FrameLayout
             android:id="@+id/profile_avatar_container"
             android:layout_width="40dp"
@@ -26,88 +38,88 @@
             android:clickable="true"
             android:focusable="true">
 
-            <!-- 用于显示用户真实头像的CircleImageView -->
+            <!-- 用户头像 -->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@android:color/transparent"
-                android:visibility="gone"
+                android:src="@drawable/default_avatar"
+                android:visibility="visible"
                 app:civ_border_width="0dp" />
-
         </FrameLayout>
 
-        <!-- 标题 -->
+        <!-- 应用标题 -->
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/app_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginHorizontal="16dp"
-            android:text="高考祈福"
             android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="@color/white"
+            android:text="高考祈福"
+            android:shadowColor="@color/black_40"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:textColor="@color/white_90"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- 通知图标 -->
+        <!-- 通知图标容器 -->
         <FrameLayout
             android:id="@+id/notification_container"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/notification_bg_circle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/notification_bg"
             android:clickable="true"
             android:focusable="true">
 
             <ImageView
                 android:id="@+id/iv_notification"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_notification"
                 android:contentDescription="通知"
-                app:tint="@color/white_90" />
+                app:tint="@color/white_80" />
 
-            <!-- 通知红点 -->
+            <!-- 通知红点徽章 -->
             <View
                 android:id="@+id/notification_badge"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_gravity="top|end"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/notification_red_dot"
+                android:background="@drawable/notification_badge"
                 android:visibility="visible" />
 
         </FrameLayout>
 
     </LinearLayout>
 
-    <!-- 主要内容区域 -->
+    <!-- 主内容区域 - 按照原型图重新设计 -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:fillViewport="true"
         android:scrollbars="none"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="24dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="32dp">
+            android:paddingHorizontal="24dp">
 
-            <!-- 欢迎卡片 - 按照原型图设计 -->
+            <!-- 欢迎卡片 - 玻璃磨砂效果 -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_welcome"
+                android:id="@+id/welcome_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 app:cardBackgroundColor="@color/glass_card_bg"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -116,137 +128,41 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <!-- 金色装饰线 -->
+                    <!-- 金色渐变装饰线 -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/gold_gradient" />
 
+                    <!-- 欢迎标题 -->
                     <TextView
                         android:id="@+id/tv_welcome_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="🌟 为高考学子送上祝福"
+                        android:letterSpacing="0.02"
                         android:textColor="@color/white_90"
                         android:textSize="20sp"
+                        android:text="🌟 早安，祈福开始！"
                         android:textStyle="bold" />
 
+                    <!-- 欢迎副标题 -->
                     <TextView
                         android:id="@+id/tv_welcome_subtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:lineSpacingExtra="2dp"
-                        android:text="用心传递温暖，让爱点亮梦想之路"
+                        android:text="距离高考还有120天，一起为考生加油吧！✨"
                         android:textColor="@color/white_60"
                         android:textSize="14sp" />
-
-                    <!-- 统计信息 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_countdown"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="120天"
-                                android:textColor="@color/golden_yellow"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="距离高考"
-                                android:textColor="@color/white_60"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:background="@color/white_20" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_blessing_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1,288"
-                                android:textColor="@color/golden_yellow"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="祝福数量"
-                                android:textColor="@color/white_60"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:background="@color/white_20" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_student_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="3"
-                                android:textColor="@color/golden_yellow"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="管理考生"
-                                android:textColor="@color/white_60"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <!-- 快速操作区域-->
+            <!-- 快速操作区域 - 2x2网格布局 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,18 +177,25 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_star"
+                        app:tint="@color/golden_yellow" />
+
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="✨ 快速操作"
+                        android:text="快速操作"
                         android:textColor="@color/white_90"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-                <!-- 操作按钮网格 -->
+                <!-- 2x2操作网格 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -304,14 +227,23 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="20dp">
 
-                                <View
+                                <!-- 操作图标 -->
+                                <FrameLayout
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:background="@drawable/action_icon_gradient"
-                                    android:backgroundTint="@color/gradient_gold_start" />
+                                    android:layout_marginBottom="12dp"
+                                    android:background="@drawable/btn_primary_gradient">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_blessing"
+                                        app:tint="@color/dark_background" />
+
+                                </FrameLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -333,9 +265,9 @@
 
                         </androidx.cardview.widget.CardView>
 
-                        <!-- 快速祈福 -->
+                        <!-- 管理考生 -->
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/card_quick_blessing"
+                            android:id="@+id/card_manage_students"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -352,20 +284,29 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="20dp">
 
-                                <View
+                                <!-- 操作图标 -->
+                                <FrameLayout
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:background="@drawable/action_icon_gradient"
-                                    android:backgroundTint="@color/gradient_orange_start" />
+                                    android:layout_marginBottom="12dp"
+                                    android:background="@drawable/btn_primary_gradient">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_student"
+                                        app:tint="@color/dark_background" />
+
+                                </FrameLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:text="快速祈福"
+                                    android:text="管理考生"
                                     android:textColor="@color/white_90"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
@@ -373,7 +314,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="一键送祝福"
+                                    android:text="添加考生信息"
                                     android:textColor="@color/white_60"
                                     android:textSize="12sp" />
 
@@ -389,9 +330,9 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <!-- 管理考生 -->
+                        <!-- 祈福墙 -->
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/card_manage_students"
+                            android:id="@+id/card_blessing_wall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
@@ -408,20 +349,29 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="20dp">
 
-                                <View
+                                <!-- 操作图标 -->
+                                <FrameLayout
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:background="@drawable/action_icon_gradient"
-                                    android:backgroundTint="@color/gradient_blue_start" />
+                                    android:layout_marginBottom="12dp"
+                                    android:background="@drawable/btn_primary_gradient">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_wall"
+                                        app:tint="@color/dark_background" />
+
+                                </FrameLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="4dp"
-                                    android:text="管理考生"
+                                    android:text="祈福墙"
                                     android:textColor="@color/white_90"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
@@ -429,7 +379,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="添加考生信息"
+                                    android:text="查看所有祝福"
                                     android:textColor="@color/white_60"
                                     android:textSize="12sp" />
 
@@ -456,14 +406,23 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="20dp">
 
-                                <View
+                                <!-- 操作图标 -->
+                                <FrameLayout
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:background="@drawable/action_icon_gradient"
-                                    android:backgroundTint="@color/gradient_purple_start" />
+                                    android:layout_marginBottom="12dp"
+                                    android:background="@drawable/btn_primary_gradient">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_stats_24"
+                                        app:tint="@color/dark_background" />
+
+                                </FrameLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -534,7 +493,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    tools:itemCount="4"
+                    tools:itemCount="3"
                     tools:listitem="@layout/item_recent_blessing" />
 
                 <!-- 空状态提示 -->

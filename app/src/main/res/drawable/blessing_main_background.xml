@@ -11,16 +11,4 @@
                 android:type="linear" />
         </shape>
     </item>
-    
-    <!-- 浮动装饰元素 -->
-    <item>
-        <shape android:shape="oval">
-            <size android:width="300dp" android:height="300dp" />
-            <gradient
-                android:startColor="#20FFD700"
-                android:endColor="#10FFD700"
-                android:type="radial"
-                android:gradientRadius="150dp" />
-        </shape>
-    </item>
 </layer-list>

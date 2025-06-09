@@ -10,23 +10,56 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mlinyun.gaokaoblessing.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 祈福模板适配器
  */
 public class BlessingTemplateAdapter extends RecyclerView.Adapter<BlessingTemplateAdapter.ViewHolder> {
 
-    private String[] templates;
-    private OnTemplateClickListener listener;
+    private List<String> templates = new ArrayList<>();
+    private OnTemplateSelectedListener listener;
 
     /**
-     * 模板点击接口
+     * 模板选择接口
+     */
+    public interface OnTemplateSelectedListener {
+        void onTemplateSelected(String template);
+    }
+
+    /**
+     * 模板点击接口 (保持向后兼容)
      */
     public interface OnTemplateClickListener {
         void onTemplateClick(String template);
     }
 
+    // 默认构造函数
+    public BlessingTemplateAdapter() {
+    }
+
+    // 兼容旧版本的构造函数
     public BlessingTemplateAdapter(String[] templates, OnTemplateClickListener listener) {
+        this.templates = new ArrayList<>();
+        for (String template : templates) {
+            this.templates.add(template);
+        }
+        this.listener = template -> listener.onTemplateClick(template);
+    }
+
+    /**
+     * 设置模板列表
+     */
+    public void setTemplates(List<String> templates) {
         this.templates = templates;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 设置模板选择监听器
+     */
+    public void setOnTemplateSelectedListener(OnTemplateSelectedListener listener) {
         this.listener = listener;
     }
 
@@ -37,22 +70,21 @@ public class BlessingTemplateAdapter extends RecyclerView.Adapter<BlessingTempla
                 .inflate(R.layout.item_blessing_template, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String template = templates[position];
+        String template = templates.get(position);
         holder.tvTemplateText.setText(template);
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onTemplateClick(template);
+                listener.onTemplateSelected(template);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return templates.length;
+        return templates.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

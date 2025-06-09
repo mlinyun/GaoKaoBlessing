@@ -20,6 +20,7 @@
     <color name="blessing_gold">#FFD700</color>
     <color name="blessing_gold_light">#FFF8DC</color>
     <color name="blessing_gold_dark">#DAA520</color>
+    <color name="blessing_gold_20">#33FFD700</color>
     <color name="gold_primary">#FFD700</color>
     <color name="gold_accent">#FF8C42</color>
 
@@ -173,4 +174,8 @@
     <color name="primary_variant">#4F46E5</color>
     <color name="primary_light">#A5B4FC</color>
     <color name="primary_dark">#3730A3</color>
+
+    <!-- 新增：布局文件中需要的颜色 -->
+    <color name="transparent">#00000000</color>
+    <color name="black_40">#66000000</color>
 </resources>

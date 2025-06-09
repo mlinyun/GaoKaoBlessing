@@ -11,40 +11,43 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.mlinyun.gaokaoblessing.R;
 import com.mlinyun.gaokaoblessing.base.BaseFragment;
-import com.mlinyun.gaokaoblessing.databinding.FragmentBlessingBinding;
 import com.mlinyun.gaokaoblessing.data.model.User;
+import com.mlinyun.gaokaoblessing.databinding.FragmentBlessingBinding;
 import com.mlinyun.gaokaoblessing.manager.UserSessionManager;
 import com.mlinyun.gaokaoblessing.ui.auth.AuthActivity;
 import com.mlinyun.gaokaoblessing.ui.blessing.adapter.BlessingTemplateAdapter;
 import com.mlinyun.gaokaoblessing.ui.blessing.adapter.RecentBlessingsAdapter;
-import com.mlinyun.gaokaoblessing.ui.blessing.model.BlessingRecord;
-import com.mlinyun.gaokaoblessing.ui.blessing.model.RecentBlessing;
+import com.mlinyun.gaokaoblessing.ui.blessing.view.FloatingParticleView;
 import com.mlinyun.gaokaoblessing.ui.main.MainActivity;
-import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 /**
  * 祈福主页Fragment - 按照UI原型图实现
  * 包含顶部导航、欢迎区域、快速操作、最近祈福记录等功能
  */
 public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, BlessingViewModel> {
-
     private RecentBlessingsAdapter recentBlessingsAdapter;
     private Handler uiHandler = new Handler(Looper.getMainLooper());
     private UserSessionManager userSessionManager;
+    private FloatingParticleView particleView;
 
     @Override
     protected FragmentBlessingBinding getViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -59,12 +62,12 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
     protected void initView() {
         // 初始化用户会话管理器
         userSessionManager = UserSessionManager.getInstance(requireContext());
-
         setupTopNavigation();
         setupWelcomeArea();
         setupQuickActions();
         setupRecentBlessings();
         setupFloatingActionButton();
+        setupParticleEffect();
         startPeriodicUpdates();
     }
     @Override
@@ -111,15 +114,14 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
                 navigateToAuth();
             }
         });
-
         // 设置通知图标点击事件
-        mBinding.ivNotification.setOnClickListener(v -> {
+        mBinding.notificationContainer.setOnClickListener(v -> {
             addClickAnimation(v);
             showNotifications();
         });
 
         // 更新标题
-        mBinding.tvTitle.setText("高考祈福");
+        mBinding.appTitle.setText("高考祈福");
 
         // 加载当前用户头像
         loadCurrentUserAvatar();
@@ -131,9 +133,8 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
     private void setupWelcomeArea() {
         updateWelcomMessage();
         updateCountdownTimer();
-
         // 设置欢迎卡片点击效果
-        mBinding.cardWelcome.setOnClickListener(v -> {
+        mBinding.welcomeCard.setOnClickListener(v -> {
             addCardClickAnimation(v);
             showDetailedStats();
         });
@@ -148,9 +149,8 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
             addCardClickAnimation(v);
             createBlessing();
         });
-
         // 快速祈福
-        mBinding.cardQuickBlessing.setOnClickListener(v -> {
+        mBinding.cardBlessingWall.setOnClickListener(v -> {
             addCardClickAnimation(v);
             showQuickBlessingDialog();
         });
@@ -181,7 +181,6 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
             navigateToBlessingWall();
         });
     }
-
     /**
      * 设置浮动操作按钮
      */
@@ -190,6 +189,15 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
             addFabClickAnimation(v);
             showQuickBlessingDialog();
         });
+    }
+
+    /**
+     * 设置浮动粒子效果
+     */
+    private void setupParticleEffect() {
+        // 创建粒子视图并添加到背景容器
+        particleView = new FloatingParticleView(getContext());
+        mBinding.backgroundParticles.addView(particleView);
     }
 
     /**
@@ -219,86 +227,81 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
                 uiHandler.postDelayed(this, 60000);
             }
         });
-    }
-    /**
-     * 显示快速祈福对话框
-     */
-    private void showQuickBlessingDialog() {
-        if (getContext() == null) return;
 
-        // 预设的祈福模板
-        String[] blessingTemplates = {
-                "愿你高考顺利，金榜题名！🎓",
-                "祝愿你考试发挥出色，心想事成！✨",
-                "愿你文思如泉涌，答题如神助！📝",
-                "祝你高考大捷，前程似锦！🌟",
-                "愿你超常发挥，录取理想大学！🏫",
-                "祝你考场上从容不迫，马到成功！🐎"
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.Theme_GaoKaoBlessing_Dialog);
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_quick_blessing, null);
-
-        // 获取对话框中的控件
-        RecyclerView rvTemplates = dialogView.findViewById(R.id.rvBlessingTemplates);
-        EditText etCustomBlessing = dialogView.findViewById(R.id.etCustomBlessing);
-        Button btnSend = dialogView.findViewById(R.id.btnSendBlessing);
-        Button btnCancel = dialogView.findViewById(R.id.btnCancel);
-
-        // 设置模板列表
-        BlessingTemplateAdapter templateAdapter = new BlessingTemplateAdapter(blessingTemplates, template -> {
-            etCustomBlessing.setText(template);
-            etCustomBlessing.setSelection(template.length());
-        });
-        rvTemplates.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvTemplates.setAdapter(templateAdapter);
-
-        AlertDialog dialog = builder.setView(dialogView).create();
-
-        // 发送按钮点击事件
-        btnSend.setOnClickListener(v -> {
-            String blessingText = etCustomBlessing.getText().toString().trim();
-            if (blessingText.isEmpty()) {
-                showToast("请输入祈福内容");
-                return;
-            }
-
-            // 发送祈福
-            sendQuickBlessing(blessingText);
-            dialog.dismiss();
-        });
-
-        // 取消按钮点击事件
-        btnCancel.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
+        // 启动3D背景粒子效果
+        initParticleBackground();
     }
 
     /**
-     * 发送快速祈福
+     * 初始化3D背景浮动粒子效果
      */
-    private void sendQuickBlessing(String blessingText) {
-        if (getContext() == null) return;
-
-        // 显示发送成功动画
-        showToast("祈福已发送！愿心想事成！🙏");
-
-        // 这里可以添加实际的发送逻辑，比如保存到数据库
-        // mViewModel.sendBlessing(blessingText);
-
-        // 模拟添加到最近祈福记录
-        if (recentBlessingsAdapter != null) {
-            RecentBlessing newBlessing = new RecentBlessing();
-            newBlessing.setTitle(blessingText);
-            newBlessing.setTime(System.currentTimeMillis());
-            newBlessing.setStatus("已发送");
-
-            // 添加到列表顶部
-            recentBlessingsAdapter.addBlessing(newBlessing);
-
-            // 更新统计数字
-            updateBlessingStats(recentBlessingsAdapter.getItemCount());
+    private void initParticleBackground() {
+        // 创建多个浮动粒子
+        for (int i = 0; i < 8; i++) {
+            createFloatingParticle(i);
         }
+    }
+
+    /**
+     * 创建浮动粒子
+     */
+    private void createFloatingParticle(int index) {
+        if (getContext() == null) return;
+
+        View particle = new View(getContext());
+        int size = (int) (8 + Math.random() * 16); // 8-24dp大小
+        particle.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
+        particle.setBackgroundResource(R.drawable.floating_particle);
+        particle.setAlpha(0.3f + (float) (Math.random() * 0.4f)); // 0.3-0.7透明度
+
+        // 随机位置
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) particle.getLayoutParams();
+        params.leftMargin = (int) (Math.random() * 400);
+        params.topMargin = (int) (Math.random() * 600);
+
+        mBinding.backgroundParticles.addView(particle);
+
+        // 启动浮动动画
+        startParticleAnimation(particle, index);
+    }
+
+    /**
+     * 启动粒子浮动动画
+     */
+    private void startParticleAnimation(View particle, int index) {
+        // 垂直浮动动画
+        ObjectAnimator floatingY = ObjectAnimator.ofFloat(particle, "translationY",
+                0f, -30f - (float) (Math.random() * 20f), 0f);
+        floatingY.setDuration(3000 + (int) (Math.random() * 2000)); // 3-5秒
+        floatingY.setRepeatCount(ObjectAnimator.INFINITE);
+        floatingY.setRepeatMode(ObjectAnimator.REVERSE);
+
+        // 水平微动画
+        ObjectAnimator floatingX = ObjectAnimator.ofFloat(particle, "translationX",
+                0f, 10f - (float) (Math.random() * 20f), 0f);
+        floatingX.setDuration(2000 + (int) (Math.random() * 3000)); // 2-5秒
+        floatingX.setRepeatCount(ObjectAnimator.INFINITE);
+        floatingX.setRepeatMode(ObjectAnimator.REVERSE);
+
+        // 旋转动画
+        ObjectAnimator rotation = ObjectAnimator.ofFloat(particle, "rotation", 0f, 360f);
+        rotation.setDuration(8000 + (int) (Math.random() * 4000)); // 8-12秒
+        rotation.setRepeatCount(ObjectAnimator.INFINITE);
+
+        // 透明度闪烁
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(particle, "alpha",
+                particle.getAlpha(), particle.getAlpha() * 0.5f, particle.getAlpha());
+        alpha.setDuration(1500 + (int) (Math.random() * 1500)); // 1.5-3秒
+        alpha.setRepeatCount(ObjectAnimator.INFINITE);
+        alpha.setRepeatMode(ObjectAnimator.REVERSE);
+
+        // 错开动画开始时间
+        uiHandler.postDelayed(() -> {
+            floatingY.start();
+            floatingX.start();
+            rotation.start();
+            alpha.start();
+        }, index * 200);
     }
 
     /**
@@ -321,20 +324,22 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
             mViewModel.clearError();
         }
     }
-
     /**
      * 更新祈福统计
      */
     private void updateBlessingStats(int blessingCount) {
-        mBinding.tvBlessingCount.setText(String.valueOf(blessingCount + 128)); // 基础数量
+        // 更新欢迎区域的统计信息
+        mBinding.tvWelcomeSubtitle.setText(
+                String.format("已有%d位考生收到祝福，一起为考生加油吧！✨", blessingCount + 128)
+        );
     }
-
     /**
      * 更新学生统计
      */
     private void updateStudentStats(Integer studentCount) {
         if (studentCount != null) {
-            mBinding.tvStudentCount.setText(String.valueOf(studentCount));
+            // 这里可以添加学生统计相关的UI更新
+            // 目前布局中没有专门的学生统计显示区域
         }
     }
 
@@ -391,11 +396,10 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
         long currentTime = System.currentTimeMillis();
         return Math.max(0, (examTime - currentTime) / (1000 * 60 * 60 * 24));
     }
-
     private void updateCountdownTimer() {
         long days = calculateDaysToExam();
-        mBinding.tvCountdown.setText(String.format("%d天", days));
-    }    // 导航方法
+        // 更新欢迎区域的倒计时信息，已在updateWelcomMessage中处理
+    }// 导航方法
     private void navigateToProfile() {
         // 切换到个人中心页面
         if (getActivity() != null && getActivity() instanceof MainActivity) {
@@ -450,6 +454,72 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
             ((MainActivity) getActivity()).switchToWall();
         }
     }
+
+    /**
+     * 显示快速祈福对话框
+     */
+    private void showQuickBlessingDialog() {
+        if (getContext() == null) return;
+
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_quick_blessing, null);
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(getContext())
+                .setView(dialogView)
+                .create();
+
+        // 设置祈福模板适配器
+        RecyclerView rvTemplates = dialogView.findViewById(R.id.rvBlessingTemplates);
+        BlessingTemplateAdapter templateAdapter = new BlessingTemplateAdapter();
+        rvTemplates.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvTemplates.setAdapter(templateAdapter);
+
+        // 设置预定义模板
+        templateAdapter.setTemplates(getPredefinedTemplates());
+
+        EditText etCustomBlessing = dialogView.findViewById(R.id.etCustomBlessing);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancel);
+        Button btnSendBlessing = dialogView.findViewById(R.id.btnSendBlessing);
+
+        // 模板选择监听
+        templateAdapter.setOnTemplateSelectedListener(template -> {
+            etCustomBlessing.setText(template);
+        });
+
+        // 取消按钮
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        // 发送祈福按钮
+        btnSendBlessing.setOnClickListener(v -> {
+            String blessingContent = etCustomBlessing.getText().toString().trim();
+            if (blessingContent.isEmpty()) {
+                Toast.makeText(getContext(), "请输入祈福内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // 创建祈福记录
+            mViewModel.createBlessing("考生", blessingContent, "快速祈福");
+
+            dialog.dismiss();
+
+            Toast.makeText(getContext(), "祈福发送成功！", Toast.LENGTH_SHORT).show();
+        });
+
+        dialog.show();
+    }
+
+    /**
+     * 获取预定义祈福模板
+     */
+    private List<String> getPredefinedTemplates() {
+        List<String> templates = new ArrayList<>();
+        templates.add("愿你考试顺利，金榜题名！🎓");
+        templates.add("保持冷静，发挥最佳水平！💪");
+        templates.add("相信自己，你一定能取得好成绩！⭐");
+        templates.add("愿你带着平常心走进考场！🙏");
+        templates.add("所有的努力都会有回报！🌟");
+        return templates;
+    }
+
     /**
      * 加载当前用户头像
      */
@@ -486,6 +556,9 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
         super.onDestroy();
         if (uiHandler != null) {
             uiHandler.removeCallbacksAndMessages(null);
+        }
+        if (particleView != null) {
+            particleView.stopAnimation();
         }
     }
 }
