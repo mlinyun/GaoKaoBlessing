@@ -43,11 +43,10 @@ public class AuthViewModel extends AndroidViewModel {
 
     // 密码强度
     private final MutableLiveData<Integer> passwordStrength = new MutableLiveData<>(0);
-
     public AuthViewModel(Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(application);
-        this.userRepository = new UserRepository(database.userDao());
+        this.userRepository = new UserRepository(database.userDao(), application);
     }
 
     // Getter methods for LiveData
@@ -381,7 +380,6 @@ public class AuthViewModel extends AndroidViewModel {
             SUCCESS, ERROR, NO_AUTO_LOGIN
         }
     }
-
     /**
      * 认证模式枚举
      */

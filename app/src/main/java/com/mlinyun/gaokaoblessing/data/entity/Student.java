@@ -2,6 +2,7 @@ package com.mlinyun.gaokaoblessing.data.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -26,8 +27,14 @@ public class Student {
     @ColumnInfo(name = "school")
     private String school;
 
-    @ColumnInfo(name = "grade")
-    private String grade;
+    @ColumnInfo(name = "class_name")
+    private String className;
+
+    @ColumnInfo(name = "subject_type")
+    private String subjectType; // 文科/理科
+
+    @ColumnInfo(name = "graduation_year")
+    private int graduationYear;
 
     @ColumnInfo(name = "exam_date")
     private String examDate;
@@ -37,6 +44,9 @@ public class Student {
 
     @ColumnInfo(name = "target_university")
     private String targetUniversity;
+
+    @ColumnInfo(name = "is_followed")
+    private boolean isFollowed;
 
     @ColumnInfo(name = "owner_user_id")
     private String ownerUserId;
@@ -48,17 +58,26 @@ public class Student {
     private long createdAt;
 
     @ColumnInfo(name = "updated_at")
-    private long updatedAt;
-
-    // 构造函数
+    private long updatedAt;    // 构造函数
     public Student() {}
 
-    public Student(String studentId, String name, String ownerUserId) {
-        this.studentId = studentId;
+    @Ignore
+    public Student(String name, String school, String className, String subjectType, int graduationYear, String ownerUserId) {
         this.name = name;
+        this.school = school;
+        this.className = className;
+        this.subjectType = subjectType;
+        this.graduationYear = graduationYear;
         this.ownerUserId = ownerUserId;
+        this.studentId = generateStudentId();
+        this.isFollowed = false;
+        this.blessingCount = 0;
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = System.currentTimeMillis();
+    }
+
+    private String generateStudentId() {
+        return "STU" + System.currentTimeMillis();
     }
 
     // Getter和Setter方法
@@ -101,13 +120,44 @@ public class Student {
     public void setSchool(String school) {
         this.school = school;
     }
-
     public String getGrade() {
-        return grade;
+        return className;
     }
 
     public void setGrade(String grade) {
-        this.grade = grade;
+        this.className = grade;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getSubjectType() {
+        return subjectType;
+    }
+
+    public void setSubjectType(String subjectType) {
+        this.subjectType = subjectType;
+    }
+
+    public int getGraduationYear() {
+        return graduationYear;
+    }
+
+    public void setGraduationYear(int graduationYear) {
+        this.graduationYear = graduationYear;
+    }
+
+    public boolean isFollowed() {
+        return isFollowed;
+    }
+
+    public void setFollowed(boolean followed) {
+        isFollowed = followed;
     }
 
     public String getExamDate() {

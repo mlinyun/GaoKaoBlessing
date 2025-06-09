@@ -7,7 +7,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
+
 import com.mlinyun.gaokaoblessing.data.entity.Student;
+
 import java.util.List;
 
 /**
@@ -59,10 +61,16 @@ public interface StudentDao {
     LiveData<List<Student>> getStudentsBySchool(String school);
 
     /**
-     * 根据年级查询学生
+     * 根据班级查询学生
      */
-    @Query("SELECT * FROM student WHERE grade = :grade ORDER BY created_at DESC")
-    LiveData<List<Student>> getStudentsByGrade(String grade);
+    @Query("SELECT * FROM student WHERE owner_user_id = :userId AND class_name = :className ORDER BY created_at DESC")
+    LiveData<List<Student>> getStudentsByClass(String userId, String className);
+
+    /**
+     * 根据科目类型查询学生
+     */
+    @Query("SELECT * FROM student WHERE owner_user_id = :userId AND subject_type = :subjectType ORDER BY created_at DESC")
+    LiveData<List<Student>> getStudentsBySubjectType(String userId, String subjectType);
 
     /**
      * 更新学生祝福数量
@@ -79,8 +87,49 @@ public interface StudentDao {
     /**
      * 搜索学生（按姓名）
      */
-    @Query("SELECT * FROM student WHERE name LIKE '%' || :name || '%' ORDER BY blessing_count DESC")
-    LiveData<List<Student>> searchStudentsByName(String name);
+    @Query("SELECT * FROM student WHERE owner_user_id = :userId AND name LIKE '%' || :name || '%' ORDER BY created_at DESC")
+    LiveData<List<Student>> searchStudentsByName(String userId, String name);
+
+    /**
+     * 获取关注的学生
+     */
+    @Query("SELECT * FROM student WHERE owner_user_id = :userId AND is_followed = 1 ORDER BY created_at DESC")
+    LiveData<List<Student>> getFollowedStudents(String userId);
+
+    /**
+     * 更新关注状态
+     */
+    @Query("UPDATE student SET is_followed = :isFollowed, updated_at = :updateTime WHERE id = :studentId")
+    void updateFollowStatus(int studentId, boolean isFollowed, long updateTime);
+
+    /**
+     * 获取所有学校列表
+     */
+    @Query("SELECT DISTINCT school FROM student WHERE owner_user_id = :userId AND school IS NOT NULL ORDER BY school")
+    LiveData<List<String>> getAllSchools(String userId);
+
+    /**
+     * 获取所有班级列表
+     */
+    @Query("SELECT DISTINCT class_name FROM student WHERE owner_user_id = :userId AND class_name IS NOT NULL ORDER BY class_name")
+    LiveData<List<String>> getAllClasses(String userId);
+
+    /**
+     * 获取学生总数
+     */
+    @Query("SELECT COUNT(*) FROM student WHERE owner_user_id = :userId")
+    LiveData<Integer> getStudentCount(String userId);
+
+    /**
+     * 复合搜索
+     */
+    @Query("SELECT * FROM student WHERE owner_user_id = :userId " +
+            "AND (:name IS NULL OR name LIKE '%' || :name || '%') " +
+            "AND (:school IS NULL OR school = :school) " +
+            "AND (:className IS NULL OR class_name = :className) " +
+            "AND (:subjectType IS NULL OR subject_type = :subjectType) " +
+            "ORDER BY created_at DESC")
+    LiveData<List<Student>> searchStudentsWithFilters(String userId, String name, String school, String className, String subjectType);
 
     /**
      * 获取热门学生（按祝福数量排序）

@@ -16,7 +16,7 @@ import com.mlinyun.gaokaoblessing.data.model.User;
  */
 @Database(
         entities = {User.class, Student.class},
-        version = 2,  // 增加版本号，因为User表结构发生了变化
+        version = 3,  // 增加版本号，解决schema验证问题
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -33,7 +33,6 @@ public abstract class AppDatabase extends RoomDatabase {
      * 获取学生DAO
      */
     public abstract StudentDao studentDao();
-
     /**
      * 获取数据库实例（单例模式）
      */
@@ -47,6 +46,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                     DATABASE_NAME
                             )
                             .fallbackToDestructiveMigration() // 版本升级时删除重建
+                            .fallbackToDestructiveMigrationOnDowngrade() // 版本降级时删除重建
                             .build();
                 }
             }
@@ -55,9 +55,45 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     /**
+     * 获取测试数据库实例（内存数据库）
+     */
+    public static AppDatabase getTestInstance(Context context) {
+        return Room.inMemoryDatabaseBuilder(
+                        context.getApplicationContext(),
+                        AppDatabase.class
+                )
+                .allowMainThreadQueries() // 测试时允许主线程查询
+                .build();
+    }
+
+    /**
+     * 强制清理并重建数据库实例
+     * 用于解决schema验证失败的问题
+     */
+    public static void forceRecreateDatabase(Context context) {
+        synchronized (AppDatabase.class) {
+            if (INSTANCE != null) {
+                INSTANCE.close();
+                INSTANCE = null;
+            }
+
+            // 删除数据库文件
+            context.deleteDatabase(DATABASE_NAME);
+
+            // 重新创建实例
+            getInstance(context);
+        }
+    }
+
+    /**
      * 销毁数据库实例
      */
     public static void destroyInstance() {
-        INSTANCE = null;
+        synchronized (AppDatabase.class) {
+            if (INSTANCE != null) {
+                INSTANCE.close();
+                INSTANCE = null;
+            }
+        }
     }
 }

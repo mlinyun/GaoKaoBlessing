@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
 /**
- * Fragment 基类
- * 提供 ViewBinding、ViewModel 等基础功能
+ * Fragment基类
+ * 提供ViewBinding、ViewModel等基础功能
  */
 public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel> extends Fragment {
 
@@ -32,17 +33,25 @@ public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel>
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // 初始化 ViewBinding
+        // 初始化ViewBinding
         mBinding = getViewBinding(inflater, container);
         return mBinding.getRoot();
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 初始化 ViewModel
-        mViewModel = new ViewModelProvider(this).get(getViewModelClass());
+        // 初始化ViewModel
+        Class<VM> viewModelClass = getViewModelClass();
+        if (AndroidViewModel.class.isAssignableFrom(viewModelClass)) {
+            // 创建AndroidViewModel的工厂
+            ViewModelProvider.AndroidViewModelFactory factory =
+                    ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication());
+            mViewModel = new ViewModelProvider(this, factory).get(viewModelClass);
+        } else {
+            // 普通ViewModel
+            mViewModel = new ViewModelProvider(this).get(viewModelClass);
+        }
 
         // 初始化UI
         initView();
@@ -63,17 +72,17 @@ public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel>
     }
 
     /**
-     * 获取 ViewBinding 实例
+     * 获取ViewBinding实例
      */
     protected abstract VB getViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
 
     /**
-     * 获取 ViewModel 类
+     * 获取ViewModel类
      */
     protected abstract Class<VM> getViewModelClass();
 
     /**
-     * 初始化 View
+     * 初始化View
      */
     protected abstract void initView();
 
@@ -106,7 +115,7 @@ public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel>
     }
 
     /**
-     * 显示 Toast 消息
+     * 显示Toast消息
      */
     protected void showToast(String message) {
         if (getActivity() instanceof BaseActivity) {
@@ -115,7 +124,7 @@ public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel>
     }
 
     /**
-     * 显示长 Toast 消息
+     * 显示长Toast消息
      */
     protected void showLongToast(String message) {
         if (getActivity() instanceof BaseActivity) {
