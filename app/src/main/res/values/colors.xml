@@ -7,6 +7,20 @@
     <!-- 高考祈福品牌色彩 - 基于UI原型的紫蓝渐变和金色系统 -->
     <!-- 主要品牌色 - 紫蓝渐变 -->
     <color name="brand_primary">#6366F1</color>
+    <color name="blessing_success">#4CAF50</color>
+    <color name="step_inactive">#B0BEC5</color>
+    <color name="blessing_tab_text">#333333</color>
+    <color name="sort_background">#F5F5F5</color>
+
+    <!-- 优化学生卡片背景颜色 - 深色背景与白色文字形成对比 -->
+    <color name="card_background">#2C3E50</color>
+    <color name="card_stroke">#34495E</color>
+
+    <!-- 学生卡片专用颜色 -->
+    <color name="student_card_background">#34495E</color>
+    <color name="student_card_text_primary">#FFFFFF</color>
+    <color name="student_card_text_secondary">#BDC3C7</color>
+    <color name="student_card_stroke">#4A6741</color>
     <color name="brand_primary_variant">#4F46E5</color>
     <color name="brand_secondary">#8B5CF6</color>
 
@@ -238,10 +252,4 @@
     <color name="button_primary_pressed">#DAA520</color>
     <color name="nav_button_pressed">#4F46E5</color>
     <color name="nav_button_normal">#6366F1</color>
-    <color name="blessing_success">#4CAF50</color>
-    <color name="step_inactive">#B0BEC5</color>
-    <color name="blessing_tab_text">#333333</color>
-    <color name="sort_background">#F5F5F5</color>
-    <color name="card_stroke">#E0E0E0</color>
-    <color name="card_background">#FFFFFF</color>
 </resources>

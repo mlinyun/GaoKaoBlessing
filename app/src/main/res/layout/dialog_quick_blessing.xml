@@ -48,7 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/edit_text_background"
         android:gravity="top"
         android:hint="请输入您的祈福内容..."
         android:inputType="textMultiLine"

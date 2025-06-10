@@ -137,7 +137,6 @@
                 android:id="@+id/tv_graduation_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_year_tag"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/text_hint_dark"

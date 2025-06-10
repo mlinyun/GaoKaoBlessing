@@ -7,18 +7,18 @@
     android:layout_marginBottom="12dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/card_background"
     app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/card_stroke"
-    app:strokeWidth="1dp">
+    app:cardElevation="4dp"
+    app:strokeWidth="2dp"
+    app:strokeColor="@color/student_card_stroke"
+    app:cardBackgroundColor="@color/student_card_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
         <!-- 学生头像 -->
         <FrameLayout
@@ -41,18 +41,16 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_student_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="张三"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">            <TextView
+            android:id="@+id/tv_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="张三"
+            android:textColor="@color/student_card_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_student_info"
@@ -60,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="某某高中 · 高三"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/student_card_text_secondary"
                 android:textSize="14sp" />
 
             <TextView
@@ -68,11 +66,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/countdown_background"
-                android:padding="4dp"
                 android:text="距离高考还有 30 天"
                 android:textColor="@color/blessing_accent"
                 android:textSize="12sp"
+                android:padding="4dp"
                 android:visibility="visible" />
         </LinearLayout>
 
