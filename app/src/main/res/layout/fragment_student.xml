@@ -119,6 +119,18 @@
                 app:chipBackgroundColor="@android:color/transparent"
                 app:chipStrokeColor="@color/primary_color" />
 
+            <!-- 显示模式切换 -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_show_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:checked="true"
+                android:text="所有学生"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/accent_color"
+                app:chipStrokeColor="@color/accent_color" />
+
         </LinearLayout>
 
     </HorizontalScrollView>

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.chip.Chip;
+import com.mlinyun.gaokaoblessing.R;
 import com.mlinyun.gaokaoblessing.base.BaseFragment;
 import com.mlinyun.gaokaoblessing.data.entity.Student;
 import com.mlinyun.gaokaoblessing.databinding.FragmentStudentBinding;
@@ -69,7 +70,6 @@ public class StudentFragment extends BaseFragment<FragmentStudentBinding, Studen
         setupClickListeners();
         setupFilterChips();
     }
-
     private void setupRecyclerView() {
         studentAdapter = new StudentAdapter(getContext());
         studentAdapter.setOnStudentActionListener(this);
@@ -102,7 +102,6 @@ public class StudentFragment extends BaseFragment<FragmentStudentBinding, Studen
         // 筛选按钮
         mBinding.ivFilter.setOnClickListener(v -> toggleFilterVisibility());
     }
-
     private void setupFilterChips() {
         mBinding.chipAll.setOnClickListener(v -> {
             selectFilterChip(mBinding.chipAll);
@@ -112,6 +111,13 @@ public class StudentFragment extends BaseFragment<FragmentStudentBinding, Studen
         mBinding.chipFollowed.setOnClickListener(v -> {
             selectFilterChip(mBinding.chipFollowed);
             mViewModel.showFollowedStudents(true);
+        });
+
+        // 显示模式切换
+        mBinding.chipShowMode.setOnClickListener(v -> {
+            boolean currentShowAll = mBinding.chipShowMode.isChecked();
+            mBinding.chipShowMode.setText(currentShowAll ? "我的学生" : "所有学生");
+            mViewModel.toggleShowAllStudents(!currentShowAll);
         });
     }
 
@@ -160,18 +166,37 @@ public class StudentFragment extends BaseFragment<FragmentStudentBinding, Studen
                 showAddStudentDialog();
             }
         });
-
         // 观察编辑学生
         mViewModel.getEditingStudent().observe(getViewLifecycleOwner(), student -> {
             if (student != null) {
                 showEditStudentDialog(student);
             }
         });
-    }
 
+        // 观察显示模式变化
+        mViewModel.getShowAllStudents().observe(getViewLifecycleOwner(), showAll -> {
+            if (showAll != null) {
+                updateShowModeChip(showAll);
+            }
+        });
+    }
     private void updateEmptyState(boolean isEmpty) {
         mBinding.llEmptyState.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         mBinding.rvStudents.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+    }
+
+    private void updateShowModeChip(boolean showAll) {
+        mBinding.chipShowMode.setChecked(showAll);
+        mBinding.chipShowMode.setText(showAll ? "所有学生" : "我的学生");
+
+        // 更新chip的样式
+        if (showAll) {
+            mBinding.chipShowMode.setChipBackgroundColorResource(R.color.accent_color);
+            mBinding.chipShowMode.setTextColor(getResources().getColor(android.R.color.white, null));
+        } else {
+            mBinding.chipShowMode.setChipBackgroundColorResource(android.R.color.transparent);
+            mBinding.chipShowMode.setTextColor(getResources().getColor(R.color.accent_color, null));
+        }
     }
 
     private void showAddStudentDialog() {
@@ -185,7 +210,6 @@ public class StudentFragment extends BaseFragment<FragmentStudentBinding, Studen
         dialog.setOnStudentSaveListener(this);
         dialog.show(getChildFragmentManager(), "EditStudentDialog");
     }
-
     private void showDeleteConfirmDialog(Student student) {
         new AlertDialog.Builder(requireContext())
                 .setTitle("删除考生")

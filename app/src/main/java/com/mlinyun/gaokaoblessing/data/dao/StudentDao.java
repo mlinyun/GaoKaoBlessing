@@ -59,7 +59,6 @@ public interface StudentDao {
      */
     @Query("SELECT * FROM student WHERE school LIKE '%' || :school || '%' ORDER BY created_at DESC")
     LiveData<List<Student>> getStudentsBySchool(String school);
-
     /**
      * 根据班级查询学生
      */
@@ -113,12 +112,17 @@ public interface StudentDao {
      */
     @Query("SELECT DISTINCT class_name FROM student WHERE owner_user_id = :userId AND class_name IS NOT NULL ORDER BY class_name")
     LiveData<List<String>> getAllClasses(String userId);
-
     /**
-     * 获取学生总数
+     * 获取指定用户的学生总数
      */
     @Query("SELECT COUNT(*) FROM student WHERE owner_user_id = :userId")
     LiveData<Integer> getStudentCount(String userId);
+
+    /**
+     * 获取数据库中所有学生的总数
+     */
+    @Query("SELECT COUNT(*) FROM student")
+    LiveData<Integer> getAllStudentCount();
 
     /**
      * 复合搜索

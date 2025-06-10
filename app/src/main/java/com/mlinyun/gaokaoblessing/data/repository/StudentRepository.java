@@ -99,6 +99,13 @@ public class StudentRepository {
     }
 
     /**
+     * 获取数据库中的所有学生（不分用户）
+     */
+    public LiveData<List<Student>> getAllStudentsFromDatabase() {
+        return studentDao.getAllStudents();
+    }
+
+    /**
      * 搜索学生
      */
     public LiveData<List<Student>> searchStudents(String userId, String name) {
@@ -195,6 +202,13 @@ public class StudentRepository {
      */
     public LiveData<Integer> getStudentCount(String userId) {
         return studentDao.getStudentCount(userId);
+    }
+
+    /**
+     * 获取数据库中所有学生的总数
+     */
+    public LiveData<Integer> getAllStudentCount() {
+        return studentDao.getAllStudentCount();
     }
 
     /**

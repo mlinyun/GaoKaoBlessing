@@ -31,6 +31,7 @@ public class StudentViewModel extends AndroidViewModel {
     private MutableLiveData<String> filterClass = new MutableLiveData<>();
     private MutableLiveData<String> filterSubjectType = new MutableLiveData<>();
     private MutableLiveData<Boolean> showFollowedOnly = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> showAllStudents = new MutableLiveData<>(true); // 默认显示所有学生
 
     // 学生数据相关的LiveData
     private MediatorLiveData<List<Student>> studentsLiveData = new MediatorLiveData<>();
@@ -75,22 +76,23 @@ public class StudentViewModel extends AndroidViewModel {
             return;
         }
 
-        String userId = getCurrentUserId();
-        if (userId == null || userId.isEmpty()) {
-            return;
-        }
-
         isInitialized = true;
 
-        // 初始化基础数据源        allStudentsLiveData = studentRepository.getAllStudents(userId);
-        studentCountLiveData = studentRepository.getStudentCount(userId);
-        schoolsLiveData = studentRepository.getAllSchools(userId);
-        classesLiveData = studentRepository.getAllClasses(userId);
+        // 初始化基础数据源 - 默认显示所有学生
+        allStudentsLiveData = studentRepository.getAllStudentsFromDatabase();
+        studentCountLiveData = studentRepository.getAllStudentCount();
+
+        String userId = getCurrentUserId();
+        if (userId != null && !userId.isEmpty()) {
+            schoolsLiveData = studentRepository.getAllSchools(userId);
+            classesLiveData = studentRepository.getAllClasses(userId);
+        }
 
         // 安全地添加源
         safeAddSource(allStudentsLiveData, () -> applyCurrentFilter());
         safeAddSource(searchQuery, () -> applyCurrentFilter());
         safeAddSource(showFollowedOnly, () -> applyCurrentFilter());
+        safeAddSource(showAllStudents, () -> switchStudentDataSource());
     }
 
     private void safeAddSource(LiveData<?> source, Runnable observer) {
@@ -119,34 +121,61 @@ public class StudentViewModel extends AndroidViewModel {
             return;
         }
 
-        String userId = getCurrentUserId();
-        if (userId == null || userId.isEmpty()) {
-            return;
-        }
-
         String query = searchQuery.getValue();
         String school = filterSchool.getValue();
         String className = filterClass.getValue();
         String subjectType = filterSubjectType.getValue();
         Boolean followedOnly = showFollowedOnly.getValue();
+        Boolean showAll = showAllStudents.getValue();
 
         LiveData<List<Student>> targetSource = determineTargetSource(
-                userId, query, school, className, subjectType, followedOnly
+                showAll, query, school, className, subjectType, followedOnly
         );
 
         updateDynamicSource(targetSource);
     }
 
-    private LiveData<List<Student>> determineTargetSource(String userId, String query,
+    /**
+     * 切换学生数据源（所有学生 vs 当前用户的学生）
+     */
+    private void switchStudentDataSource() {
+        Boolean showAll = showAllStudents.getValue();
+        if (showAll != null && showAll) {
+            // 显示所有学生
+            allStudentsLiveData = studentRepository.getAllStudentsFromDatabase();
+            studentCountLiveData = studentRepository.getAllStudentCount();
+        } else {
+            // 显示当前用户的学生
+            String userId = getCurrentUserId();
+            if (userId != null && !userId.isEmpty()) {
+                allStudentsLiveData = studentRepository.getAllStudents(userId);
+                studentCountLiveData = studentRepository.getStudentCount(userId);
+            }
+        }
+
+        // 重新初始化数据源
+        clearAllSources();
+        safeAddSource(allStudentsLiveData, () -> applyCurrentFilter());
+        safeAddSource(searchQuery, () -> applyCurrentFilter());
+        safeAddSource(showFollowedOnly, () -> applyCurrentFilter());
+
+        // 应用当前过滤器
+        applyCurrentFilter();
+    }
+
+    private LiveData<List<Student>> determineTargetSource(Boolean showAll, String query,
                                                           String school, String className, String subjectType, Boolean followedOnly) {
 
-        if (followedOnly != null && followedOnly) {
+        String userId = getCurrentUserId();
+
+        if (followedOnly != null && followedOnly && userId != null) {
             return studentRepository.getFollowedStudents(userId);
-        } else if (query != null && !query.trim().isEmpty()) {
+        } else if (query != null && !query.trim().isEmpty() && userId != null) {
             return studentRepository.searchStudents(userId, query.trim());
-        } else if (school != null || className != null || subjectType != null) {
+        } else if ((school != null || className != null || subjectType != null) && userId != null) {
             return studentRepository.searchWithFilters(userId, null, school, className, subjectType);
         } else {
+            // 根据显示模式返回对应的数据源
             return allStudentsLiveData;
         }
     }
@@ -277,6 +306,15 @@ public class StudentViewModel extends AndroidViewModel {
         showFollowedOnly.setValue(showOnly);
     }
 
+    /**
+     * 切换显示所有学生或仅显示当前用户的学生
+     *
+     * @param showAll true=显示所有学生, false=仅显示当前用户的学生
+     */
+    public void toggleShowAllStudents(boolean showAll) {
+        showAllStudents.setValue(showAll);
+    }
+
     public void setFilters(String school, String className, String subjectType) {
         filterSchool.setValue(school);
         filterClass.setValue(className);
@@ -348,6 +386,10 @@ public class StudentViewModel extends AndroidViewModel {
 
     public LiveData<Student> getEditingStudent() {
         return editingStudent;
+    }
+
+    public LiveData<Boolean> getShowAllStudents() {
+        return showAllStudents;
     }
 
     @Override
