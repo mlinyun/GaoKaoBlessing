@@ -74,6 +74,21 @@
             android:name=".ui.main.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <!-- 创建祈福Activity -->
+        <activity
+            android:name=".ui.blessing.CreateBlessingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GaoKaoBlessing"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- 祈福墙Activity -->
+        <activity
+            android:name=".ui.blessing.BlessingWallActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GaoKaoBlessing" />
     </application>
 
 </manifest>

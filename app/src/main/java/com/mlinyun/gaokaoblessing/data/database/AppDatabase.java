@@ -5,20 +5,27 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.mlinyun.gaokaoblessing.data.dao.BlessingDao;
+import com.mlinyun.gaokaoblessing.data.dao.BlessingTemplateDao;
 import com.mlinyun.gaokaoblessing.data.dao.StudentDao;
 import com.mlinyun.gaokaoblessing.data.dao.UserDao;
+import com.mlinyun.gaokaoblessing.data.entity.BlessingEntity;
+import com.mlinyun.gaokaoblessing.data.entity.BlessingTemplateEntity;
 import com.mlinyun.gaokaoblessing.data.entity.Student;
 import com.mlinyun.gaokaoblessing.data.model.User;
+import com.mlinyun.gaokaoblessing.utils.DateConverter;
 
 /**
  * 高考祈福应用数据库
  */
 @Database(
-        entities = {User.class, Student.class},
-        version = 3,  // 增加版本号，解决schema验证问题
+        entities = {User.class, Student.class, BlessingEntity.class, BlessingTemplateEntity.class},
+        version = 5,  // 增加版本号，添加effect字段到祈福模板表
         exportSchema = false
 )
+@TypeConverters({DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "gaokao_blessing_db";
@@ -28,11 +35,20 @@ public abstract class AppDatabase extends RoomDatabase {
      * 获取用户DAO
      */
     public abstract UserDao userDao();
-
     /**
      * 获取学生DAO
      */
     public abstract StudentDao studentDao();
+
+    /**
+     * 获取祈福DAO
+     */
+    public abstract BlessingDao blessingDao();
+
+    /**
+     * 获取祈福模板DAO
+     */
+    public abstract BlessingTemplateDao blessingTemplateDao();
     /**
      * 获取数据库实例（单例模式）
      */

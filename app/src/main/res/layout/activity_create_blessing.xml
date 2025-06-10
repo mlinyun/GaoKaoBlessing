@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blessing_main_background"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.blessing.CreateBlessingActivity">
+
+    <!-- 顶部导航栏 -->
+    <LinearLayout
+        android:id="@+id/top_nav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/transparent"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="8dp">
+
+        <!-- 返回按钮 -->
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/nav_button_selector"
+            android:contentDescription="返回"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary" />
+
+        <!-- 标题 -->
+        <TextView
+            android:id="@+id/tv_step_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="创建祈福"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- 帮助按钮 -->
+        <ImageButton
+            android:id="@+id/btn_help"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/nav_button_selector"
+            android:contentDescription="帮助"
+            android:src="@drawable/ic_help"
+            app:tint="@color/blessing_accent" />
+    </LinearLayout>
+
+    <!-- 主内容区域 -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="80dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- 步骤指示器 -->
+            <LinearLayout
+                android:id="@+id/layout_step_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/step_active" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/step_inactive" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/step_inactive" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="4dp"
+                    android:background="@drawable/step_inactive" />
+            </LinearLayout>
+
+            <!-- 步骤描述 -->
+            <TextView
+                android:id="@+id/tv_step_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="请选择要祈福的考生"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <!-- 加载指示器 -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <!-- 步骤1: 选择学生 -->
+            <LinearLayout
+                android:id="@+id/layout_select_student"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_students"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <Button
+                    android:id="@+id/btn_add_student"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_outline_selector"
+                    android:text="+ 添加新学生"
+                    android:textColor="@color/blessing_primary" />
+            </LinearLayout>
+
+            <!-- 步骤2: 选择模板 -->
+            <LinearLayout
+                android:id="@+id/layout_select_template"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- 模板分类标签 -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_template_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:tabIndicatorColor="@color/blessing_primary"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/blessing_primary"
+                    app:tabTextColor="@color/text_secondary" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_templates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+
+            <!-- 步骤3: 自定义内容 -->
+            <LinearLayout
+                android:id="@+id/layout_custom_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入您的祈福内容">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_custom_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLines="8"
+                        android:minLines="4" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/hint_background"
+                    android:padding="8dp"
+                    android:text="💡 温馨提示：真诚的祈福更有意义"
+                    android:textColor="@color/text_hint"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 步骤4: 选择特效 -->
+            <LinearLayout
+                android:id="@+id/layout_select_effect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="选择祈福特效"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/ll_effects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- 底部操作栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bottom_nav_background"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_previous"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_outline_selector"
+            android:text="上一步"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_primary_selector"
+            android:text="下一步"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_complete"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_primary_selector"
+            android:text="完成祈福"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

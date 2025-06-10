@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- 类别指示器 -->
+        <View
+            android:id="@+id/vCategoryIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/blessing_primary" />
+
+        <!-- 祈福内容 -->
+        <TextView
+            android:id="@+id/tvBlessingContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="祈福内容"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 学生信息 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- 学生头像 -->
+            <TextView
+                android:id="@+id/tvStudentAvatar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:text="张"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_circle_avatar"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tvStudentName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="张三"
+                android:textSize="12sp"
+                android:textColor="@color/blessing_accent" />
+
+            <!-- 特效图标 -->
+            <ImageView
+                android:id="@+id/ivEffectIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_effect_star"
+                android:visibility="gone"
+                android:contentDescription="特效" />
+        </LinearLayout>
+
+        <!-- 作者和时间信息 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvAuthorName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="来自 匿名用户"
+                android:textSize="10sp"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvCreateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="刚刚"
+                android:textSize="10sp"
+                android:textColor="@color/text_hint" />
+        </LinearLayout>
+
+        <!-- 互动区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_heart_outline"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:tint="@color/text_hint"
+                android:contentDescription="点赞" />            <TextView
+            android:id="@+id/tvLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="0"
+            android:textSize="12sp"
+            android:textColor="@color/text_hint" />
+
+            <!-- 评论按钮和数量 -->
+            <ImageButton
+                android:id="@+id/btnComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_comment_outline"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:contentDescription="评论"
+                app:tint="@color/text_hint" />
+
+            <TextView
+                android:id="@+id/tvCommentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="0"
+                android:textSize="12sp"
+                android:textColor="@color/text_hint" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- 分类标签 -->
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="考试必过"
+                android:textSize="10sp"
+                android:textColor="@color/blessing_primary"
+                android:background="@drawable/bg_category_tag"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

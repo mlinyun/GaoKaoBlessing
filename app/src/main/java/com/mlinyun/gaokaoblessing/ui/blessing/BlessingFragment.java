@@ -91,9 +91,11 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
         // 观察用户会话变化，更新头像
         userSessionManager.getCurrentUserLiveData().observe(getViewLifecycleOwner(), this::updateUserAvatar);
     }
-
     @Override
     protected void initData() {
+        // 初始化默认祈福模板数据
+        initializeDefaultData();
+
         // 加载祈福数据
         mViewModel.loadBlessingData();
         mViewModel.loadStudentData();
@@ -426,12 +428,10 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
             Toast.makeText(getContext(), "详细统计功能开发中...", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void createBlessing() {
-        // 创建祈福
-        if (getContext() != null) {
-            Toast.makeText(getContext(), "创建祈福功能开发中...", Toast.LENGTH_SHORT).show();
-        }
+        // 导航到创建祈福页面
+        Intent intent = new Intent(getActivity(), CreateBlessingActivity.class);
+        startActivityForResult(intent, 1002);
     }
 
     private void navigateToStudentManagement() {
@@ -506,7 +506,6 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
 
         dialog.show();
     }
-
     /**
      * 获取预定义祈福模板
      */
@@ -549,6 +548,27 @@ public class BlessingFragment extends BaseFragment<FragmentBlessingBinding, Bles
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(mBinding.ivAvatar);
         }
+    }
+
+    /**
+     * 初始化默认数据
+     */
+    private void initializeDefaultData() {
+        com.mlinyun.gaokaoblessing.data.repository.DataInitializer dataInitializer =
+                new com.mlinyun.gaokaoblessing.data.repository.DataInitializer(requireContext());
+
+        dataInitializer.initializeDefaultTemplates()
+                .whenComplete((result, throwable) -> {
+                    if (throwable != null) {
+                        // 初始化失败，记录日志但不影响用户体验
+                        throwable.printStackTrace();
+                    } else {
+                        // 初始化成功，可以显示提示信息
+                        uiHandler.post(() -> {
+                            // Toast.makeText(requireContext(), "祈福模板初始化完成", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                });
     }
 
     @Override

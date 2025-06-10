@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_24"
+        android:title="搜索"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_filter_list"
+        android:title="筛选"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_sort"
+        android:title="排序"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/sort_time_desc"
+                android:checkable="true"
+                android:checked="true"
+                android:title="最新发布" />
+
+            <item
+                android:id="@+id/sort_like_desc"
+                android:checkable="true"
+                android:title="最多点赞" />
+
+            <item
+                android:id="@+id/sort_comment_desc"
+                android:checkable="true"
+                android:title="最多评论" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_refresh_24"
+        android:title="刷新"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_24"
+        android:title="分享"
+        app:showAsAction="never" />
+
+</menu>
