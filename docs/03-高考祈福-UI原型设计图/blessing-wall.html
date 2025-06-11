@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高考祈福 - 祈福墙</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 动态心形粒子背景 */
+        .heart-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: #FFD700;
+            font-size: 12px;
+            opacity: 0.6;
+            animation: floatHeart 8s infinite ease-in-out;
+        }
+
+        .heart-particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .heart-particle:nth-child(2) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .heart-particle:nth-child(3) {
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .heart-particle:nth-child(4) {
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .heart-particle:nth-child(5) {
+            left: 90%;
+            animation-delay: 1s;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: translateY(-20px) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-right: 40px;
+        }
+
+        /* 筛选标签 */
+        .filter-tabs {
+            position: absolute;
+            top: 107px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 90;
+            overflow: hidden;
+        }
+
+        .filter-container {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 24px;
+            flex: 1;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            touch-action: pan-x;
+            border: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-scroll.scrolling {
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .filter-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            user-select: none;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            border-color: #FFD700;
+            color: #0f0f23;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            animation: tabSelectAnimation 0.3s ease-out;
+        }
+
+        @keyframes tabSelectAnimation {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            }
+
+            100% {
+                transform: scale(1.05);
+                box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* 滑动提示箭头 */
+        .scroll-hint {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            animation: slideHint 2s ease-in-out infinite;
+        }
+
+        .scroll-hint.hidden {
+            opacity: 0;
+        }
+
+        @keyframes slideHint {
+
+            0%,
+            100% {
+                transform: translateY(-50%) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-50%) translateX(-3px);
+            }
+        }
+
+        /* 渐变遮罩效果 */
+        .filter-tabs::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(15, 15, 35, 0.8));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .filter-tabs::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to left, transparent, rgba(15, 15, 35, 0.8));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: calc(100% - 167px);
+            margin-top: 167px;
+            overflow-y: auto;
+        }
+
+        /* 滚动条样式 */
+        .main-content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 祈福卡片 */
+        .blessing-cards {
+            padding: 20px 24px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .blessing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blessing-card:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .blessing-card.premium {
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 66, 0.1));
+        }
+
+        .blessing-card.premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FFD700, #FF8C42, #FFD700);
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .blessing-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .blessing-user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2px;
+        }
+
+        .blessing-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .target-student {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        .blessing-content {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .blessing-effects {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .effect-tag {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #FFD700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .blessing-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 6px;
+            border-radius: 8px;
+        }
+
+        .action-btn:hover {
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .action-btn.liked {
+            color: #FF4444;
+        }
+
+        .blessing-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 底部导航 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 83px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 24px 34px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active .nav-icon {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        .nav-item.active .nav-label {
+            color: #FFD700;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* 浮动操作按钮 */
+        .fab-button {
+            position: absolute;
+            bottom: 100px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #0f0f23;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.4);
+            z-index: 101;
+        }
+
+        .fab-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 24px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .empty-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        /* 额外的滑动优化 */
+        .filter-scroll {
+            cursor: grab;
+            touch-action: pan-x;
+        }
+
+        .filter-scroll:active {
+            cursor: grabbing;
+        }
+
+        /* 触摸设备优化 */
+        @media (hover: none) and (pointer: coarse) {
+            .filter-tab {
+                padding: 10px 18px;
+                font-size: 15px;
+            }
+
+            .filter-scroll {
+                padding: 12px 24px;
+            }
+
+            .scroll-hint {
+                display: none;
+            }
+        }
+
+        /* 高性能滚动 */
+        .filter-scroll {
+            will-change: scroll-position;
+            transform: translateZ(0);
+        }
+
+        /* 滚动优化和增强动画 */
+        .filter-scroll {
+            border: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-scroll.scrolling {
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        /* 智能预加载指示器 */
+        .filter-tab.preloading::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            border-radius: 22px;
+            animation: preloadShimmer 1.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes preloadShimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* 边界反弹效果 */
+        .filter-scroll.boundary-bounce {
+            animation: boundaryBounce 0.3s ease-out;
+        }
+
+        @keyframes boundaryBounce {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* 快速滚动指示器 */
+        .quick-scroll-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 215, 0, 0.9);
+            color: #0f0f23;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            transition: opacity 0.3s ease;
+        }
+
+        .quick-scroll-indicator.show {
+            opacity: 1;
+            animation: quickScrollPulse 0.5s ease-out;
+        }
+
+        @keyframes quickScrollPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 心形粒子背景 -->
+            <div class="heart-particles">
+                <div class="heart-particle">💖</div>
+                <div class="heart-particle">🌟</div>
+                <div class="heart-particle">💫</div>
+                <div class="heart-particle">✨</div>
+                <div class="heart-particle">💝</div>
+            </div>
+
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="nav-back" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-title">祈福墙</div>
+            </div>
+            
+            <!-- 筛选标签 -->
+            <div class="filter-tabs">
+                <div class="filter-container">
+                    <div class="filter-scroll" id="filterScroll">
+                        <div class="filter-tab active" onclick="filterBlessings('all', this)">全部</div>
+                        <div class="filter-tab" onclick="filterBlessings('recent', this)">最新</div>
+                        <div class="filter-tab" onclick="filterBlessings('popular', this)">热门</div>
+                        <div class="filter-tab" onclick="filterBlessings('premium', this)">精品</div>
+                        <div class="filter-tab" onclick="filterBlessings('friends', this)">好友</div>
+                        <div class="filter-tab" onclick="filterBlessings('my', this)">我的</div>
+                        <div class="filter-tab" onclick="filterBlessings('video', this)">视频</div>
+                        <div class="filter-tab" onclick="filterBlessings('audio', this)">语音</div>
+                        <div class="filter-tab" onclick="filterBlessings('photo', this)">图片</div>
+                    </div>
+                    <div class="scroll-hint" id="scrollHint">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="quick-scroll-indicator" id="quickScrollIndicator">
+                        快速导航
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <div class="blessing-cards" id="blessingCards">
+                    <!-- 精品祈福卡片 -->
+                    <div class="blessing-card premium">
+                        <div class="premium-badge">精品</div>
+                        <div class="blessing-header">
+                            <div class="user-avatar">王</div>
+                            <div class="blessing-user-info">
+                                <div class="user-name">王老师</div>
+                                <div class="blessing-meta">
+                                    <span>给</span>
+                                    <span class="target-student">李明同学</span>
+                                    <span>•</span>
+                                    <span>2小时前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blessing-content">
+                            愿你在高考的战场上，以笔为剑，以智慧为盾，披荆斩棘，勇往直前！三年的汗水将在这一刻绽放出最绚烂的花朵，所有的努力都将得到最好的回报。加油，相信自己！💪✨
+                        </div>
+                        <div class="blessing-effects">
+                            <div class="effect-tag">
+                                <i class="fas fa-star"></i>
+                                金榜题名
+                            </div>
+                            <div class="effect-tag">
+                                <i class="fas fa-heart"></i>
+                                心想事成
+                            </div>
+                            <div class="effect-tag">
+                                <i class="fas fa-graduation-cap"></i>
+                                状元及第
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-buttons">
+                                <div class="action-btn liked" onclick="toggleLike(this)">
+                                    <i class="fas fa-heart"></i>
+                                    <span>236</span>
+                                </div>
+                                <div class="action-btn" onclick="showComments(this)">
+                                    <i class="fas fa-comment"></i>
+                                    <span>42</span>
+                                </div>
+                                <div class="action-btn" onclick="shareBlessing(this)">
+                                    <i class="fas fa-share"></i>
+                                    <span>转发</span>
+                                </div>
+                            </div>
+                            <div class="blessing-time">2小时前</div>
+                        </div>
+                    </div>
+
+                    <!-- 普通祈福卡片 -->
+                    <div class="blessing-card">
+                        <div class="blessing-header">
+                            <div class="user-avatar">张</div>
+                            <div class="blessing-user-info">
+                                <div class="user-name">张妈妈</div>
+                                <div class="blessing-meta">
+                                    <span>给</span>
+                                    <span class="target-student">张小萌同学</span>
+                                    <span>•</span>
+                                    <span>5小时前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blessing-content">
+                            亲爱的孩子，妈妈相信你一定能够发挥出最好的水平！这些年的努力都不会白费，保持平常心，你就是最棒的！🎓
+                        </div>
+                        <div class="blessing-effects">
+                            <div class="effect-tag">
+                                <i class="fas fa-clover"></i>
+                                好运连连
+                            </div>
+                            <div class="effect-tag">
+                                <i class="fas fa-sun"></i>
+                                前程似锦
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-buttons">
+                                <div class="action-btn" onclick="toggleLike(this)">
+                                    <i class="far fa-heart"></i>
+                                    <span>89</span>
+                                </div>
+                                <div class="action-btn" onclick="showComments(this)">
+                                    <i class="fas fa-comment"></i>
+                                    <span>15</span>
+                                </div>
+                                <div class="action-btn" onclick="shareBlessing(this)">
+                                    <i class="fas fa-share"></i>
+                                    <span>转发</span>
+                                </div>
+                            </div>
+                            <div class="blessing-time">5小时前</div>
+                        </div>
+                    </div>
+
+                    <!-- 另一个祈福卡片 -->
+                    <div class="blessing-card">
+                        <div class="blessing-header">
+                            <div class="user-avatar">刘</div>
+                            <div class="blessing-user-info">
+                                <div class="user-name">刘同学</div>
+                                <div class="blessing-meta">
+                                    <span>给</span>
+                                    <span class="target-student">王小华同学</span>
+                                    <span>•</span>
+                                    <span>昨天</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blessing-content">
+                            一起加油！我们都要考上理想的大学，未来在最好的地方等着我们！🌈✨
+                        </div>
+                        <div class="blessing-effects">
+                            <div class="effect-tag">
+                                <i class="fas fa-rainbow"></i>
+                                梦想成真
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-buttons">
+                                <div class="action-btn" onclick="toggleLike(this)">
+                                    <i class="far fa-heart"></i>
+                                    <span>67</span>
+                                </div>
+                                <div class="action-btn" onclick="showComments(this)">
+                                    <i class="fas fa-comment"></i>
+                                    <span>8</span>
+                                </div>
+                                <div class="action-btn" onclick="shareBlessing(this)">
+                                    <i class="fas fa-share"></i>
+                                    <span>转发</span>
+                                </div>
+                            </div>
+                            <div class="blessing-time">昨天 16:30</div>
+                        </div>
+                    </div>
+
+                    <!-- 视频祈福卡片 -->
+                    <div class="blessing-card premium">
+                        <div class="premium-badge">视频</div>
+                        <div class="blessing-header">
+                            <div class="user-avatar">陈</div>
+                            <div class="blessing-user-info">
+                                <div class="user-name">陈校长</div>
+                                <div class="blessing-meta">
+                                    <span>给</span>
+                                    <span class="target-student">全体考生</span>
+                                    <span>•</span>
+                                    <span>2天前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blessing-content">
+                            🎬 特别录制视频祝福：孩子们，你们是学校的骄傲，也是老师心中最亮的星！愿你们在高考中发光发热，创造属于自己的辉煌！
+                        </div>
+                        <div class="blessing-effects">
+                            <div class="effect-tag">
+                                <i class="fas fa-video"></i>
+                                视频祝福
+                            </div>
+                            <div class="effect-tag">
+                                <i class="fas fa-crown"></i>
+                                校长特别版
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-buttons">
+                                <div class="action-btn liked" onclick="toggleLike(this)">
+                                    <i class="fas fa-heart"></i>
+                                    <span>512</span>
+                                </div>
+                                <div class="action-btn" onclick="showComments(this)">
+                                    <i class="fas fa-comment"></i>
+                                    <span>98</span>
+                                </div>
+                                <div class="action-btn" onclick="shareBlessing(this)">
+                                    <i class="fas fa-share"></i>
+                                    <span>转发</span>
+                                </div>
+                            </div>
+                            <div class="blessing-time">2天前</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 浮动操作按钮 -->
+            <div class="fab-button" onclick="createBlessing()">
+                <i class="fas fa-pen"></i>
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="goToHome()">
+                    <div class="nav-icon"><i class="fas fa-home"></i></div>
+                    <div class="nav-label">首页</div>
+                </div>
+                <div class="nav-item active">
+                    <div class="nav-icon"><i class="fas fa-comments"></i></div>
+                    <div class="nav-label">祈福墙</div>
+                </div>
+                <div class="nav-item" onclick="goToStudents()">
+                    <div class="nav-icon"><i class="fas fa-users"></i></div>
+                    <div class="nav-label">考生</div>
+                </div>
+                <div class="nav-item" onclick="goToProfile()">
+                    <div class="nav-icon"><i class="fas fa-user"></i></div>
+                    <div class="nav-label">我的</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 全局变量
+        let scrollPosition = 0;
+        let isScrolling = false;
+
+        // 页面加载动画
+        window.addEventListener('load', function () {
+            document.body.style.opacity = '1';
+            initializeFilterTabs();
+        });
+        
+        // 初始化筛选标签功能
+        function initializeFilterTabs() {
+            const filterScroll = document.getElementById('filterScroll');
+            const scrollHint = document.getElementById('scrollHint');
+
+            if (!filterScroll) {
+                console.error('Filter scroll element not found');
+                return;
+            }
+            // 基础功能初始化
+            filterScroll.addEventListener('scroll', handleFilterScroll);
+            checkScrollHint();
+
+            // 交互功能
+            initializeTouchGestures();
+            initializeKeyboardNavigation();
+            addDoubleClickScroll();
+
+            // 滚动增强
+            addInertiaScrolling();
+            addScrollBoundaryDetection();
+            addScrollStateManagement();
+            addResponsiveScrollOptimization();
+
+            // 高级功能
+            addSmartPreloading();
+            addKeyboardShortcuts();
+            monitorScrollPerformance();
+
+            // 用户体验优化
+            setTimeout(() => {
+                if (scrollHint) {
+                    scrollHint.classList.add('hidden');
+                }
+            }, 5000);
+
+            // 完成初始化提示
+            setTimeout(() => {
+                showToast('✨ 滤镜标签页已完全优化');
+            }, 500);
+
+            console.log('Filter tabs initialized with all enhancements');
+        }
+        
+        // 处理滚动事件
+        function handleFilterScroll() {
+            const filterScroll = document.getElementById('filterScroll');
+            clearTimeout(window.scrollTimeout);
+
+            window.scrollTimeout = setTimeout(() => {
+                checkScrollHint();
+            }, 100);
+        }
+
+        // 检查滑动提示
+        function checkScrollHint() {
+            const filterScroll = document.getElementById('filterScroll');
+            const scrollHint = document.getElementById('scrollHint');
+
+            if (!filterScroll || !scrollHint) return;
+
+            const canScrollRight = filterScroll.scrollLeft < filterScroll.scrollWidth - filterScroll.clientWidth - 10;
+
+            if (!canScrollRight) {
+                scrollHint.classList.add('hidden');
+            }
+        }
+
+        // 触摸手势支持
+        function initializeTouchGestures() {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll) return;
+
+            let startX = 0;
+            let scrollLeft = 0;
+            let isDown = false;
+
+            filterScroll.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - filterScroll.offsetLeft;
+                scrollLeft = filterScroll.scrollLeft;
+                filterScroll.style.cursor = 'grabbing';
+            });
+
+            filterScroll.addEventListener('mouseleave', () => {
+                isDown = false;
+                filterScroll.style.cursor = 'grab';
+            });
+
+            filterScroll.addEventListener('mouseup', () => {
+                isDown = false;
+                filterScroll.style.cursor = 'grab';
+            });
+
+            filterScroll.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - filterScroll.offsetLeft;
+                const walk = (x - startX) * 2;
+                filterScroll.scrollLeft = scrollLeft - walk;
+            });
+        }
+
+        // 键盘导航支持
+        function initializeKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                const activeTab = document.querySelector('.filter-tab.active');
+                if (!activeTab) return;
+
+                let nextTab = null;
+
+                if (e.key === 'ArrowLeft') {
+                    nextTab = activeTab.previousElementSibling;
+                    e.preventDefault();
+                } else if (e.key === 'ArrowRight') {
+                    nextTab = activeTab.nextElementSibling;
+                    e.preventDefault();
+                }
+
+                if (nextTab && nextTab.classList.contains('filter-tab')) {
+                    nextTab.click();
+                }
+            });
+        }
+
+        // 智能滚动到边界
+        function smoothScrollToEdge(direction) {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll) return;
+
+            const scrollAmount = direction === 'left' ? 0 : filterScroll.scrollWidth;
+
+            filterScroll.scrollTo({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // 添加惯性滚动效果
+        function addInertiaScrolling() {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll) return;
+
+            let velocity = 0;
+            let lastScrollLeft = 0;
+            let lastTime = Date.now();
+
+            filterScroll.addEventListener('scroll', () => {
+                const now = Date.now();
+                const currentScrollLeft = filterScroll.scrollLeft;
+                const deltaTime = now - lastTime;
+                const deltaScroll = currentScrollLeft - lastScrollLeft;
+
+                if (deltaTime > 0) {
+                    velocity = deltaScroll / deltaTime;
+                }
+
+                lastTime = now;
+                lastScrollLeft = currentScrollLeft;
+            });
+        }
+
+        // 自动居中活动标签
+        function centerActiveTab() {
+            const activeTab = document.querySelector('.filter-tab.active');
+            if (activeTab) {
+                scrollToActiveTab(activeTab);
+            }
+        }
+
+        // 添加滚动性能监控
+        function monitorScrollPerformance() {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll) return;
+
+            let frameCount = 0;
+            let lastTime = performance.now();
+
+            function countFrames() {
+                frameCount++;
+                const currentTime = performance.now();
+
+                if (currentTime - lastTime >= 1000) {
+                    // 每秒检查帧率
+                    if (frameCount < 30) {
+                        console.warn('滚动性能较低:', frameCount, 'FPS');
+                    }
+                    frameCount = 0;
+                    lastTime = currentTime;
+                }
+
+                requestAnimationFrame(countFrames);
+            }
+
+            requestAnimationFrame(countFrames);
+        }
+
+        // 返回上一页
+        function goBack() {
+            showToast('返回首页...');
+        }
+
+        // 筛选祈福 - 增强版本
+        function filterBlessings(type, element) {
+            // 更新标签状态
+            const tabs = document.querySelectorAll('.filter-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+
+            // 平滑滚动到选中的标签
+            scrollToActiveTab(element);
+
+            // 模拟筛选逻辑
+            showToast(`正在筛选${getFilterName(type)}祈福...`);
+
+            // 这里可以添加实际的筛选逻辑
+            loadBlessings(type);
+        }
+
+        // 滚动到活动标签
+        function scrollToActiveTab(activeTab) {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll || !activeTab) return;
+
+            const containerRect = filterScroll.getBoundingClientRect();
+            const tabRect = activeTab.getBoundingClientRect();
+
+            const scrollLeft = filterScroll.scrollLeft + tabRect.left - containerRect.left - (containerRect.width / 2) + (tabRect.width / 2);
+            filterScroll.scrollTo({
+                left: scrollLeft,
+                behavior: 'smooth'
+            });
+        }
+
+        function getFilterName(type) {
+            const names = {
+                'all': '全部',
+                'recent': '最新',
+                'popular': '热门',
+                'premium': '精品',
+                'friends': '好友',
+                'my': '我的',
+                'video': '视频',
+                'audio': '语音',
+                'photo': '图片'
+            };
+            return names[type] || '全部';
+        }
+
+        // 加载祈福内容
+        function loadBlessings(type) {
+            const cards = document.getElementById('blessingCards');
+
+            // 添加加载动画效果
+            cards.style.opacity = '0.5';
+
+            setTimeout(() => {
+                cards.style.opacity = '1';
+                // 这里可以根据type加载不同的内容
+            }, 300);
+        }
+
+        // 点赞功能
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            const count = btn.querySelector('span');
+            const currentCount = parseInt(count.textContent);
+
+            if (btn.classList.contains('liked')) {
+                // 取消点赞
+                btn.classList.remove('liked');
+                icon.className = 'far fa-heart';
+                count.textContent = currentCount - 1;
+                showToast('已取消点赞');
+            } else {
+                // 点赞
+                btn.classList.add('liked');
+                icon.className = 'fas fa-heart';
+                count.textContent = currentCount + 1;
+                showToast('点赞成功！');
+
+                // 添加点赞动画
+                createLikeAnimation(btn);
+            }
+        }
+
+        // 点赞动画
+        function createLikeAnimation(btn) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.style.cssText = `
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 20px;
+                pointer-events: none;
+                animation: likeAnimation 0.8s ease-out forwards;
+                z-index: 1000;
+            `;
+
+            btn.style.position = 'relative';
+            btn.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 800);
+        }
+
+        // 显示评论
+        function showComments(btn) {
+            showToast('查看评论...');
+        }
+
+        // 分享祈福
+        function shareBlessing(btn) {
+            showToast('分享祈福到朋友圈...');
+        }        // 创建祈福
+        function createBlessing() {
+            showToast('正在进入祈福创建...');
+            pageTransition('create-blessing.html');
+        }// 页面过渡动画
+        function pageTransition(targetPage, callback) {
+            const phoneScreen = document.querySelector('.phone-screen');
+            phoneScreen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            phoneScreen.style.transform = 'scale(0.95)';
+            phoneScreen.style.opacity = '0.7';
+
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        // 导航功能
+        function goToHome() {
+            updateNavState(0);
+            showToast('切换到首页...');
+            pageTransition('blessing-main.html');
+        }
+
+        function goToStudents() {
+            updateNavState(2);
+            showToast('切换到考生管理...');
+            pageTransition('student-management.html');
+        }
+
+        function goToProfile() {
+            updateNavState(3);
+            showToast('切换到个人中心...');
+            pageTransition('personal-center.html');
+        }
+
+        // 更新导航状态
+        function updateNavState(activeIndex) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, index) => {
+                if (index === activeIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // 添加点击特效
+        function createClickEffect(e) {
+            const ripple = document.createElement('div');
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ripple.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translate(-50%, -50%);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                z-index: 1000;
+            `;
+
+            e.target.style.position = 'relative';
+            e.target.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // 为相关元素添加点击特效
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.action-btn, .fab-button, .nav-back, .nav-item, .filter-tab')) {
+                createClickEffect(e);
+            }
+        });
+
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes likeAnimation {
+                0% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translate(-50%, -50%) scale(1.5);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: translate(-50%, -150%) scale(0.5);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 消息提示
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 20px;
+                font-size: 14px;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // 模拟实时更新
+        function simulateRealTimeUpdates() {
+            setInterval(() => {
+                // 随机更新点赞数
+                const likeBtns = document.querySelectorAll('.action-btn:first-child span');
+                likeBtns.forEach(span => {
+                    if (Math.random() > 0.8) {
+                        const currentCount = parseInt(span.textContent);
+                        span.textContent = currentCount + 1;
+                    }
+                });
+            }, 30000); // 30秒更新一次
+        }
+
+        // 初始化实时更新
+        simulateRealTimeUpdates();
+
+        // 下拉刷新模拟
+        let startY = 0;
+        let pullDistance = 0;
+
+        document.addEventListener('touchstart', function (e) {
+            startY = e.touches[0].pageY;
+        });
+
+        document.addEventListener('touchmove', function (e) {
+            const currentY = e.touches[0].pageY;
+            pullDistance = currentY - startY;
+
+            if (pullDistance > 0 && window.scrollY === 0) {
+                e.preventDefault();
+                // 可以添加下拉刷新的视觉效果
+            }
+        });
+
+        document.addEventListener('touchend', function (e) {
+            if (pullDistance > 80 && window.scrollY === 0) {
+                showToast('正在刷新祈福墙...');
+                // 模拟刷新
+                setTimeout(() => {
+                    showToast('刷新完成！');
+                }, 1000);
+            }
+            pullDistance = 0;
+        });        // 添加双击快速滚动
+        function addDoubleClickScroll() {
+            const filterScroll = document.getElementById('filterScroll');
+            const quickScrollIndicator = document.getElementById('quickScrollIndicator');
+            if (!filterScroll) return;
+
+            let clickCount = 0;
+            let clickTimer = null;
+
+            filterScroll.addEventListener('click', (e) => {
+                clickCount++;
+
+                if (clickCount === 1) {
+                    clickTimer = setTimeout(() => {
+                        clickCount = 0;
+                    }, 300);
+                } else if (clickCount === 2) {
+                    clearTimeout(clickTimer);
+                    clickCount = 0;
+
+                    // 双击时快速滚动到边界
+                    const scrollLeft = filterScroll.scrollLeft;
+                    const scrollWidth = filterScroll.scrollWidth - filterScroll.clientWidth;
+                    const scrollDirection = scrollLeft > scrollWidth / 2 ? 'left' : 'right';
+
+                    // 显示快速滚动指示器
+                    if (quickScrollIndicator) {
+                        quickScrollIndicator.classList.add('show');
+                        setTimeout(() => {
+                            quickScrollIndicator.classList.remove('show');
+                        }, 1000);
+                    }
+
+                    smoothScrollToEdge(scrollDirection);
+                    showToast(`🔄 快速滚动到${scrollDirection === 'left' ? '起始' : '末尾'}`);
+                }
+            });
+        }
+
+        // 添加滚动边界检测
+        function addScrollBoundaryDetection() {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll) return;
+
+            filterScroll.addEventListener('scroll', () => {
+                const isAtStart = filterScroll.scrollLeft <= 10;
+                const isAtEnd = filterScroll.scrollLeft >= filterScroll.scrollWidth - filterScroll.clientWidth - 10;
+
+                // 边界视觉反馈
+                if (isAtStart || isAtEnd) {
+                    filterScroll.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                    setTimeout(() => {
+                        filterScroll.style.borderColor = 'transparent';
+                    }, 200);
+                }
+            });
+        }
+
+        // 添加智能预加载
+        function addSmartPreloading() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+
+            filterTabs.forEach((tab, index) => {
+                // 添加懒加载观察器
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // 预加载相邻标签内容
+                            const filterType = tab.getAttribute('onclick').match(/'([^']+)'/)[1];
+                            console.log(`预加载 ${filterType} 内容`);
+                        }
+                    });
+                }, {
+                    rootMargin: '50px'
+                });
+
+                observer.observe(tab);
+            });
+        }
+
+        // 添加滚动状态管理
+        function addScrollStateManagement() {
+            const filterScroll = document.getElementById('filterScroll');
+            if (!filterScroll) return;
+
+            let isScrolling = false;
+            let scrollTimeout;
+
+            filterScroll.addEventListener('scroll', () => {
+                if (!isScrolling) {
+                    filterScroll.classList.add('scrolling');
+                    isScrolling = true;
+                }
+
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    filterScroll.classList.remove('scrolling');
+                    isScrolling = false;
+                }, 150);
+            });
+        }
+
+        // 添加响应式滚动优化
+        function addResponsiveScrollOptimization() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const filterScroll = document.getElementById('filterScroll');
+
+            if (!filterScroll) return;
+
+            // 根据设备类型调整滚动行为
+            const isMobile = window.innerWidth <= 768;
+            const scrollBehavior = isMobile ? 'smooth' : 'auto';
+
+            filterScroll.style.scrollBehavior = scrollBehavior;
+
+            // 触摸设备优化
+            if ('ontouchstart' in window) {
+                filterScroll.style.webkitOverflowScrolling = 'touch';
+                filterScroll.style.overscrollBehavior = 'contain';
+            }
+        }
+
+        // 添加键盘快捷键
+        function addKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            smoothScrollToEdge('left');
+                            showToast('⬅️ 滚动到开始');
+                            break;
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            smoothScrollToEdge('right');
+                            showToast('➡️ 滚动到末尾');
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            document.querySelector('.filter-tab').click();
+                            showToast('🏠 回到全部');
+                            break;
+                    }
+                }
+            });
+        }
+
+        // 执行增强功能
+        addDoubleClickScroll();
+        addScrollBoundaryDetection();
+        addSmartPreloading();
+        addScrollStateManagement();
+        addResponsiveScrollOptimization();
+        addKeyboardShortcuts();
+    </script>
+</body>
+</html>

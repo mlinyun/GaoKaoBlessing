@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高考祈福 - 数据统计</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #000;
+            overflow: hidden;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 状态栏样式 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 导航栏 */
+        .nav-bar {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 90;
+        }
+
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-action {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-action:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 动态背景粒子 */
+        .chart-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .chart-particle {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 16px;
+            animation: chartFloat 8s infinite linear;
+            pointer-events: none;
+        }
+
+        .chart-particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .chart-particle:nth-child(2) {
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        .chart-particle:nth-child(3) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .chart-particle:nth-child(4) {
+            left: 40%;
+            animation-delay: 3s;
+        }
+
+        .chart-particle:nth-child(5) {
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .chart-particle:nth-child(6) {
+            left: 60%;
+            animation-delay: 1.5s;
+        }
+
+        .chart-particle:nth-child(7) {
+            left: 70%;
+            animation-delay: 2.5s;
+        }
+
+        .chart-particle:nth-child(8) {
+            left: 80%;
+            animation-delay: 3.5s;
+        }
+
+        .chart-particle:nth-child(9) {
+            left: 90%;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes chartFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: calc(100% - 107px);
+            margin-top: 107px;
+            overflow-y: auto;
+            padding: 20px 24px 100px;
+        }
+
+        /* 滚动条样式 */
+        .main-content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 时间范围选择器 */
+        .time-selector {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 4px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .time-option {
+            flex: 1;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .time-option.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+        }
+
+        /* 统计概览卡片 */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #FF8C42);
+            opacity: 0.8;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 66, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+        }
+
+        .trend-up {
+            color: #10B981;
+        }
+
+        .trend-down {
+            color: #EF4444;
+        }
+
+        /* 图表区域 */
+        .chart-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .chart-filter {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            border-color: transparent;
+        }
+
+        /* 模拟图表 */
+        .chart-container {
+            height: 200px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: end;
+            padding: 20px;
+            gap: 8px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #FFD700, #FF8C42);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.05);
+        }
+
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* 排行榜 */
+        .ranking-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 12px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .ranking-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 16px;
+        }
+
+        .ranking-number.top-1 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #0f0f23;
+        }
+
+        .ranking-number.top-2 {
+            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+            color: #0f0f23;
+        }
+
+        .ranking-number.top-3 {
+            background: linear-gradient(135deg, #CD7F32, #B8860B);
+            color: white;
+        }
+
+        .ranking-number.other {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .ranking-info {
+            flex: 1;
+        }
+
+        .ranking-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2px;
+        }
+
+        .ranking-detail {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .ranking-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        /* 页面加载动画 */
+        .main-content {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 卡片进入动画 */
+        .stat-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardSlideIn 0.6s ease-out forwards;
+        }
+
+        .stat-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .stat-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stat-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .stat-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes cardSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 动态背景 -->
+            <div class="chart-particles">
+                <div class="chart-particle">📊</div>
+                <div class="chart-particle">📈</div>
+                <div class="chart-particle">📉</div>
+                <div class="chart-particle">💹</div>
+                <div class="chart-particle">📋</div>
+                <div class="chart-particle">📊</div>
+                <div class="chart-particle">📈</div>
+                <div class="chart-particle">📉</div>
+                <div class="chart-particle">💹</div>
+            </div>
+            <!-- 导航栏 -->
+            <div class="nav-bar">
+                <div class="nav-back" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-title">数据统计</div>
+                <div class="nav-action" onclick="shareStatistics()">
+                    <i class="fas fa-share"></i>
+                </div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <!-- 时间范围选择 -->
+                <div class="time-selector">
+                    <div class="time-option" onclick="selectTimeRange('today')">今日</div>
+                    <div class="time-option active" onclick="selectTimeRange('week')">本周</div>
+                    <div class="time-option" onclick="selectTimeRange('month')">本月</div>
+                    <div class="time-option" onclick="selectTimeRange('year')">今年</div>
+                </div>
+
+                <!-- 统计概览 -->
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-number">1,234</div>
+                        <div class="stat-label">发送祝福</div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12.5%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-number">5,678</div>
+                        <div class="stat-label">祝福浏览</div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+8.3%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div class="stat-number">892</div>
+                        <div class="stat-label">获得点赞</div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+15.7%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">触达考生</div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+6.2%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 祝福趋势图表 -->
+                <div class="chart-section">
+                    <div class="chart-header">
+                        <div class="chart-title">祝福发送趋势</div>
+                        <div class="chart-filter">
+                            <div class="filter-btn active">祝福数</div>
+                            <div class="filter-btn">点赞数</div>
+                            <div class="filter-btn">浏览数</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-bar" style="height: 45%;" data-value="68"></div>
+                        <div class="chart-bar" style="height: 72%;" data-value="89"></div>
+                        <div class="chart-bar" style="height: 38%;" data-value="52"></div>
+                        <div class="chart-bar" style="height: 85%;" data-value="125"></div>
+                        <div class="chart-bar" style="height: 92%;" data-value="142"></div>
+                        <div class="chart-bar" style="height: 67%;" data-value="98"></div>
+                        <div class="chart-bar" style="height: 55%;" data-value="76"></div>
+                    </div>
+                </div>
+
+                <!-- 热门祝福排行 -->
+                <div class="ranking-section">
+                    <div class="chart-header">
+                        <div class="chart-title">热门祝福排行</div>
+                        <div class="chart-filter">
+                            <div class="filter-btn active">本周</div>
+                            <div class="filter-btn">本月</div>
+                        </div>
+                    </div>
+
+                    <div class="ranking-item">
+                        <div class="ranking-number top-1">1</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">金榜题名 状元及第</div>
+                            <div class="ranking-detail">经典祝福 · 传统特效</div>
+                        </div>
+                        <div class="ranking-value">2,456</div>
+                    </div>
+
+                    <div class="ranking-item">
+                        <div class="ranking-number top-2">2</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">鲤鱼跃龙门</div>
+                            <div class="ranking-detail">动画特效 · 3D场景</div>
+                        </div>
+                        <div class="ranking-value">1,892</div>
+                    </div>
+
+                    <div class="ranking-item">
+                        <div class="ranking-number top-3">3</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">学业有成 前程似锦</div>
+                            <div class="ranking-detail">温馨祝福 · 花瓣特效</div>
+                        </div>
+                        <div class="ranking-value">1,634</div>
+                    </div>
+
+                    <div class="ranking-item">
+                        <div class="ranking-number other">4</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">心想事成 梦想成真</div>
+                            <div class="ranking-detail">励志祝福 · 星光特效</div>
+                        </div>
+                        <div class="ranking-value">1,425</div>
+                    </div>
+
+                    <div class="ranking-item">
+                        <div class="ranking-number other">5</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">旗开得胜 马到成功</div>
+                            <div class="ranking-detail">胜利祝福 · 烟花特效</div>
+                        </div>
+                        <div class="ranking-value">1,287</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 时间范围选择
+        function selectTimeRange(range) {
+            document.querySelectorAll('.time-option').forEach(option => {
+                option.classList.remove('active');
+            });
+
+            event.target.classList.add('active');
+
+            // 模拟数据更新
+            updateStatistics(range);
+
+            // 显示Toast提示
+            showToast(`已切换到${getTimeRangeText(range)}数据`);
+        }
+
+        function getTimeRangeText(range) {
+            const textMap = {
+                'today': '今日',
+                'week': '本周',
+                'month': '本月',
+                'year': '今年'
+            };
+            return textMap[range] || '本周';
+        }
+
+        // 更新统计数据（模拟）
+        function updateStatistics(range) {
+            const ranges = {
+                'today': [45, 156, 28, 12],
+                'week': [1234, 5678, 892, 156],
+                'month': [5642, 18924, 3456, 487],
+                'year': [25847, 89562, 15632, 2156]
+            };
+
+            const data = ranges[range] || ranges['week'];
+            const statNumbers = document.querySelectorAll('.stat-number');
+
+            statNumbers.forEach((element, index) => {
+                if (data[index]) {
+                    animateNumber(element, parseInt(element.textContent.replace(/,/g, '')), data[index]);
+                }
+            });
+        }
+
+        // 数字动画
+        function animateNumber(element, start, end) {
+            const duration = 1000;
+            const startTime = Date.now();
+
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                const current = Math.floor(start + (end - start) * progress);
+                element.textContent = current.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            update();
+        }
+
+        // 图表筛选
+        document.querySelectorAll('.chart-filter .filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const parent = this.closest('.chart-filter');
+                parent.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                showToast(`已切换到${this.textContent}视图`);
+            });
+        });
+
+        // 返回功能        // 页面过渡动画
+        function pageTransition(targetPage, callback) {
+            const phoneScreen = document.querySelector('.phone-screen');
+            phoneScreen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            phoneScreen.style.transform = 'scale(0.95)';
+            phoneScreen.style.opacity = '0.7';
+
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        function goBack() {
+            showToast('返回主页...');
+            pageTransition('blessing-main.html');
+        }
+
+        // 分享统计
+        function shareStatistics() {
+            showToast('正在生成分享图片...');
+
+            setTimeout(() => {
+                showToast('分享图片已保存到相册');
+            }, 1500);
+        }
+
+        // Toast 提示
+        function showToast(message) {
+            // 移除已存在的toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 1000;
+                pointer-events: none;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            `;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // 图表条形图交互
+        document.querySelectorAll('.chart-bar').forEach(bar => {
+            bar.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                showToast(`该时段祝福数: ${value}`);
+            });
+        });
+
+        // 排行榜项目点击
+        document.querySelectorAll('.ranking-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const name = this.querySelector('.ranking-name').textContent;
+                showToast(`查看"${name}"详细数据`);
+            });
+        });
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function () {
+            // 模拟数据加载
+            setTimeout(() => {
+                document.querySelectorAll('.stat-card').forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>

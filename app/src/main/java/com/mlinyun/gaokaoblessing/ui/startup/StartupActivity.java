@@ -44,10 +44,12 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
     private int devicePerformanceLevel = PERFORMANCE_HIGH;
 
     // 动画配置
-    private AnimationConfig animationConfig;
+    private AnimationConfig animationConfig;    // 性能监控器
+    private StartupPerformanceMonitor performanceMonitor;    // ValueAnimator实例，用于在销毁时停止
+    private ValueAnimator backgroundPulseAnimator;
 
-    // 性能监控器
-    private StartupPerformanceMonitor performanceMonitor;
+    // ObjectAnimator实例，用于在销毁时停止
+    private ObjectAnimator blessingFadeInAnimator;
 
     /**
      * 动画配置类
@@ -423,9 +425,9 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
         long blessingDelay = devicePerformanceLevel >= PERFORMANCE_MEDIUM ? 2000 : 1500;
         safePostDelayed(() -> {
             if (mBinding != null && mBinding.blessingText != null) {
-                ObjectAnimator blessingFadeIn = ObjectAnimator.ofFloat(mBinding.blessingText, "alpha", 0f, 1f);
-                blessingFadeIn.setDuration(animationConfig.textAnimationDuration);
-                blessingFadeIn.start();
+                blessingFadeInAnimator = ObjectAnimator.ofFloat(mBinding.blessingText, "alpha", 0f, 1f);
+                blessingFadeInAnimator.setDuration(animationConfig.textAnimationDuration);
+                blessingFadeInAnimator.start();
             }
         }, blessingDelay);
     }
@@ -455,6 +457,11 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
      * Logo光泽效果（性能自适应）
      */
     private void startLogoShimmerEffect() {
+        // 检查Activity和binding状态
+        if (isFinishing() || isDestroyed() || mBinding == null) {
+            return;
+        }
+
         // 显示闪光层
         mBinding.shimmerOverlay.setVisibility(View.VISIBLE);
 
@@ -466,22 +473,24 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
         // 根据性能配置决定是否启用呼吸动画
         if (animationConfig.enableBreathingAnimation) {
             Animation breathingAnimation = AnimationUtils.loadAnimation(this, R.anim.logo_breathing);
-            mBinding.logoIcon.startAnimation(breathingAnimation);
+            mBinding.logoIcon.startAnimation(breathingAnimation);            // 为背景添加轻微的脉冲效果
+            backgroundPulseAnimator = ValueAnimator.ofFloat(0.95f, 1.0f);
+            backgroundPulseAnimator.setDuration((long) (3000 * animationConfig.animationScale));
+            backgroundPulseAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            backgroundPulseAnimator.setRepeatMode(ValueAnimator.REVERSE);
+            backgroundPulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
 
-            // 为背景添加轻微的脉冲效果
-            ValueAnimator backgroundPulse = ValueAnimator.ofFloat(0.95f, 1.0f);
-            backgroundPulse.setDuration((long) (3000 * animationConfig.animationScale));
-            backgroundPulse.setRepeatCount(ValueAnimator.INFINITE);
-            backgroundPulse.setRepeatMode(ValueAnimator.REVERSE);
-            backgroundPulse.setInterpolator(new AccelerateDecelerateInterpolator());
-
-            backgroundPulse.addUpdateListener(animation -> {
+            backgroundPulseAnimator.addUpdateListener(animation -> {
+                // 检查Activity和binding状态，避免空指针异常
+                if (isFinishing() || isDestroyed() || mBinding == null || mBinding.logoBackground == null) {
+                    return;
+                }
                 float scale = (float) animation.getAnimatedValue();
                 mBinding.logoBackground.setScaleX(scale);
                 mBinding.logoBackground.setScaleY(scale);
             });
 
-            backgroundPulse.start();
+            backgroundPulseAnimator.start();
         }
     }
 
@@ -707,6 +716,7 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
         // 对主容器应用退出动画
         findViewById(android.R.id.content).startAnimation(exitAnimation);
     }
+
     /**
      * 停止所有动画
      */
@@ -714,6 +724,16 @@ public class StartupActivity extends BaseActivity<ActivityStartupBinding, Startu
         // 清除所有待执行的任务
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
+        }        // 停止ValueAnimator
+        if (backgroundPulseAnimator != null) {
+            backgroundPulseAnimator.cancel();
+            backgroundPulseAnimator = null;
+        }
+
+        // 停止ObjectAnimator
+        if (blessingFadeInAnimator != null) {
+            blessingFadeInAnimator.cancel();
+            blessingFadeInAnimator = null;
         }
 
         // 检查mBinding是否为null，避免空指针异常

@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>高考祈福 - 编辑资料</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 星光粒子背景 */
+        .star-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .star-particle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 8px;
+            opacity: 0.6;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        .star-particle:nth-child(1) { left: 10%; top: 15%; animation-delay: 0s; }
+        .star-particle:nth-child(2) { left: 30%; top: 25%; animation-delay: 0.5s; }
+        .star-particle:nth-child(3) { left: 60%; top: 10%; animation-delay: 1s; }
+        .star-particle:nth-child(4) { left: 80%; top: 30%; animation-delay: 1.5s; }
+        .star-particle:nth-child(5) { left: 20%; top: 60%; animation-delay: 2s; }
+        .star-particle:nth-child(6) { left: 70%; top: 70%; animation-delay: 2.5s; }        @keyframes twinkle {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* iPhone状态栏 */
+        .status-bar {
+            height: 47px;
+            padding: 8px 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: transparent;
+            position: relative;
+            z-index: 1000;
+            font-size: 15px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .status-time {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            letter-spacing: -0.3px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-icon {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .signal-bars {
+            display: flex;
+            align-items: end;
+            gap: 2px;
+            height: 12px;
+        }
+
+        .signal-bar {
+            width: 3px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1px;
+        }
+
+        .signal-bar:nth-child(1) { height: 3px; }
+        .signal-bar:nth-child(2) { height: 5px; }
+        .signal-bar:nth-child(3) { height: 7px; }
+        .signal-bar:nth-child(4) { height: 9px; }
+
+        .wifi-icon {
+            font-size: 12px;
+        }
+
+        .battery-container {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .battery-level {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .battery-icon {
+            width: 22px;
+            height: 11px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 2px;
+            position: relative;
+            background: transparent;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 3px;
+            width: 2px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-fill {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            bottom: 1px;
+            width: 75%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1px;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+        }
+
+        .nav-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+        }        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+            /* 隐藏滚动条但保留滚动功能 */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        /* 隐藏Webkit浏览器的滚动条 */
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 进度条 */
+        .progress-container {
+            margin-bottom: 24px;
+            /* 居中显示进度条 */
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .step-circle.active {
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-color: #ffd700;
+            color: #000;
+        }
+
+        .step-circle.completed {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 8px;
+            position: relative;
+        }
+
+        .step-line.completed::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c42);
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            flex: 1;
+        }
+
+        .progress-label.active {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        /* 步骤内容 */
+        .step-content {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .char-count {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .char-count.warning {
+            color: #ff8c42;
+        }
+
+        .char-count.error {
+            color: #ff4757;
+        }
+
+        /* 头像编辑 */
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .avatar-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .avatar-container:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .avatar-container:hover .avatar-image {
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .avatar-edit-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        .avatar-options {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .avatar-option {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .avatar-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+        }
+
+        /* 身份选择 */
+        .identity-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .identity-option {
+            padding: 20px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .identity-option:hover:not(.selected) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .identity-option.selected {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 140, 66, 0.15));
+            border-color: rgba(255, 215, 0, 0.4);
+            color: #ffd700;
+        }
+
+        .identity-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .identity-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .identity-description {
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 1.3;
+        }
+
+        /* 学生管理 */
+        .student-list {
+            margin-bottom: 20px;
+        }
+
+        .student-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .student-name {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .student-remove {
+            color: #ff4757;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 14px;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .student-info-item {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .add-student-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            color: #ffd700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .add-student-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        /* 底部按钮 */
+        .bottom-actions {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            color: #000;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ffed4e, #ff9f59);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 隐藏/显示步骤 */
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">            <!-- 星光粒子背景 -->
+            <div class="star-particles">
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+            </div>
+
+            <!-- iPhone状态栏 -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <div class="status-time" id="status-time">9:41</div>
+                </div>
+                <div class="status-right">
+                    <div class="signal-bars">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                    </div>
+                    <i class="fas fa-wifi wifi-icon"></i>
+                    <div class="battery-container">
+                        <span class="battery-level">75%</span>
+                        <div class="battery-icon">
+                            <div class="battery-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="nav-title">编辑资料</div>
+                <div class="nav-button" onclick="showHelp()">
+                    <i class="fas fa-question"></i>
+                </div>
+            </div>
+
+            <!-- 进度条 -->
+            <div class="main-content">
+                <div class="progress-container">
+                    <div class="progress-steps">
+                        <div class="progress-step">
+                            <div class="step-circle active" id="step1-circle">1</div>
+                            <div class="step-line" id="step1-line"></div>
+                            <div class="step-circle" id="step2-circle">2</div>
+                            <div class="step-line" id="step2-line"></div>
+                            <div class="step-circle" id="step3-circle">3</div>
+                        </div>
+                    </div>
+                    <div class="progress-labels">
+                        <div class="progress-label active" id="step1-label">基本信息</div>
+                        <div class="progress-label" id="step2-label">身份选择</div>
+                        <div class="progress-label" id="step3-label">专属信息</div>
+                    </div>
+                </div>
+
+                <!-- 步骤1：基本信息 -->
+                <div class="step-content active" id="step1-content">
+                    <div class="step-title">
+                        <i class="fas fa-user-edit"></i>
+                        完善基本信息
+                    </div>
+                    <div class="step-description">
+                        请填写您的基本个人信息，这些信息将在您的个人主页中展示。
+                    </div>
+
+                    <!-- 头像编辑 -->
+                    <div class="avatar-section">
+                        <div class="avatar-container">
+                            <img src="https://intelli-gallery-1311108900.cos.ap-guangzhou.myqcloud.com/avatar.jpeg" alt="头像" class="avatar-image" id="avatar-image">
+                            <div class="avatar-overlay" onclick="editAvatar()">
+                                <i class="fas fa-camera avatar-edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="avatar-options" id="avatar-options" style="display: none;">
+                            <div class="avatar-option" onclick="selectFromAlbum()">
+                                <i class="fas fa-images"></i> 相册
+                            </div>
+                            <div class="avatar-option" onclick="takePhoto()">
+                                <i class="fas fa-camera"></i> 拍照
+                            </div>
+                            <div class="avatar-option" onclick="useDefaultAvatar()">
+                                <i class="fas fa-user"></i> 默认
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 基本信息表单 -->
+                    <div class="form-group">
+                        <label class="form-label">用户昵称 *</label>
+                        <input type="text" class="form-input" id="nickname" placeholder="请输入昵称" maxlength="20" oninput="updateCharCount('nickname', 'nickname-count', 20)">
+                        <div class="char-count" id="nickname-count">0/20</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">性别 *</label>
+                        <select class="form-select" id="gender">
+                            <option value="">请选择性别</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">出生日期 *</label>
+                        <input type="date" class="form-input" id="birthdate">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">手机号 *</label>
+                        <input type="tel" class="form-input" id="phone" placeholder="请输入手机号" oninput="validatePhone()">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">邮箱</label>
+                        <input type="email" class="form-input" id="email" placeholder="请输入邮箱地址">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">个人简介</label>
+                        <textarea class="form-textarea" id="bio" placeholder="介绍一下自己吧..." maxlength="200" oninput="updateCharCount('bio', 'bio-count', 200)"></textarea>
+                        <div class="char-count" id="bio-count">0/200</div>
+                    </div>
+                </div>
+
+                <!-- 步骤2：身份选择 -->
+                <div class="step-content" id="step2-content">
+                    <div class="step-title">
+                        <i class="fas fa-user-tag"></i>
+                        选择您的身份
+                    </div>
+                    <div class="step-description">
+                        请选择最符合您情况的身份标识，我们将根据您的身份提供个性化服务。
+                    </div>
+
+                    <div class="identity-selector">
+                        <div class="identity-option" onclick="selectIdentity('parent')">
+                            <div class="identity-icon">👨‍👩‍👧‍👦</div>
+                            <div class="identity-name">考生家长</div>
+                            <div class="identity-description">为孩子加油助力的家长</div>
+                        </div>
+                        <div class="identity-option" onclick="selectIdentity('teacher')">
+                            <div class="identity-icon">👨‍🏫</div>
+                            <div class="identity-name">学校老师</div>
+                            <div class="identity-description">陪伴学生成长的教育工作者</div>
+                        </div>
+                        <div class="identity-option" onclick="selectIdentity('friend')">
+                            <div class="identity-icon">👫</div>
+                            <div class="identity-name">同学朋友</div>
+                            <div class="identity-description">一起奋斗的同窗好友</div>
+                        </div>
+                        <div class="identity-option" onclick="selectIdentity('supporter')">
+                            <div class="identity-icon">🙏</div>
+                            <div class="identity-name">社会祝福者</div>
+                            <div class="identity-description">关心教育事业的社会人士</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步骤3：专属信息 -->
+                <div class="step-content" id="step3-content">
+                    <!-- 考生家长专属 -->
+                    <div id="parent-info" style="display: none;">
+                        <div class="step-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            学生信息管理
+                        </div>
+                        <div class="step-description">
+                            请添加您需要关注的学生信息，您可以为多个孩子提供支持。
+                        </div>
+                        
+                        <div class="student-list" id="student-list">
+                            <!-- 学生信息将动态添加 -->
+                        </div>
+                        
+                        <div class="add-student-btn" onclick="addStudent()">
+                            <i class="fas fa-plus"></i> 添加学生信息
+                        </div>
+                    </div>
+
+                    <!-- 学校老师专属 -->
+                    <div id="teacher-info" style="display: none;">
+                        <div class="step-title">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            教师信息
+                        </div>
+                        <div class="step-description">
+                            请完善您的教师相关信息，让学生和家长更好地了解您。
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">任职学校 *</label>
+                            <input type="text" class="form-input" id="school" placeholder="请输入学校名称">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">任教科目 *</label>
+                            <input type="text" class="form-input" id="subject" placeholder="请输入任教科目">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">教龄</label>
+                            <select class="form-select" id="teaching-years">
+                                <option value="">请选择教龄</option>
+                                <option value="1-3">1-3年</option>
+                                <option value="4-10">4-10年</option>
+                                <option value="11-20">11-20年</option>
+                                <option value="20+">20年以上</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 同学朋友专属 -->
+                    <div id="friend-info" style="display: none;">
+                        <div class="step-title">
+                            <i class="fas fa-user-friends"></i>
+                            学生信息
+                        </div>
+                        <div class="step-description">
+                            请填写您的学生身份信息，与同学朋友一起加油！
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">真实姓名 *</label>
+                            <input type="text" class="form-input" id="real-name" placeholder="请输入真实姓名">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">就读学校 *</label>
+                            <input type="text" class="form-input" id="student-school" placeholder="请输入学校名称">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">班级</label>
+                            <input type="text" class="form-input" id="class-name" placeholder="请输入班级名称">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">选科类别</label>
+                            <select class="form-select" id="subject-type">
+                                <option value="">请选择选科类别</option>
+                                <option value="文科">文科</option>
+                                <option value="理科">理科</option>
+                                <option value="新高考">新高考选科</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 社会祝福者专属 -->
+                    <div id="supporter-info" style="display: none;">
+                        <div class="step-title">
+                            <i class="fas fa-heart"></i>
+                            感谢您的关注
+                        </div>
+                        <div class="step-description">
+                            感谢您对教育事业的关注和支持！您的每一份祝福都是对莘莘学子最大的鼓励。
+                        </div>
+                        
+                        <div style="text-align: center; padding: 40px 20px; background: rgba(255, 215, 0, 0.1); border-radius: 12px; border: 1px solid rgba(255, 215, 0, 0.2);">
+                            <i class="fas fa-hands-helping" style="font-size: 48px; color: #ffd700; margin-bottom: 16px;"></i>
+                            <p style="color: rgba(255, 255, 255, 0.8); font-size: 16px; line-height: 1.6; margin: 0;">
+                                您选择的身份无需填写额外信息，<br>
+                                点击完成即可开始您的祝福之旅！
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部操作按钮 -->
+            <div class="bottom-actions">
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="prev-btn" onclick="prevStep()" style="display: none;">
+                        上一步
+                    </button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextStep()">
+                        下一步
+                    </button>
+                    <button class="btn btn-primary" id="finish-btn" onclick="finishProfile()" style="display: none;">
+                        完成
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedIdentity = null;
+        let students = [];        // 初始化
+        function init() {
+            updateProgress();
+            loadExistingData();
+            updateStatusBarTime();
+            // 每分钟更新一次时间
+            setInterval(updateStatusBarTime, 60000);
+        }
+
+        // 更新状态栏时间
+        function updateStatusBarTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            document.getElementById('status-time').textContent = timeString;
+        }
+
+        // 更新进度条
+        function updateProgress() {
+            // 重置所有步骤状态
+            for (let i = 1; i <= 3; i++) {
+                const circle = document.getElementById(`step${i}-circle`);
+                const line = document.getElementById(`step${i}-line`);
+                const label = document.getElementById(`step${i}-label`);
+                
+                circle.classList.remove('active', 'completed');
+                if (line) line.classList.remove('completed');
+                label.classList.remove('active');
+            }
+
+            // 设置当前步骤
+            for (let i = 1; i <= currentStep; i++) {
+                const circle = document.getElementById(`step${i}-circle`);
+                const line = document.getElementById(`step${i}-line`);
+                const label = document.getElementById(`step${i}-label`);
+                
+                if (i < currentStep) {
+                    circle.classList.add('completed');
+                    if (line) line.classList.add('completed');
+                } else if (i === currentStep) {
+                    circle.classList.add('active');
+                    label.classList.add('active');
+                }
+            }
+
+            // 显示/隐藏步骤内容
+            for (let i = 1; i <= 3; i++) {
+                const content = document.getElementById(`step${i}-content`);
+                content.classList.toggle('active', i === currentStep);
+            }
+
+            // 更新按钮状态
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const finishBtn = document.getElementById('finish-btn');
+
+            prevBtn.style.display = currentStep > 1 ? 'block' : 'none';
+            
+            if (currentStep < 3) {
+                nextBtn.style.display = 'block';
+                finishBtn.style.display = 'none';
+                nextBtn.disabled = !validateCurrentStep();
+            } else {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+                finishBtn.disabled = !validateCurrentStep();
+            }
+        }
+
+        // 验证当前步骤
+        function validateCurrentStep() {
+            switch (currentStep) {
+                case 1:
+                    return validateBasicInfo();
+                case 2:
+                    return selectedIdentity !== null;
+                case 3:
+                    return validateSpecificInfo();
+                default:
+                    return false;
+            }
+        }
+
+        // 验证基本信息
+        function validateBasicInfo() {
+            const nickname = document.getElementById('nickname').value.trim();
+            const gender = document.getElementById('gender').value;
+            const birthdate = document.getElementById('birthdate').value;
+            const phone = document.getElementById('phone').value.trim();
+
+            return nickname && gender && birthdate && phone && validatePhoneNumber(phone);
+        }
+
+        // 验证特定身份信息
+        function validateSpecificInfo() {
+            switch (selectedIdentity) {
+                case 'parent':
+                    return students.length > 0;
+                case 'teacher':
+                    const school = document.getElementById('school').value.trim();
+                    const subject = document.getElementById('subject').value.trim();
+                    return school && subject;
+                case 'friend':
+                    const realName = document.getElementById('real-name').value.trim();
+                    const studentSchool = document.getElementById('student-school').value.trim();
+                    return realName && studentSchool;
+                case 'supporter':
+                    return true; // 无需额外验证
+                default:
+                    return false;
+            }
+        }
+
+        // 下一步
+        function nextStep() {
+            if (validateCurrentStep() && currentStep < 3) {
+                currentStep++;
+                updateProgress();
+                
+                // 如果进入步骤3，显示对应身份的信息表单
+                if (currentStep === 3) {
+                    showIdentitySpecificInfo();
+                }
+            }
+        }
+
+        // 上一步
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgress();
+            }
+        }
+
+        // 选择身份
+        function selectIdentity(identity) {
+            selectedIdentity = identity;
+            
+            // 更新UI
+            document.querySelectorAll('.identity-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.identity-option').classList.add('selected');
+            
+            updateProgress();
+        }
+
+        // 显示身份特定信息
+        function showIdentitySpecificInfo() {
+            // 隐藏所有身份信息
+            document.getElementById('parent-info').style.display = 'none';
+            document.getElementById('teacher-info').style.display = 'none';
+            document.getElementById('friend-info').style.display = 'none';
+            document.getElementById('supporter-info').style.display = 'none';
+            
+            // 显示对应身份信息
+            if (selectedIdentity) {
+                document.getElementById(`${selectedIdentity}-info`).style.display = 'block';
+            }
+        }
+
+        // 头像相关功能
+        function editAvatar() {
+            const options = document.getElementById('avatar-options');
+            options.style.display = options.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function selectFromAlbum() {
+            // 模拟从相册选择
+            alert('从相册选择功能');
+            hideAvatarOptions();
+        }
+
+        function takePhoto() {
+            // 模拟拍照功能
+            alert('拍照功能');
+            hideAvatarOptions();
+        }
+
+        function useDefaultAvatar() {
+            // 使用默认头像
+            document.getElementById('avatar-image').src = 'https://via.placeholder.com/80x80?text=默认';
+            hideAvatarOptions();
+        }
+
+        function hideAvatarOptions() {
+            document.getElementById('avatar-options').style.display = 'none';
+        }
+
+        // 字符计数
+        function updateCharCount(inputId, countId, maxLength) {
+            const input = document.getElementById(inputId);
+            const count = document.getElementById(countId);
+            const currentLength = input.value.length;
+            
+            count.textContent = `${currentLength}/${maxLength}`;
+            
+            if (currentLength > maxLength * 0.9) {
+                count.classList.add('warning');
+            } else {
+                count.classList.remove('warning');
+            }
+            
+            if (currentLength >= maxLength) {
+                count.classList.add('error');
+            } else {
+                count.classList.remove('error');
+            }
+            
+            updateProgress();
+        }
+
+        // 手机号验证
+        function validatePhone() {
+            const phone = document.getElementById('phone').value;
+            updateProgress();
+        }
+
+        function validatePhoneNumber(phone) {
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // 学生管理功能
+        function addStudent() {
+            const studentId = Date.now();
+            const student = {
+                id: studentId,
+                name: '',
+                school: '',
+                grade: '',
+                class: ''
+            };
+            
+            students.push(student);
+            renderStudentForm(student);
+            updateProgress();
+        }
+
+        function removeStudent(studentId) {
+            students = students.filter(s => s.id !== studentId);
+            document.getElementById(`student-${studentId}`).remove();
+            updateProgress();
+        }
+
+        function renderStudentForm(student) {
+            const studentList = document.getElementById('student-list');
+            const studentDiv = document.createElement('div');
+            studentDiv.className = 'student-item';
+            studentDiv.id = `student-${student.id}`;
+            
+            studentDiv.innerHTML = `
+                <div class="student-header">
+                    <div class="student-name">学生信息</div>
+                    <div class="student-remove" onclick="removeStudent(${student.id})">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label class="form-label">学生姓名 *</label>
+                        <input type="text" class="form-input" placeholder="请输入学生姓名" 
+                               onchange="updateStudentInfo(${student.id}, 'name', this.value)">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label class="form-label">就读学校 *</label>
+                        <input type="text" class="form-input" placeholder="请输入学校名称"
+                               onchange="updateStudentInfo(${student.id}, 'school', this.value)">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">年级</label>
+                        <select class="form-select" onchange="updateStudentInfo(${student.id}, 'grade', this.value)">
+                            <option value="">请选择年级</option>
+                            <option value="高一">高一</option>
+                            <option value="高二">高二</option>
+                            <option value="高三">高三</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">班级</label>
+                        <input type="text" class="form-input" placeholder="请输入班级"
+                               onchange="updateStudentInfo(${student.id}, 'class', this.value)">
+                    </div>
+                </div>
+            `;
+            
+            studentList.appendChild(studentDiv);
+        }
+
+        function updateStudentInfo(studentId, field, value) {
+            const student = students.find(s => s.id === studentId);
+            if (student) {
+                student[field] = value;
+                updateProgress();
+            }
+        }
+
+        // 完成资料编辑
+        function finishProfile() {
+            if (!validateCurrentStep()) {
+                return;
+            }
+            
+            // 收集所有数据
+            const profileData = {
+                basic: {
+                    nickname: document.getElementById('nickname').value,
+                    gender: document.getElementById('gender').value,
+                    birthdate: document.getElementById('birthdate').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    bio: document.getElementById('bio').value
+                },
+                identity: selectedIdentity,
+                specific: getSpecificData()
+            };
+            
+            // 保存数据
+            localStorage.setItem('userProfile', JSON.stringify(profileData));
+            
+            alert('资料保存成功！');
+            // 返回个人中心
+            window.location.href = 'personal-center.html';
+        }
+
+        function getSpecificData() {
+            switch (selectedIdentity) {
+                case 'parent':
+                    return { students };
+                case 'teacher':
+                    return {
+                        school: document.getElementById('school').value,
+                        subject: document.getElementById('subject').value,
+                        teachingYears: document.getElementById('teaching-years').value
+                    };
+                case 'friend':
+                    return {
+                        realName: document.getElementById('real-name').value,
+                        school: document.getElementById('student-school').value,
+                        className: document.getElementById('class-name').value,
+                        subjectType: document.getElementById('subject-type').value
+                    };
+                case 'supporter':
+                    return {};
+                default:
+                    return {};
+            }
+        }
+
+        // 加载现有数据
+        function loadExistingData() {
+            const savedData = localStorage.getItem('userProfile');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // 填充基本信息
+                if (data.basic) {
+                    document.getElementById('nickname').value = data.basic.nickname || '';
+                    document.getElementById('gender').value = data.basic.gender || '';
+                    document.getElementById('birthdate').value = data.basic.birthdate || '';
+                    document.getElementById('phone').value = data.basic.phone || '';
+                    document.getElementById('email').value = data.basic.email || '';
+                    document.getElementById('bio').value = data.basic.bio || '';
+                    
+                    // 更新字符计数
+                    updateCharCount('nickname', 'nickname-count', 20);
+                    updateCharCount('bio', 'bio-count', 200);
+                }
+                
+                // 设置身份
+                if (data.identity) {
+                    selectedIdentity = data.identity;
+                }
+                
+                // 填充特定信息
+                if (data.specific) {
+                    fillSpecificData(data.specific);
+                }
+            }
+        }
+
+        function fillSpecificData(data) {
+            switch (selectedIdentity) {
+                case 'parent':
+                    if (data.students) {
+                        students = data.students;
+                        students.forEach(student => renderStudentForm(student));
+                    }
+                    break;
+                case 'teacher':
+                    document.getElementById('school').value = data.school || '';
+                    document.getElementById('subject').value = data.subject || '';
+                    document.getElementById('teaching-years').value = data.teachingYears || '';
+                    break;
+                case 'friend':
+                    document.getElementById('real-name').value = data.realName || '';
+                    document.getElementById('student-school').value = data.school || '';
+                    document.getElementById('class-name').value = data.className || '';
+                    document.getElementById('subject-type').value = data.subjectType || '';
+                    break;
+            }
+        }
+
+        // 导航功能
+        function goBack() {
+            if (currentStep > 1) {
+                prevStep();
+            } else {
+                window.location.href = 'personal-center.html';
+            }
+        }
+
+        function showHelp() {
+            alert('如需帮助，请联系客服：400-123-4567');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

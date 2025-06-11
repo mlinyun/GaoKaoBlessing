@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系客服 - 高考祈福</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f0f23 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 服务背景粒子 */
+        .service-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .service-particle {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.3);
+            font-size: 16px;
+            animation: serviceFloat 10s ease-in-out infinite;
+        }
+
+        .service-particle:nth-child(1) {
+            top: 12%;
+            left: 18%;
+            animation-delay: 0s;
+        }
+
+        .service-particle:nth-child(2) {
+            top: 28%;
+            right: 22%;
+            animation-delay: 1.5s;
+        }
+
+        .service-particle:nth-child(3) {
+            top: 45%;
+            left: 15%;
+            animation-delay: 3s;
+        }
+
+        .service-particle:nth-child(4) {
+            top: 62%;
+            right: 18%;
+            animation-delay: 4.5s;
+        }
+
+        .service-particle:nth-child(5) {
+            top: 78%;
+            left: 25%;
+            animation-delay: 6s;
+        }
+
+        .service-particle:nth-child(6) {
+            top: 35%;
+            left: 45%;
+            animation-delay: 7.5s;
+        }
+
+        @keyframes serviceFloat {
+            0%, 100% {
+                opacity: 0.1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            25% {
+                opacity: 0.4;
+                transform: translateY(-12px) rotate(90deg) scale(1.1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translateY(-8px) rotate(180deg) scale(0.9);
+            }
+            75% {
+                opacity: 0.3;
+                transform: translateY(-15px) rotate(270deg) scale(1.2);
+            }
+        }
+
+        /* iPhone状态栏 */
+        .status-bar {
+            height: 47px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+        }
+
+        .signal-bar {
+            width: 3px;
+            background: white;
+            border-radius: 1px;
+        }
+
+        .signal-bar:nth-child(1) { height: 4px; }
+        .signal-bar:nth-child(2) { height: 6px; }
+        .signal-bar:nth-child(3) { height: 8px; }
+        .signal-bar:nth-child(4) { height: 10px; }
+
+        .wifi-icon { font-size: 12px; }
+
+        .battery-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .battery-level { font-size: 12px; }
+
+        .battery-icon {
+            width: 22px;
+            height: 11px;
+            border: 1px solid white;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 3px;
+            width: 2px;
+            height: 5px;
+            background: white;
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-fill {
+            width: 88%;
+            height: 100%;
+            background: white;
+            border-radius: 1px;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .nav-button i {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+        }
+
+        .nav-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 客服头部 */
+        .service-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff8c42, #ffd700);
+        }
+
+        .service-avatar {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            position: relative;
+            animation: avatarPulse 3s ease-in-out infinite;
+        }
+
+        .service-avatar::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 24px;
+            height: 24px;
+            background: #00ff88;
+            border-radius: 50%;
+            border: 3px solid #0f0f23;
+            animation: statusBlink 2s ease-in-out infinite;
+        }
+
+        .service-avatar i {
+            font-size: 36px;
+            color: #000;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .service-welcome {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .service-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #00ff88;
+        }
+
+        .service-status i {
+            font-size: 10px;
+        }
+
+        /* AI智能助手 */
+        .ai-assistant {
+            margin-bottom: 25px;
+        }
+
+        .ai-card {
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 18px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-card:hover {
+            background: rgba(138, 43, 226, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.2);
+        }
+
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2, #9370db, #8a2be2);
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ai-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #8a2be2, #9370db);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            position: relative;
+            animation: aiGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes aiGlow {
+            0% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
+            100% { box-shadow: 0 0 15px rgba(138, 43, 226, 0.8); }
+        }
+
+        .ai-info h3 {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .ai-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+        }
+
+        .ai-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ai-feature {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 联系方式网格 */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .contact-option {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .contact-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-option:hover::before {
+            opacity: 1;
+        }
+
+        .contact-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 22px;
+            position: relative;
+        }
+
+        .contact-icon::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #ff8c42, #ffd700);
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-option:hover .contact-icon::after {
+            opacity: 0.4;
+        }
+
+        .contact-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .contact-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .contact-status {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .status-online {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .status-busy {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+
+        .status-offline {
+            background: rgba(128, 128, 128, 0.2);
+            color: #808080;
+        }
+
+        /* 快速问题 */
+        .quick-questions {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: #ffd700;
+        }
+
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .question-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .question-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .question-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .question-arrow {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+        }
+
+        /* 服务时间和信息 */
+        .service-info {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .info-value {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .info-highlight {
+            color: #ffd700;
+        }
+
+        /* 反馈评价 */
+        .feedback-section {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .star {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .feedback-text {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .feedback-text:focus {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .feedback-text::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* 底部信息 */
+        .service-footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-option, .question-item, .ai-card {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .contact-option:nth-child(1) { animation-delay: 0.1s; }
+        .contact-option:nth-child(2) { animation-delay: 0.2s; }
+        .contact-option:nth-child(3) { animation-delay: 0.3s; }
+        .contact-option:nth-child(4) { animation-delay: 0.4s; }        /* 聊天气泡模拟 */
+        .chat-preview {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            backdrop-filter: blur(20px);
+            display: none;
+            z-index: 1000;
+            animation: chatBounce 0.5s ease-out;
+            max-width: 200px;
+        }
+
+        .chat-preview.show {
+            display: block;
+        }
+
+        @keyframes chatBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .chat-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .chat-time {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 10px;
+            text-align: right;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- 服务背景粒子 -->
+            <div class="service-particles">
+                <div class="service-particle"><i class="fas fa-headset"></i></div>
+                <div class="service-particle"><i class="fas fa-comments"></i></div>
+                <div class="service-particle"><i class="fas fa-phone"></i></div>
+                <div class="service-particle"><i class="fas fa-envelope"></i></div>
+                <div class="service-particle"><i class="fas fa-user-tie"></i></div>
+                <div class="service-particle"><i class="fas fa-heart"></i></div>
+            </div>
+
+            <!-- iPhone状态栏 -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <div class="status-time" id="status-time">9:41</div>
+                </div>
+                <div class="status-right">
+                    <div class="signal-bars">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                    </div>
+                    <i class="fas fa-wifi wifi-icon"></i>
+                    <div class="battery-container">
+                        <span class="battery-level">88%</span>
+                        <div class="battery-icon">
+                            <div class="battery-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="nav-title">联系客服</div>
+                <div class="nav-button" onclick="showMenu()">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+
+            <!-- 主内容区域 -->
+            <div class="main-content">
+                <!-- 客服头部 -->
+                <div class="service-header">
+                    <div class="service-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="service-welcome">小福客服为您服务</div>
+                    <div class="service-subtitle">专业团队7×24小时在线<br>平均响应时间 < 30秒</div>
+                    <div class="service-status">
+                        <i class="fas fa-circle"></i>
+                        <span>在线服务中</span>
+                    </div>
+                </div>
+
+                <!-- AI智能助手 -->
+                <div class="ai-assistant">
+                    <div class="ai-card" onclick="startAIChat()">
+                        <div class="ai-header">
+                            <div class="ai-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="ai-info">
+                                <h3>AI智能助手</h3>
+                                <p>即时解答，智能引导</p>
+                            </div>
+                        </div>
+                        <div class="ai-features">
+                            <div class="ai-feature">24小时在线</div>
+                            <div class="ai-feature">秒级响应</div>
+                            <div class="ai-feature">智能学习</div>
+                            <div class="ai-feature">多语言支持</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系方式网格 -->
+                <div class="contact-grid">
+                    <div class="contact-option" onclick="startOnlineChat()">
+                        <div class="contact-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="contact-title">在线客服</div>
+                        <div class="contact-desc">实时对话，即时解决</div>
+                        <div class="contact-status status-online">在线</div>
+                    </div>
+
+                    <div class="contact-option" onclick="makePhoneCall()">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-title">电话咨询</div>
+                        <div class="contact-desc">400-688-1688</div>
+                        <div class="contact-status status-online">9:00-22:00</div>
+                    </div>
+
+                    <div class="contact-option" onclick="sendEmail()">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-title">邮件反馈</div>
+                        <div class="contact-desc">详细描述问题</div>
+                        <div class="contact-status status-online">24h内回复</div>
+                    </div>
+
+                    <div class="contact-option" onclick="openVideoCall()">
+                        <div class="contact-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="contact-title">视频客服</div>
+                        <div class="contact-desc">面对面沟通</div>
+                        <div class="contact-status status-busy">预约中</div>
+                    </div>
+                </div>
+
+                <!-- 快速问题 -->
+                <div class="quick-questions">
+                    <div class="section-title">
+                        <i class="fas fa-bolt"></i>
+                        快速解答
+                    </div>
+                    <div class="question-list">
+                        <div class="question-item" onclick="showAnswer('blessing')">
+                            <div class="question-text">如何创建个性化祝福？</div>
+                            <div class="question-arrow"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                        <div class="question-item" onclick="showAnswer('payment')">
+                            <div class="question-text">金币购买和使用问题</div>
+                            <div class="question-arrow"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                        <div class="question-item" onclick="showAnswer('account')">
+                            <div class="question-text">账号安全和密码重置</div>
+                            <div class="question-arrow"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                        <div class="question-item" onclick="showAnswer('bug')">
+                            <div class="question-text">应用故障和Bug反馈</div>
+                            <div class="question-arrow"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                        <div class="question-item" onclick="showAnswer('feature')">
+                            <div class="question-text">新功能建议和需求</div>
+                            <div class="question-arrow"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 服务信息 -->
+                <div class="service-info">
+                    <div class="section-title">
+                        <i class="fas fa-info-circle"></i>
+                        服务信息
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">服务时间</div>
+                            <div class="info-value">7×24小时</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">响应时间</div>
+                            <div class="info-value info-highlight">< 30秒</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">解决率</div>
+                            <div class="info-value info-highlight">99.5%</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">满意度</div>
+                            <div class="info-value info-highlight">4.9/5.0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 反馈评价 -->
+                <div class="feedback-section">
+                    <div class="section-title">
+                        <i class="fas fa-star"></i>
+                        服务评价
+                    </div>
+                    <div style="text-align: center; margin-bottom: 12px;">
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 14px;">您对我们的服务满意吗？</div>
+                    </div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star star" onclick="setRating(1)"></i>
+                        <i class="fas fa-star star" onclick="setRating(2)"></i>
+                        <i class="fas fa-star star" onclick="setRating(3)"></i>
+                        <i class="fas fa-star star" onclick="setRating(4)"></i>
+                        <i class="fas fa-star star" onclick="setRating(5)"></i>
+                    </div>
+                    <textarea class="feedback-text" placeholder="请分享您的使用感受或改进建议，您的反馈对我们很重要..."></textarea>
+                    <button class="submit-btn" onclick="submitFeedback()">提交反馈</button>
+                </div>                <!-- 底部信息 -->
+                <div class="service-footer">
+                    高考祈福客服中心 | 用心服务每一位用户<br>
+                    服务热线：400-688-1688 | 邮箱：service@gaokao-blessing.com
+                </div>
+            </div>
+
+            <!-- 聊天预览气泡 -->
+            <div class="chat-preview" id="chat-preview">
+                <div class="chat-text">客服小福：您好！有什么可以帮助您的吗？</div>
+                <div class="chat-time">刚刚</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+
+        // 初始化
+        function init() {
+            updateStatusBarTime();
+            setInterval(updateStatusBarTime, 60000);
+            
+            // 模拟客服消息提示
+            setTimeout(() => {
+                showChatPreview();
+            }, 3000);
+        }
+
+        // 更新状态栏时间
+        function updateStatusBarTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            document.getElementById('status-time').textContent = timeString;
+        }
+
+        // 显示聊天预览
+        function showChatPreview() {
+            const preview = document.getElementById('chat-preview');
+            preview.classList.add('show');
+            
+            setTimeout(() => {
+                preview.classList.remove('show');
+            }, 4000);
+        }
+
+        // 开始AI聊天
+        function startAIChat() {
+            showChatPreview();
+            setTimeout(() => {
+                alert('🤖 AI智能助手\n\n正在为您连接AI客服...\n\n功能特色：\n• 24小时在线服务\n• 秒级智能响应\n• 多轮对话理解\n• 支持语音输入\n• 自动问题分类\n• 智能推荐解决方案\n\n即将为您开启智能客服对话！');
+            }, 500);
+        }
+
+        // 开始在线聊天
+        function startOnlineChat() {
+            alert('💬 在线客服\n\n正在为您连接人工客服...\n\n当前状态：\n• 在线客服：8人\n• 等待人数：2人\n• 预计等待：30秒\n\n我们的客服代表将尽快为您服务！');
+        }
+
+        // 拨打电话
+        function makePhoneCall() {
+            if (confirm('📞 电话咨询\n\n客服热线：400-688-1688\n\n服务时间：\n• 周一至周日 9:00-22:00\n• 节假日正常服务\n• 支持多语言服务\n\n点击确定拨打电话')) {
+                window.location.href = 'tel:400-688-1688';
+            }
+        }
+
+        // 发送邮件
+        function sendEmail() {
+            const emailContent = `
+主题：高考祈福应用 - 用户咨询
+
+尊敬的客服团队：
+
+请在此描述您遇到的问题或需要咨询的内容：
+[请详细描述您的问题]
+
+用户信息：
+- 设备型号：${navigator.userAgent.includes('iPhone') ? 'iPhone' : '移动设备'}
+- 应用版本：v2.1.0
+- 联系时间：${new Date().toLocaleString('zh-CN')}
+
+感谢您的支持！
+
+此致
+敬礼！
+            `.trim();
+
+            window.location.href = `mailto:service@gaokao-blessing.com?subject=高考祈福应用咨询&body=${encodeURIComponent(emailContent)}`;
+        }
+
+        // 开启视频通话
+        function openVideoCall() {
+            alert('📹 视频客服\n\n预约视频通话服务：\n\n服务说明：\n• 面对面沟通交流\n• 屏幕共享演示\n• 问题现场解决\n• 高级技术支持\n\n预约时间：\n• 工作日 9:00-18:00\n• 需要提前预约\n\n正在为您预约视频客服...');
+        }
+
+        // 显示快速解答
+        function showAnswer(type) {
+            const answers = {
+                blessing: '✨ 创建个性化祝福\n\n步骤说明：\n1. 点击首页"+"按钮\n2. 选择祝福模板或自定义\n3. 添加个人照片和文字\n4. 选择动画特效\n5. 设置发送时间\n6. 分享给考生\n\n高级功能：\n• 语音祝福录制\n• AR特效祝福\n• 定时批量发送\n• 祝福数据统计',
+                
+                payment: '💰 金币购买和使用\n\n获得方式：\n• 每日签到奖励\n• 完成任务获得\n• 邀请好友获得\n• 充值购买金币\n\n使用用途：\n• 购买祝福特效\n• 解锁高级模板\n• 兑换实物礼品\n• 提升账号等级\n\n如有充值问题，请联系客服处理。',
+                
+                account: '🔐 账号安全设置\n\n密码重置：\n1. 登录页点击"忘记密码"\n2. 输入手机号或邮箱\n3. 获取验证码\n4. 设置新密码\n\n安全设置：\n• 开启二次验证\n• 绑定安全邮箱\n• 定期更换密码\n• 检查登录记录\n\n账号异常请立即联系客服。',
+                
+                bug: '🐛 故障反馈处理\n\n反馈步骤：\n1. 详细描述问题现象\n2. 提供错误截图\n3. 说明复现步骤\n4. 提供设备信息\n\n常见问题：\n• 应用闪退 → 重启应用\n• 加载缓慢 → 检查网络\n• 功能异常 → 更新版本\n• 数据丢失 → 联系技术支持\n\n严重bug我们会优先处理。',
+                
+                feature: '💡 功能建议收集\n\n建议分类：\n• 新功能需求\n• 界面优化建议\n• 用户体验改进\n• 性能提升建议\n\n提交方式：\n• 应用内反馈\n• 客服在线提交\n• 邮件详细说明\n• 用户调研参与\n\n您的建议对产品改进非常重要！'
+            };
+
+            alert(answers[type] || '正在整理相关信息...');
+        }
+
+        // 设置评分
+        function setRating(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // 提交反馈
+        function submitFeedback() {
+            const feedbackText = document.querySelector('.feedback-text').value.trim();
+            
+            if (currentRating === 0) {
+                alert('请先给我们的服务打分哦 ⭐');
+                return;
+            }
+
+            if (!feedbackText) {
+                alert('请填写您的反馈内容，您的意见对我们很重要 📝');
+                return;
+            }
+
+            // 模拟提交
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.textContent = '提交中...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                alert(`🎉 感谢您的反馈！\n\n评分：${'⭐'.repeat(currentRating)}\n反馈内容：${feedbackText.substring(0, 50)}${feedbackText.length > 50 ? '...' : ''}\n\n您的反馈已成功提交，我们会认真对待每一条建议！`);
+                
+                // 重置表单
+                document.querySelector('.feedback-text').value = '';
+                setRating(0);
+                submitBtn.textContent = '提交反馈';
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+
+        // 导航功能
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'personal-center.html';
+            }
+        }
+
+        function showMenu() {
+            alert('客服菜单\n\n• 刷新页面\n• 服务记录\n• 常见问题\n• 投诉建议\n• 服务评价');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>高考祈福 - 个人中心</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 星光粒子背景 */
+        .star-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .star-particle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 8px;
+            opacity: 0.6;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        .star-particle:nth-child(1) {
+            left: 10%;
+            top: 15%;
+            animation-delay: 0s;
+        }
+
+        .star-particle:nth-child(2) {
+            left: 30%;
+            top: 25%;
+            animation-delay: 0.5s;
+        }
+
+        .star-particle:nth-child(3) {
+            left: 60%;
+            top: 10%;
+            animation-delay: 1s;
+        }
+
+        .star-particle:nth-child(4) {
+            left: 80%;
+            top: 30%;
+            animation-delay: 1.5s;
+        }
+
+        .star-particle:nth-child(5) {
+            left: 20%;
+            top: 60%;
+            animation-delay: 2s;
+        }
+
+        .star-particle:nth-child(6) {
+            left: 70%;
+            top: 70%;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 顶部个人信息区域 */
+        .profile-header {
+            position: relative;
+            padding: 16px 20px 14px 20px;
+            z-index: 90;
+            margin-top: 47px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 头像增强样式 */
+        .profile-avatar-large {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            font-size: 26px;
+            font-weight: 700;
+            position: relative;
+            box-shadow:
+                0 8px 24px rgba(255, 215, 0, 0.2),
+                0 3px 12px rgba(255, 140, 66, 0.12),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            min-width: 64px;
+            min-height: 64px;
+            max-width: 64px;
+            max-height: 64px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        .profile-avatar-large:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow:
+                0 16px 40px rgba(255, 215, 0, 0.25),
+                0 6px 20px rgba(255, 140, 66, 0.15),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .edit-avatar-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+            box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 4px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+        }
+
+        .profile-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.3;
+            font-weight: 500;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 16px;
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-stat {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .profile-stat:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .profile-stat-number {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 1px;
+            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .profile-stat-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 滚动条样式 */
+        .main-content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 功能区域 */
+        .content-sections {
+            padding: 16px 20px 20px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title i {
+            color: #ffd700;
+        }
+
+        /* 菜单项 */
+        .menu-list {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+
+        /* 增强交互动效 */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transform: translateX(0);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(255, 215, 0, 0.1);
+        }
+
+        .menu-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 215, 0, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-content {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2px;
+        }
+
+        .menu-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .menu-arrow {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        .menu-badge {
+            background: #ff4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .menu-switch {
+            width: 44px;
+            height: 24px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-switch.active {
+            background: #ffd700;
+        }
+
+        .menu-switch::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .menu-switch.active::before {
+            transform: translateX(20px);
+        }
+
+        /* VIP 卡片 */
+        .vip-card {
+            background: linear-gradient(135deg,
+                    rgba(255, 215, 0, 0.15),
+                    rgba(255, 140, 66, 0.15));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .vip-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 48px rgba(255, 215, 0, 0.18);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .vip-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ff8c42, #ffd700);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .vip-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle,
+                    rgba(255, 215, 0, 0.1) 0%,
+                    transparent 70%);
+            animation: vip-glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes vip-glow {
+            0% {
+                opacity: 0.5;
+                transform: rotate(0deg) scale(1);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: rotate(10deg) scale(1.1);
+            }
+        }
+
+        .vip-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .vip-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .vip-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            font-size: 18px;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .vip-icon::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: linear-gradient(45deg, #ffd700, #ff8c42, #ffd700);
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .vip-title-group {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .vip-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .vip-price {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .vip-price .original {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .vip-price .current {
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .vip-price .discount-tag {
+            background: linear-gradient(135deg, #ff4444, #ff6666);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+        }
+
+        .vip-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .vip-benefits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .benefit-tag {
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #ffd700;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            min-height: 36px;
+        }
+
+        .benefit-tag i {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .benefit-tag::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.15),
+                    transparent);
+            transition: left 0.6s ease;
+        }
+
+        .benefit-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .benefit-tag:hover::before {
+            left: 100%;
+        }
+
+        .vip-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .vip-action {
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            color: #0f0f23;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            flex-shrink: 0;
+        }
+
+        .vip-learn-more {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .vip-learn-more:hover {
+            color: #ffd700;
+            transform: translateX(2px);
+        }
+
+        .vip-action::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            transition: left 0.5s ease;
+        }
+
+        .vip-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .vip-action:hover::before {
+            left: 100%;
+        }
+
+        .vip-action:active {
+            transform: translateY(-1px);
+        }
+
+        /* 底部导航 */
+        .bottom-nav {
+            flex-shrink: 0;
+            height: 83px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 24px 34px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active .nav-icon {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .nav-item.active .nav-label {
+            color: #ffd700;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 星光粒子背景 -->
+            <div class="star-particles">
+                <div class="star-particle">✨</div>
+                <div class="star-particle">⭐</div>
+                <div class="star-particle">💫</div>
+                <div class="star-particle">🌟</div>
+                <div class="star-particle">✨</div>
+                <div class="star-particle">⭐</div>
+            </div>
+
+            <!-- 个人信息头部 -->
+            <div class="profile-header">
+                <div class="profile-top">
+                    <div class="profile-avatar-large">
+                        张
+                        <div class="edit-avatar-btn" onclick="editAvatar()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">张老师</div>
+                        <div class="profile-subtitle">北京市第一中学 · 语文老师</div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">12</div>
+                        <div class="profile-stat-label">关注考生</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">156</div>
+                        <div class="profile-stat-label">发送祝福</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">89</div>
+                        <div class="profile-stat-label">获得点赞</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <div class="content-sections">
+                    <!-- VIP升级卡片 -->
+                    <div class="vip-card">
+                        <div class="vip-header">
+                            <div class="vip-left">
+                                <div class="vip-icon">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <div class="vip-title-group">
+                                    <div class="vip-title">升级为VIP会员</div>
+                                    <div class="vip-price">
+                                        <span class="original">¥198/月</span>
+                                        <span class="current">¥98/月</span>
+                                        <span class="discount-tag">限时5折</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vip-subtitle">
+                            解锁更多精美祝福特效和专属功能，为考生送上最诚挚的祝福
+                        </div>
+                        <div class="vip-benefits">
+                            <div class="benefit-tag">
+                                <i class="fas fa-magic"></i>
+                                专属特效
+                            </div>
+                            <div class="benefit-tag">
+                                <i class="fas fa-infinity"></i>
+                                无限祈福
+                            </div>
+                            <div class="benefit-tag">
+                                <i class="fas fa-star"></i>
+                                优先展示
+                            </div>
+                            <div class="benefit-tag">
+                                <i class="fas fa-chart-line"></i>
+                                数据分析
+                            </div>
+                        </div>
+                        <div class="vip-actions">
+                            <span class="vip-learn-more" onclick="learnMoreVIP()">了解更多特权</span>
+                            <button class="vip-action" onclick="upgradeVIP()">
+                                <i class="fas fa-crown"></i>
+                                立即升级
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 我的功能 -->
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-user"></i>
+                            我的功能
+                        </div>
+                        <div class="menu-list">
+                            <div class="menu-item" onclick="viewMyBlessings()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">我的祝福</div>
+                                    <div class="menu-subtitle">查看发送的所有祝福</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="viewCollections()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-bookmark"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">我的收藏</div>
+                                    <div class="menu-subtitle">收藏的精美祝福</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="menu-item" onclick="viewInviteRewards()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">邀请奖励</div>
+                                    <div class="menu-subtitle">邀请好友获得祈福币</div>
+                                </div>
+                                <div class="menu-badge">NEW</div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="openCoinShop()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">祈福币商城</div>
+                                    <div class="menu-subtitle">购买祈福币和特殊道具</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="previewEffects()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">祈福特效</div>
+                                    <div class="menu-subtitle">预览和选择祈福特效</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 设置选项 -->
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-cog"></i>
+                            设置选项
+                        </div>
+                        <div class="menu-list">
+                            <div class="menu-item" onclick="editProfile()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">编辑资料</div>
+                                    <div class="menu-subtitle">修改个人信息</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item">
+                                <div class="menu-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">消息通知</div>
+                                    <div class="menu-subtitle">接收祝福和回复通知</div>
+                                </div>
+                                <div class="menu-switch active" onclick="toggleNotification(this)"></div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">隐私设置</div>
+                                    <div class="menu-subtitle">控制个人信息可见性</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="openMotivationQuotes()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">励志语句</div>
+                                    <div class="menu-subtitle">每日正能量推送</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                            <div class="menu-item" onclick="viewDataStats()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">数据统计</div>
+                                    <div class="menu-subtitle">查看详细使用统计</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="openSettings()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">系统设置</div>
+                                    <div class="menu-subtitle">应用偏好设置和数据管理</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 帮助与支持 -->
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-question-circle"></i>
+                            帮助与支持
+                        </div>
+                        <div class="menu-list">
+                            <div class="menu-item" onclick="viewHelp()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">使用帮助</div>
+                                    <div class="menu-subtitle">功能介绍和使用指南</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="contactSupport()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">联系客服</div>
+                                    <div class="menu-subtitle">在线客服咨询</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <div class="menu-item" onclick="viewAbout()">
+                                <div class="menu-icon">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="menu-content">
+                                    <div class="menu-title">关于我们</div>
+                                    <div class="menu-subtitle">应用版本和开发信息</div>
+                                </div>
+                                <div class="menu-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="goToHome()">
+                    <div class="nav-icon"><i class="fas fa-home"></i></div>
+                    <div class="nav-label">首页</div>
+                </div>
+                <div class="nav-item" onclick="goToBlessingWall()">
+                    <div class="nav-icon"><i class="fas fa-comments"></i></div>
+                    <div class="nav-label">祈福墙</div>
+                </div>
+                <div class="nav-item" onclick="goToStudents()">
+                    <div class="nav-icon"><i class="fas fa-users"></i></div>
+                    <div class="nav-label">考生</div>
+                </div>
+                <div class="nav-item active">
+                    <div class="nav-icon"><i class="fas fa-user"></i></div>
+                    <div class="nav-label">我的</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载动画
+        window.addEventListener("load", function () {
+            document.body.style.opacity = "1";
+        });
+
+        // 编辑头像
+        function editAvatar() {
+            showToast("正在打开头像编辑器...");
+        } // VIP升级
+        function upgradeVIP() {
+            // 添加点击动效
+            event.currentTarget.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                event.currentTarget.style.transform = "";
+            }, 150);
+            showToast("正在跳转到VIP购买页面...");
+        }
+
+        // VIP了解更多
+        function learnMoreVIP() {
+            showToast("查看VIP特权详细介绍...");
+        }
+
+        // 我的祝福
+        function viewMyBlessings() {
+            showToast("查看我发送的所有祝福...");
+            pageTransition('my-blessings.html');
+        }
+
+        // 我的收藏
+        function viewCollections() {
+            showToast("查看收藏的祝福内容...");
+            pageTransition('my-favorites.html');
+        }
+        
+        // 邀请奖励
+        function viewInviteRewards() {
+            showToast("进入邀请奖励页面...");
+            pageTransition('invite-share.html');
+        }
+
+        // 祈福币商城
+        function openCoinShop() {
+            showToast("进入祈福币商城...");
+            pageTransition('coin-shop.html');
+        }
+
+        // 祈福特效预览
+        function previewEffects() {
+            showToast("进入特效预览...");
+            pageTransition('effect-preview.html');
+        }
+        
+        // 编辑资料
+        function editProfile() {
+            showToast("正在编辑个人资料...");
+            pageTransition('edit-profile.html');
+        }
+        
+        // 打开系统设置
+        function openSettings() {
+            showToast("进入系统设置...");
+            pageTransition('settings.html');
+        }
+
+        // 励志语句
+        function openMotivationQuotes() {
+            showToast("进入励志语句...");
+            pageTransition('motivation-quotes.html');
+        }
+
+        // 切换通知开关
+        function toggleNotification(element) {
+            element.classList.toggle("active");
+            const isActive = element.classList.contains("active");
+            showToast(isActive ? "已开启消息通知" : "已关闭消息通知");
+        }
+
+        // 数据统计
+        function viewDataStats() {
+            showToast("查看详细数据统计...");
+            pageTransition('data-statistics.html');
+        }
+
+        // 使用帮助
+        function viewHelp() {
+            showToast("打开使用帮助页面...");
+            pageTransition('help.html');
+        }
+
+        // 联系客服
+        function contactSupport() {
+            showToast("正在连接在线客服...");
+            pageTransition('customer-service.html');
+        }
+
+        // 关于我们
+        function viewAbout() {
+            showToast("查看应用信息...");
+            pageTransition('about.html');
+        }
+        
+        // 页面过渡动画
+        function pageTransition(targetPage, callback) {
+            const phoneScreen = document.querySelector('.phone-screen');
+            phoneScreen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            phoneScreen.style.transform = 'scale(0.95)';
+            phoneScreen.style.opacity = '0.7';
+
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        // 导航功能
+        function goToHome() {
+            updateNavState(0);
+            showToast("切换到首页...");
+            pageTransition('blessing-main.html');
+        }
+
+        function goToBlessingWall() {
+            updateNavState(1);
+            showToast("切换到祈福墙...");
+            pageTransition('blessing-wall.html');
+        }
+
+        function goToStudents() {
+            updateNavState(2);
+            showToast("切换到考生管理...");
+            pageTransition('student-management.html');
+        }
+
+        // 更新导航状态
+        function updateNavState(activeIndex) {
+            const navItems = document.querySelectorAll(".nav-item");
+            navItems.forEach((item, index) => {
+                if (index === activeIndex) {
+                    item.classList.add("active");
+                } else {
+                    item.classList.remove("active");
+                }
+            });
+        }
+
+        // 添加点击特效
+        function createClickEffect(e) {
+            const ripple = document.createElement("div");
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ripple.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translate(-50%, -50%);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                z-index: 1000;
+            `;
+
+            e.target.style.position = "relative";
+            e.target.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // 为相关元素添加点击特效
+        document.addEventListener("click", function (e) {
+            if (
+                e.target.closest(
+                    ".menu-item, .vip-action, .edit-avatar-btn, .nav-item"
+                )
+            ) {
+                createClickEffect(e);
+            }
+        });
+
+        // 添加动画样式
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 消息提示
+        function showToast(message) {
+            const toast = document.createElement("div");
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 20px;
+                font-size: 14px;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.transition = "opacity 0.3s ease";
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // 菜单项悬浮效果增强
+        document.querySelectorAll(".menu-item").forEach((item) => {
+            item.addEventListener("mouseenter", function () {
+                this.style.transform = "translateX(4px)";
+            });
+
+            item.addEventListener("mouseleave", function () {
+                this.style.transform = "";
+            });
+        });
+
+        // VIP卡片悬浮效果
+        const vipCard = document.querySelector(".vip-card");
+        vipCard.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-4px)";
+            this.style.boxShadow = "0 15px 40px rgba(255, 215, 0, 0.3)";
+        });
+
+        vipCard.addEventListener("mouseleave", function () {
+            this.style.transform = "";
+            this.style.boxShadow = "";
+        });
+
+        // 模拟数据更新
+        function updateProfileStats() {
+            setInterval(() => {
+                const stats = document.querySelectorAll(".profile-stat-number");
+                stats.forEach((stat, index) => {
+                    if (Math.random() > 0.9) {
+                        const currentValue = parseInt(stat.textContent);
+                        stat.textContent =
+                            currentValue +
+                            (index === 1 ? 1 : Math.floor(Math.random() * 2));
+
+                        // 添加数字增长动画
+                        stat.style.transform = "scale(1.2)";
+                        stat.style.color = "#4CAF50";
+
+                        setTimeout(() => {
+                            stat.style.transform = "";
+                            stat.style.color = "";
+                        }, 500);
+                    }
+                });
+            }, 30000); // 30秒更新一次
+        }
+
+        // 初始化数据更新
+        updateProfileStats();
+    </script>
+</body>
+
+</html>

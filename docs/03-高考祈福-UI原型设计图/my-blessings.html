@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的祝福 - 高考祈福</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* Navigation bar */
+        .nav-bar {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 90;
+        }
+
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-action {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-action:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 3D背景场景 */
+        .background-scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.4;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, #ffd700, #ff8c42);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float3d 12s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 80%;
+            top: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            left: 60%;
+            top: 40%;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(4) {
+            width: 4px;
+            height: 4px;
+            left: 25%;
+            top: 70%;
+            animation-delay: 6s;
+        }
+
+        .floating-element:nth-child(5) {
+            width: 7px;
+            height: 7px;
+            left: 90%;
+            top: 60%;
+            animation-delay: 8s;
+        }
+
+        @keyframes float3d {
+            0%,
+            100% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: translateY(-20px) scale(1.1) rotate(90deg);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-10px) scale(0.9) rotate(180deg);
+                opacity: 0.5;
+            }
+
+            75% {
+                transform: translateY(-30px) scale(1.2) rotate(270deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* Content area */
+        .content {
+            height: calc(100% - 107px);
+            margin-top: 107px;
+            overflow-y: auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 滚动条样式 */
+        .content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 统计概览卡片 */
+        .stats-overview {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd700, #ff8c42, #ffd700);
+        }
+
+        .stats-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* 筛选栏 */
+        .filter-bar {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 4px;
+            overflow-x: auto;
+        }
+
+        .filter-tab {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .sort-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* 祝福列表 */
+        .blessing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .blessing-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .blessing-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,215,0,0.3);
+            box-shadow: 0 8px 32px rgba(255,215,0,0.1);
+        }
+
+        .blessing-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .blessing-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .student-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .blessing-time {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .blessing-status {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-delivered {
+            background: rgba(74,222,128,0.2);
+            color: #4ade80;
+        }
+
+        .status-read {
+            background: rgba(59,130,246,0.2);
+            color: #3b82f6;
+        }
+
+        .status-liked {
+            background: rgba(251,146,60,0.2);
+            color: #fb9234;
+        }
+
+        .blessing-content {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .blessing-content::before {
+            content: '"';
+            position: absolute;
+            top: -8px;
+            left: 8px;
+            font-size: 32px;
+            color: rgba(255,215,0,0.3);
+            font-family: serif;
+        }
+
+        .blessing-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .stat-item-small {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .stat-icon {
+            color: rgba(255,215,0,0.8);
+        }
+
+        .blessing-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .action-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,215,0,0.3);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border-color: transparent;
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-1px);
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .empty-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .empty-action {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .empty-action:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Toast消息 */
+        .toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(15,15,35,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 320px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .modal-body {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- 3D背景场景 -->
+            <div class="background-scene">
+                <div class="floating-elements">
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                </div>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- Navigation Bar -->
+            <div class="nav-bar">
+                <div class="nav-back" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-title">我的祝福</div>
+                <div class="nav-action" onclick="showSearchModal()">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- 统计概览 -->
+                <div class="stats-overview">
+                    <div class="stats-title">
+                        <i class="fas fa-chart-bar"></i>
+                        我的祝福统计
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">28</div>
+                            <div class="stat-label">总祝福数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">获得点赞</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">考生回复</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 筛选栏 -->
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <div class="filter-tab active" data-filter="all">全部</div>
+                        <div class="filter-tab" data-filter="delivered">已送达</div>
+                        <div class="filter-tab" data-filter="read">已阅读</div>
+                        <div class="filter-tab" data-filter="liked">被点赞</div>
+                    </div>
+                    <div class="sort-btn" onclick="toggleSort()">
+                        <i class="fas fa-sort" id="sortIcon"></i>
+                    </div>
+                </div>
+
+                <!-- 祝福列表 -->
+                <div class="blessing-list" id="blessingList">
+                    <!-- 祝福卡片1 -->
+                    <div class="blessing-card" data-status="liked" data-time="2024-06-05">
+                        <div class="blessing-header">
+                            <div class="blessing-info">
+                                <div class="student-avatar">李</div>
+                                <div class="student-info">
+                                    <h4>李明</h4>
+                                    <div class="blessing-time">2小时前</div>
+                                </div>
+                            </div>
+                            <div class="blessing-status status-liked">被点赞</div>
+                        </div>
+                        <div class="blessing-content">
+                            愿你在高考的舞台上，如雄鹰般展翅高飞，超越自我，创造属于你的辉煌！每一道题目都是你智慧的体现，每一分努力都会得到最好的回报。加油，相信你一定能够金榜题名！🎓✨
+                        </div>
+                        <div class="blessing-stats">
+                            <div class="stat-item-small">
+                                <i class="fas fa-eye stat-icon"></i>
+                                <span>已阅读</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-heart stat-icon"></i>
+                                <span>12点赞</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-comment stat-icon"></i>
+                                <span>3回复</span>
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-btn" onclick="viewReplies(1)">
+                                <i class="fas fa-comments"></i>
+                                查看回复
+                            </div>
+                            <div class="action-btn" onclick="shareBlessing(1)">
+                                <i class="fas fa-share"></i>
+                                分享
+                            </div>
+                            <div class="action-btn primary" onclick="sendAgain(1)">
+                                <i class="fas fa-paper-plane"></i>
+                                再次发送
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 祝福卡片2 -->
+                    <div class="blessing-card" data-status="read" data-time="2024-06-04">
+                        <div class="blessing-header">
+                            <div class="blessing-info">
+                                <div class="student-avatar">王</div>
+                                <div class="student-info">
+                                    <h4>王小美</h4>
+                                    <div class="blessing-time">1天前</div>
+                                </div>
+                            </div>
+                            <div class="blessing-status status-read">已阅读</div>
+                        </div>
+                        <div class="blessing-content">
+                            高考不是终点，而是人生新的起点。愿你带着自信和勇气，在考场上发挥出最佳水平。无论结果如何，你都是最棒的！加油小美！💪
+                        </div>
+                        <div class="blessing-stats">
+                            <div class="stat-item-small">
+                                <i class="fas fa-eye stat-icon"></i>
+                                <span>已阅读</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-heart stat-icon"></i>
+                                <span>8点赞</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-comment stat-icon"></i>
+                                <span>1回复</span>
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-btn" onclick="viewReplies(2)">
+                                <i class="fas fa-comments"></i>
+                                查看回复
+                            </div>
+                            <div class="action-btn" onclick="shareBlessing(2)">
+                                <i class="fas fa-share"></i>
+                                分享
+                            </div>
+                            <div class="action-btn primary" onclick="sendAgain(2)">
+                                <i class="fas fa-paper-plane"></i>
+                                再次发送
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 祝福卡片3 -->
+                    <div class="blessing-card" data-status="delivered" data-time="2024-06-03">
+                        <div class="blessing-header">
+                            <div class="blessing-info">
+                                <div class="student-avatar">张</div>
+                                <div class="student-info">
+                                    <h4>张浩然</h4>
+                                    <div class="blessing-time">2天前</div>
+                                </div>
+                            </div>
+                            <div class="blessing-status status-delivered">已送达</div>
+                        </div>
+                        <div class="blessing-content">
+                            十年寒窗苦读，今朝金榜题名时。愿你在高考中超常发挥，实现心中的梦想。记住：你的努力不会白费，你的梦想值得追求！🌟
+                        </div>
+                        <div class="blessing-stats">
+                            <div class="stat-item-small">
+                                <i class="fas fa-check stat-icon"></i>
+                                <span>已送达</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-heart stat-icon"></i>
+                                <span>5点赞</span>
+                            </div>
+                            <div class="stat-item-small">
+                                <i class="fas fa-comment stat-icon"></i>
+                                <span>0回复</span>
+                            </div>
+                        </div>
+                        <div class="blessing-actions">
+                            <div class="action-btn" onclick="viewReplies(3)">
+                                <i class="fas fa-comments"></i>
+                                查看回复
+                            </div>
+                            <div class="action-btn" onclick="shareBlessing(3)">
+                                <i class="fas fa-share"></i>
+                                分享
+                            </div>
+                            <div class="action-btn primary" onclick="sendAgain(3)">
+                                <i class="fas fa-paper-plane"></i>
+                                再次发送
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 搜索模态框 -->
+    <div class="modal" id="searchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">搜索祝福</div>
+                <button class="close-btn" onclick="closeSearchModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="输入考生姓名或祝福内容..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; outline: none;">
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeSearchModal()">取消</button>
+                <button class="modal-btn primary" onclick="performSearch()">搜索</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">确认删除</div>
+                <button class="close-btn" onclick="closeDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                确定要删除这条祝福吗？删除后无法恢复。
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeDeleteModal()">取消</button>
+                <button class="modal-btn primary" onclick="confirmDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sortAscending = true;
+        let currentFilter = 'all';
+
+        // 页面过渡动画
+        function pageTransition(targetPage, callback) {
+            const screen = document.querySelector('.phone-screen');
+            screen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            screen.style.transform = 'scale(0.95)';
+            screen.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        function goBack() {
+            pageTransition('personal-center.html');
+        }
+
+        // 显示Toast消息
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 筛选功能
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有活跃状态
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                // 添加当前活跃状态
+                this.classList.add('active');
+                
+                currentFilter = this.dataset.filter;
+                filterBlessings();
+            });
+        });
+
+        function filterBlessings() {
+            const cards = document.querySelectorAll('.blessing-card');
+            cards.forEach(card => {
+                const status = card.dataset.status;
+                if (currentFilter === 'all' || status === currentFilter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 排序功能
+        function toggleSort() {
+            sortAscending = !sortAscending;
+            const icon = document.getElementById('sortIcon');
+            icon.className = sortAscending ? 'fas fa-sort-up' : 'fas fa-sort-down';
+            
+            const blessingList = document.getElementById('blessingList');
+            const cards = Array.from(blessingList.children);
+            
+            cards.sort((a, b) => {
+                const timeA = new Date(a.dataset.time);
+                const timeB = new Date(b.dataset.time);
+                return sortAscending ? timeA - timeB : timeB - timeA;
+            });
+            
+            cards.forEach(card => blessingList.appendChild(card));
+            showToast(sortAscending ? '按时间升序排列' : '按时间降序排列');
+        }
+
+        // 搜索功能
+        function showSearchModal() {
+            document.getElementById('searchModal').classList.add('show');
+        }
+
+        function closeSearchModal() {
+            document.getElementById('searchModal').classList.remove('show');
+        }
+
+        function performSearch() {
+            const searchTerm = document.querySelector('#searchModal input').value.trim();
+            if (searchTerm) {
+                showToast(`搜索"${searchTerm}"中...`);
+                // 这里可以实现实际的搜索逻辑
+            }
+            closeSearchModal();
+        }
+
+        // 祝福操作功能
+        function viewReplies(blessingId) {
+            showToast('查看回复详情...');
+            // 这里可以跳转到回复详情页面
+        }
+
+        function shareBlessing(blessingId) {
+            showToast('分享祝福到社交媒体...');
+            // 这里可以实现分享功能
+        }
+
+        function sendAgain(blessingId) {
+            showToast('正在重新发送祝福...');
+            // 这里可以实现重新发送功能
+        }
+
+        function deleteBlessing(blessingId) {
+            window.currentDeleteId = blessingId;
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('show');
+        }
+
+        function confirmDelete() {
+            showToast('祝福已删除');
+            closeDeleteModal();
+            // 这里可以实现实际的删除逻辑
+        }
+
+        // 长按菜单功能（移动端体验优化）
+        let pressTimer;
+        document.querySelectorAll('.blessing-card').forEach(card => {
+            card.addEventListener('touchstart', function(e) {
+                pressTimer = setTimeout(() => {
+                    // 显示长按菜单
+                    showContextMenu(e, card);
+                }, 800);
+            });
+
+            card.addEventListener('touchend', function() {
+                clearTimeout(pressTimer);
+            });
+
+            card.addEventListener('touchmove', function() {
+                clearTimeout(pressTimer);
+            });
+        });
+
+        function showContextMenu(e, card) {
+            // 实现长按菜单显示
+            showToast('长按菜单功能');
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化筛选
+            filterBlessings();
+            
+            // 添加卡片点击动画
+            document.querySelectorAll('.blessing-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // 如果点击的不是按钮，则显示详情
+                    if (!e.target.closest('.action-btn')) {
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    }
+                });
+            });
+
+            // 模拟实时数据更新
+            setInterval(() => {
+                // 这里可以实现实时更新点赞数、回复数等
+            }, 30000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特效预览 - 高考祈福</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+            opacity: 0;
+            transform: scale(0.95);
+            animation: phoneAppear 0.8s ease-out forwards;
+        }
+
+        @keyframes phoneAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 3D背景场景 */
+        .background-scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.4;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, #ffd700, #ff8c42);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float3d 12s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 80%;
+            top: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            left: 60%;
+            top: 40%;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(4) {
+            width: 4px;
+            height: 4px;
+            left: 25%;
+            top: 70%;
+            animation-delay: 6s;
+        }
+
+        .floating-element:nth-child(5) {
+            width: 7px;
+            height: 7px;
+            left: 90%;
+            top: 60%;
+            animation-delay: 8s;
+        }
+
+        @keyframes float3d {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: translateY(-20px) scale(1.1) rotate(90deg);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-10px) scale(0.9) rotate(180deg);
+                opacity: 0.5;
+            }
+
+            75% {
+                transform: translateY(-30px) scale(1.2) rotate(270deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 顶部导航 */
+        .nav-bar {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffd700;
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }        /* Content area - 隐藏滚动条但保持滚动功能 */
+        .content {
+            height: calc(100% - 107px);
+            margin-top: 107px;
+            overflow-y: auto;
+            padding: 20px 24px 120px 24px;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 和 Edge */
+        }
+
+        /* 隐藏 WebKit 滚动条 */
+        .content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Preview area */
+        .preview-area {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            height: 300px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-content {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .preview-text {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .preview-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Effect animations */
+        .effect-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: particle-float 3s ease-in-out infinite;
+        }
+
+        @keyframes particle-float {
+
+            0%,
+            100% {
+                transform: translateY(20px) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .effect-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 20px;
+            animation: heart-float 4s ease-in-out infinite;
+        }
+
+        @keyframes heart-float {
+            0% {
+                transform: translateY(100%) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100%) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .effect-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            color: #ffd700;
+            font-size: 16px;
+            animation: star-twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes star-twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1) rotate(180deg);
+            }
+        }
+
+        .effect-fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: firework-explode 2s ease-out infinite;
+        }
+
+        @keyframes firework-explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(15);
+                opacity: 0;
+            }
+        }        /* Effect categories - 美化版 */        /* 分类区域增强设计 */
+        .effect-categories {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 8px 0 16px 0;
+            position: relative;
+            scroll-behavior: smooth;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 分类滚动条美化增强 */
+        .effect-categories::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .effect-categories::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            margin: 0 20px;
+        }
+
+        .effect-categories::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.6), rgba(255, 140, 66, 0.6));
+            border-radius: 3px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .effect-categories::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.8), rgba(255, 140, 66, 0.8));
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+            transform: scaleY(1.2);
+        }        .effect-categories::-webkit-scrollbar-thumb:active {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 1), rgba(255, 140, 66, 1));
+        }        .category-tab {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            padding: 12px 22px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: fit-content;
+            text-align: center;
+            user-select: none;
+            scroll-snap-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 分类标签悬浮效果增强 */
+        .category-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                transparent);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-tab:hover::before {
+            left: 100%;
+        }
+
+        .category-tab:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 215, 0, 0.4);
+            color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.2),
+                        0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-tab.active {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border-color: #ffd700;
+            transform: translateY(-3px) scale(1.05);
+            font-weight: 600;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4),
+                        0 0 0 2px rgba(255, 255, 255, 0.2),
+                        0 6px 20px rgba(0, 0, 0, 0.25);
+            animation: activeTabPulse 0.4s ease-out;
+        }
+
+        @keyframes activeTabPulse {
+            0% {
+                transform: translateY(-3px) scale(1);
+                box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            }
+            50% {
+                transform: translateY(-5px) scale(1.08);
+                box-shadow: 0 20px 40px rgba(255, 215, 0, 0.5);
+            }
+            100% {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        .category-tab.active::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.25), 
+                transparent);
+        }
+
+        .category-tab.active:hover {
+            transform: translateY(-4px) scale(1.06);
+            box-shadow: 0 18px 40px rgba(255, 215, 0, 0.5),
+                        0 0 0 2px rgba(255, 255, 255, 0.3),
+                        0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Effect grid - 添加网格动画 */
+        .effects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+            opacity: 1;
+            transition: all 0.5s ease;
+        }
+
+        .effects-grid.switching {
+            opacity: 0;
+            transform: translateY(10px);
+        }        /* 卡片样式和动画 */
+        .effect-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardFadeIn 0.6s ease forwards;
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }        .effect-card:nth-child(1) { animation-delay: 0.1s; }
+        .effect-card:nth-child(2) { animation-delay: 0.2s; }
+        .effect-card:nth-child(3) { animation-delay: 0.3s; }
+        .effect-card:nth-child(4) { animation-delay: 0.4s; }
+        .effect-card:nth-child(5) { animation-delay: 0.5s; }
+        .effect-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* 卡片光效 */
+        .effect-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .effect-card:hover::before {
+            opacity: 1;
+        }
+
+        .effect-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2),
+                        0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .effect-card.premium {
+            border: 2px solid rgba(168, 85, 247, 0.6);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.08));
+        }
+
+        .effect-card.premium:hover {
+            border-color: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.25),
+                        0 0 0 1px rgba(168, 85, 247, 0.3);
+        }
+
+        .effect-card.premium::before {
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+        }
+
+        .effect-card.premium::after {
+            content: 'VIP';
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            background: linear-gradient(135deg, #a855f7, #8b5cf6);
+            color: white;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 0 18px 0 18px;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }        .effect-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .effect-card:hover .effect-icon {
+            transform: scale(1.1) rotateY(15deg);
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+        }
+
+        .effect-name {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .effect-card:hover .effect-name {
+            color: white;
+            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        }
+
+        .effect-price {
+            color: #ffd700;
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+        }
+
+        .effect-free {
+            color: #4ade80;
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(74, 222, 128, 0.3);
+        }
+
+        /* Bottom action */
+        .bottom-action {
+            position: absolute;
+            bottom: 40px;
+            left: 24px;
+            right: 24px;
+            width: calc(100% - 48px);
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 25px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            z-index: 150;
+        }
+
+        .bottom-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Modal */
+        .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            border-radius: 47px;
+            overflow: hidden;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 300px;
+            width: 85%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .modal-detail {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Toast */
+        .toast {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 250;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* 滚动位置指示器 */
+        .scroll-indicator {
+            position: fixed;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+        }
+
+        .scroll-progress {
+            width: 100%;
+            background: linear-gradient(180deg, #ffd700, #ff8c42);
+            border-radius: 2px;
+            transition: height 0.1s ease;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        }        /* 分类标签计数器 */
+        .category-tab .tab-count {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 2px 6px;
+            border-radius: 8px;
+            margin-left: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab.active .tab-count {
+            background: rgba(26, 26, 46, 0.3);
+            color: rgba(26, 26, 46, 0.8);
+        }
+
+        /* 卡片加载动画增强 */
+        .effect-card.loading {
+            background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* 触觉反馈效果 */
+        .category-tab:active,
+        .effect-card:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+
+        /* 夜间模式适配 */
+        @media (prefers-color-scheme: dark) {
+            .content::-webkit-scrollbar-thumb {
+                background: linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(255, 140, 66, 0.8));
+            }
+            
+            .effect-categories::-webkit-scrollbar-thumb {
+                background: linear-gradient(90deg, rgba(255, 215, 0, 0.7), rgba(255, 140, 66, 0.7));
+            }
+        }
+
+        /* 高对比度模式适配 */
+        @media (prefers-contrast: high) {
+            .category-tab {
+                border-width: 2px;
+            }
+            
+            .category-tab.active {
+                border-width: 3px;
+                border-color: #ffd700;
+            }
+            
+            .content::-webkit-scrollbar-thumb {
+                background: #ffd700;
+                border: 1px solid #000;
+            }
+        }
+
+        /* 减少动画模式适配 */
+        @media (prefers-reduced-motion: reduce) {
+            .category-tab,
+            .effect-card,
+            .content::-webkit-scrollbar-thumb,
+            .effect-categories::-webkit-scrollbar-thumb {
+                transition: none;
+                animation: none;
+            }
+            
+            .category-tab::before {
+                display: none;
+            }
+            
+            .effect-categories {
+                scroll-behavior: auto;
+            }
+            
+            .content {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- 3D背景场景 -->
+            <div class="background-scene">
+                <div class="floating-elements">
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                </div>
+            </div>
+
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 顶部导航 -->
+            <div class="nav-bar">
+                <div class="nav-btn" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-title">特效预览</div>
+                <div class="nav-btn" onclick="shareEffect()">
+                    <i class="fas fa-share"></i>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Preview Area -->
+                <div class="preview-area" id="previewArea">
+                    <div class="effect-particles" id="effectContainer"></div>
+                    <div class="preview-content">
+                        <div class="preview-text" id="previewText">点击下方特效预览</div>
+                        <div class="preview-subtitle" id="previewSubtitle">选择你喜欢的祈福特效</div>
+                    </div>
+                </div>                <!-- Effect Categories -->
+                <div class="effect-categories">
+                    <!-- Category tabs with enhanced features -->
+                    <div class="category-tab active" onclick="switchCategory('basic')">
+                        <span class="tab-label">基础特效</span>
+                        <span class="tab-count" data-category="basic">12</span>
+                    </div>
+                    <div class="category-tab" onclick="switchCategory('premium')">
+                        <span class="tab-label">精品特效</span>
+                        <span class="tab-count" data-category="premium">8</span>
+                    </div>
+                    <div class="category-tab" onclick="switchCategory('vip')">
+                        <span class="tab-label">VIP专属</span>
+                        <span class="tab-count" data-category="vip">15</span>
+                    </div>
+                    <div class="category-tab" onclick="switchCategory('limited')">
+                        <span class="tab-label">限时特效</span>
+                        <span class="tab-count" data-category="limited">6</span>
+                    </div>
+                    
+                    <!-- Scroll position indicator -->
+                    <div class="scroll-indicator">
+                        <div class="scroll-progress"></div>
+                    </div>
+                </div>
+
+                <!-- Effects Grid -->
+                <div class="effects-grid" id="effectsGrid">
+                    <!-- Basic Effects -->
+                    <div class="effect-card" onclick="previewEffect('particles', '金色粒子', '免费')">
+                        <div class="effect-icon" style="color: #ffd700;">✨</div>
+                        <div class="effect-name">金色粒子</div>
+                        <div class="effect-free">免费</div>
+                    </div>
+
+                    <div class="effect-card" onclick="previewEffect('hearts', '飘落爱心', '免费')">
+                        <div class="effect-icon" style="color: #ff6b9d;">💖</div>
+                        <div class="effect-name">飘落爱心</div>
+                        <div class="effect-free">免费</div>
+                    </div>
+
+                    <div class="effect-card" onclick="previewEffect('stars', '闪烁星星', '10币')">
+                        <div class="effect-icon" style="color: #ffd700;">⭐</div>
+                        <div class="effect-name">闪烁星星</div>
+                        <div class="effect-price">10币</div>
+                    </div>
+
+                    <div class="effect-card" onclick="previewEffect('fireworks', '绚烂烟花', '20币')">
+                        <div class="effect-icon" style="color: #ff4757;">🎆</div>
+                        <div class="effect-name">绚烂烟花</div>
+                        <div class="effect-price">20币</div>
+                    </div>
+
+                    <div class="effect-card premium" onclick="previewEffect('rainbow', '彩虹光环', 'VIP')">
+                        <div class="effect-icon" style="color: #a855f7;">🌈</div>
+                        <div class="effect-name">彩虹光环</div>
+                        <div class="effect-price">VIP专享</div>
+                    </div>
+
+                    <div class="effect-card premium" onclick="previewEffect('dragon', '金龙护佑', 'VIP')">
+                        <div class="effect-icon" style="color: #ffd700;">🐉</div>
+                        <div class="effect-name">金龙护佑</div>
+                        <div class="effect-price">VIP专享</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Action Button -->
+            <button class="bottom-action" onclick="applyEffect()">
+                应用当前特效
+            </button>
+        </div>
+    </div>
+
+    <!-- Purchase Modal -->
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <div class="modal-title">购买特效</div>
+            <div class="modal-detail" id="modalDetail"></div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closePurchaseModal()">取消</button>
+                <button class="modal-btn confirm" onclick="confirmPurchase()">确认购买</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentEffect = null;
+        let animationInterval = null;        const effects = {
+            basic: [
+                { id: 'particles', name: '金色粒子', icon: '✨', color: '#ffd700', price: '免费' },
+                { id: 'hearts', name: '飘落爱心', icon: '💖', color: '#ff6b9d', price: '免费' },
+                { id: 'stars', name: '闪烁星星', icon: '⭐', color: '#ffd700', price: '10币' },
+                { id: 'fireworks', name: '绚烂烟花', icon: '🎆', color: '#ff4757', price: '20币' }
+            ],
+            premium: [
+                { id: 'rainbow', name: '彩虹光环', icon: '🌈', color: '#a855f7', price: 'VIP专享', premium: true },
+                { id: 'dragon', name: '金龙护佑', icon: '🐉', color: '#ffd700', price: 'VIP专享', premium: true },
+                { id: 'phoenix', name: '凤凰祥瑞', icon: '🦅', color: '#ff6b6b', price: '50币', premium: true },
+                { id: 'lotus', name: '莲花绽放', icon: '🌸', color: '#ff9ff3', price: '30币', premium: true }
+            ],
+            vip: [
+                { id: 'dragon-gold', name: '金龙守护', icon: '🐲', color: '#ffd700', price: 'VIP专享', premium: true },
+                { id: 'phoenix-fire', name: '火凤凰', icon: '🔥', color: '#ff4500', price: 'VIP专享', premium: true }
+            ],
+            limited: [
+                { id: 'meteor', name: '流星雨', icon: '☄️', color: '#00bfff', price: '限时免费', premium: true },
+                { id: 'aurora', name: '极光', icon: '🌌', color: '#9370db', price: '限时优惠', premium: true }
+            ]        };
+
+        // Preview effect
+        function previewEffect(effectType, name, price) {
+            currentEffect = { type: effectType, name, price };
+
+            // Update preview text
+            document.getElementById('previewText').textContent = name;
+            document.getElementById('previewSubtitle').textContent = `正在预览 ${name} 特效`;
+
+            // Clear previous animation
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+
+            const container = document.getElementById('effectContainer');
+            container.innerHTML = '';
+            container.className = 'effect-particles';
+
+            // Start new animation
+            switch (effectType) {
+                case 'particles':
+                    startParticlesEffect(container);
+                    break;
+                case 'hearts':
+                    startHeartsEffect(container);
+                    break;
+                case 'stars':
+                    startStarsEffect(container);
+                    break;
+                case 'fireworks':
+                    startFireworksEffect(container);
+                    break;
+                default:
+                    startParticlesEffect(container);
+            }
+
+            // Add selection effect
+            document.querySelectorAll('.effect-card').forEach(card => {
+                card.style.borderColor = 'rgba(255,255,255,0.2)';
+            });
+            event.currentTarget.style.borderColor = '#ffd700';
+        }
+
+        // Effect animations
+        function startParticlesEffect(container) {
+            container.className = 'effect-particles';
+
+            animationInterval = setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(particle);
+
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 3000);
+            }, 300);
+        }
+
+        function startHeartsEffect(container) {
+            container.className = 'effect-hearts';
+
+            animationInterval = setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 90 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(heart);
+
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.remove();
+                    }
+                }, 4000);
+            }, 800);
+        }
+
+        function startStarsEffect(container) {
+            container.className = 'effect-stars';
+
+            animationInterval = setInterval(() => {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.innerHTML = '⭐';
+                star.style.left = Math.random() * 90 + '%';
+                star.style.top = Math.random() * 90 + '%';
+                star.style.animationDelay = Math.random() * 1 + 's';
+                container.appendChild(star);
+
+                setTimeout(() => {
+                    if (star.parentNode) {
+                        star.remove();
+                    }
+                }, 2000);
+            }, 500);
+        }
+
+        function startFireworksEffect(container) {
+            container.className = 'effect-fireworks';
+
+            animationInterval = setInterval(() => {
+                const colors = ['#ff4757', '#ffa726', '#42a5f5', '#ab47bc', '#66bb6a'];
+                const centerX = Math.random() * 80 + 10;
+                const centerY = Math.random() * 80 + 10;
+
+                for (let i = 0; i < 12; i++) {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.left = centerX + '%';
+                    firework.style.top = centerY + '%';
+                    firework.style.animationDelay = Math.random() * 0.5 + 's';
+
+                    const angle = (i / 12) * 360;
+                    firework.style.transform = `rotate(${angle}deg)`;
+
+                    container.appendChild(firework);
+
+                    setTimeout(() => {
+                        if (firework.parentNode) {
+                            firework.remove();
+                        }
+                    }, 2000);
+                }
+            }, 1500);
+        }        // Apply effect
+        function applyEffect() {
+            if (!currentEffect) {
+                showToast('请先选择一个特效');
+                return;
+            }
+
+            if (currentEffect.price !== '免费' && currentEffect.price !== 'VIP专享' && currentEffect.price !== '限时免费') {
+                // Show purchase modal
+                const modalDetail = document.getElementById('modalDetail');
+                modalDetail.innerHTML = `
+                    <div style="font-size: 18px; color: #ffd700; margin-bottom: 8px;">
+                        ${currentEffect.name}
+                    </div>
+                    <div style="font-size: 16px; margin-bottom: 16px;">
+                        特效价格：${currentEffect.price}
+                    </div>
+                    <div style="font-size: 14px; color: rgba(255,255,255,0.6);">
+                        购买后可永久使用此特效
+                    </div>
+                `;
+
+                document.getElementById('purchaseModal').style.display = 'flex';
+            } else if (currentEffect.price === 'VIP专享') {
+                showToast('该特效需要VIP会员才能使用');
+            } else {
+                showToast(`已应用 ${currentEffect.name} 特效`);
+            }
+        }
+
+        // Close purchase modal
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+        }
+
+        // Confirm purchase
+        function confirmPurchase() {
+            if (currentEffect) {
+                closePurchaseModal();
+                showToast(`购买成功！${currentEffect.name} 特效已解锁`);
+
+                setTimeout(() => {
+                    showToast(`已应用 ${currentEffect.name} 特效`);
+                }, 1500);
+            }
+        }
+
+        // Show toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Navigation functions        // 页面过渡动画
+        function pageTransition(targetPage, callback) {
+            const screen = document.querySelector('.phone-screen');
+            screen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            screen.style.transform = 'scale(0.95)';
+            screen.style.opacity = '0.7';
+
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        function goBack() {
+            showToast('返回个人中心...');
+            pageTransition('personal-center.html');
+        }
+
+        function shareEffect() {
+            if (currentEffect) {
+                showToast(`分享 ${currentEffect.name} 特效`);
+            } else {
+                showToast('请先选择一个特效');
+            }
+        }        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Start with particles effect as default
+            setTimeout(() => {
+                const firstCard = document.querySelector('.effect-card');
+                if (firstCard) {
+                    firstCard.click();
+                }
+            }, 500);
+
+            // Initialize enhanced scroll behaviors
+            initializeEnhancedScrolling();
+            initializeCategoryScrolling();
+        });        // Simplified scrolling functionality (scrollbar removed but scroll behavior enhanced)
+        function initializeEnhancedScrolling() {
+            const content = document.querySelector('.content');
+
+            if (!content) return;
+
+            // Smooth scroll with momentum for touch devices
+            let isScrolling = false;
+            let startY = 0;
+            let velocity = 0;
+
+            content.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+                velocity = 0;
+                isScrolling = true;
+            });
+
+            content.addEventListener('touchmove', (e) => {
+                if (!isScrolling) return;
+                
+                const currentY = e.touches[0].clientY;
+                const deltaY = startY - currentY;
+                velocity = deltaY * 0.8;
+                startY = currentY;
+            });
+
+            content.addEventListener('touchend', () => {
+                if (!isScrolling) return;
+                isScrolling = false;
+                
+                // Apply momentum scrolling
+                if (Math.abs(velocity) > 5) {
+                    applyMomentumScroll(content, velocity);
+                }            });
+        }        // Simplified category scrolling
+        function initializeCategoryScrolling() {
+            const categoryContainer = document.querySelector('.effect-categories');
+
+            if (!categoryContainer) return;
+
+            // Auto-center active tab when switching categories
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    setTimeout(() => {
+                        centerActiveTab();
+                    }, 100);
+                });
+            });
+
+            // Smooth horizontal scrolling with mouse wheel
+            categoryContainer.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+                
+                e.preventDefault();
+                const scrollAmount = e.deltaY * 0.5;
+                categoryContainer.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Center the active tab in the scrollable container
+        function centerActiveTab() {
+            const activeTab = document.querySelector('.category-tab.active');
+            const container = document.querySelector('.effect-categories');
+            
+            if (!activeTab || !container) return;
+
+            const containerWidth = container.offsetWidth;
+            const tabLeft = activeTab.offsetLeft;
+            const tabWidth = activeTab.offsetWidth;
+            
+            const scrollPosition = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+            
+            container.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Apply momentum scrolling effect
+        function applyMomentumScroll(element, velocity) {
+            const friction = 0.95;
+            const minVelocity = 0.5;
+            
+            function scroll() {
+                if (Math.abs(velocity) < minVelocity) return;
+                
+                element.scrollTop += velocity;
+                velocity *= friction;
+                
+                requestAnimationFrame(scroll);
+            }
+            
+            requestAnimationFrame(scroll);
+        }
+
+        // Enhanced category switching with visual feedback
+        function switchCategory(category) {
+            // Update active tab with enhanced animation
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Center the active tab
+            setTimeout(() => {
+                centerActiveTab();
+            }, 100);
+
+            // Add switching animation
+            const grid = document.getElementById('effectsGrid');
+            grid.classList.add('switching');
+
+            setTimeout(() => {
+                // Update effects grid
+                grid.innerHTML = '';
+                
+                const categoryEffects = effects[category] || effects.basic;
+                categoryEffects.forEach((effect, index) => {
+                    const card = document.createElement('div');
+                    card.className = `effect-card ${effect.premium ? 'premium' : ''}`;
+                    card.onclick = () => previewEffect(effect.id, effect.name, effect.price);
+                    card.style.animationDelay = `${(index + 1) * 0.1}s`;
+
+                    card.innerHTML = `
+                        <div class="effect-icon" style="color: ${effect.color};">${effect.icon}</div>
+                        <div class="effect-name">${effect.name}</div>
+                        <div class="${effect.price === '免费' || effect.price === '限时免费' ? 'effect-free' : 'effect-price'}">${effect.price}</div>
+                    `;
+
+                    grid.appendChild(card);
+                });
+
+                grid.classList.remove('switching');
+            }, 250);
+        }
+
+        // Add click effects to cards
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.effect-card')) {
+                const card = e.target.closest('.effect-card');                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            }
+        });
+
+        // Update category counts dynamically
+        function updateCategoryCounts() {
+            document.querySelectorAll('.tab-count').forEach(countElement => {
+                const category = countElement.dataset.category;
+                const count = effects[category] ? effects[category].length : 0;
+                countElement.textContent = count;
+            });
+        }
+
+        // Initialize scroll progress indicator
+        function initializeScrollIndicator() {
+            const categoryContainer = document.querySelector('.effect-categories');
+            const scrollProgress = document.querySelector('.scroll-progress');
+
+            if (!categoryContainer || !scrollProgress) return;
+
+            categoryContainer.addEventListener('scroll', () => {
+                const scrollLeft = categoryContainer.scrollLeft;
+                const scrollWidth = categoryContainer.scrollWidth - categoryContainer.clientWidth;
+                const progress = scrollWidth > 0 ? (scrollLeft / scrollWidth) * 100 : 0;
+                
+                scrollProgress.style.width = `${progress}%`;
+            });
+        }
+
+        // Enhanced initialization with all new features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all enhanced features
+            initializeEnhancedScrolling();
+            initializeCategoryScrolling();
+            updateCategoryCounts();
+            initializeScrollIndicator();
+
+            // Add loading animation completion
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 500);
+
+            console.log('特效预览页面增强功能已完全加载');
+        });
+    </script>
+</body>
+</html>

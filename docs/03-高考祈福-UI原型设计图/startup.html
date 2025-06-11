@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高考祈福 - 启动页</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 动态背景粒子 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, #FFD700, #FF8C42);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 3px;
+            height: 3px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 2px;
+            height: 2px;
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(3) {
+            width: 4px;
+            height: 4px;
+            left: 60%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(4) {
+            width: 2px;
+            height: 2px;
+            left: 80%;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(5) {
+            width: 3px;
+            height: 3px;
+            left: 45%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(6) {
+            width: 5px;
+            height: 5px;
+            left: 25%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: translateY(50vh) rotate(180deg);
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        /* Logo 区域 */
+        .logo-container {
+            margin-bottom: 60px;
+            animation: logoAppear 2s ease-out;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow:
+                0 20px 40px rgba(255, 215, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .logo i {
+            font-size: 48px;
+            color: #0f0f23;
+            z-index: 1;
+        }
+
+        @keyframes logoAppear {
+            0% {
+                transform: scale(0.5) rotate(-10deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        /* 应用名称 */
+        .app-title {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .app-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 80px;
+            line-height: 1.6;
+        }
+
+        /* 祝福语轮播 */
+        .blessing-text {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 80px;
+            position: relative;
+            width: 100%;
+        }
+
+        .blessing-item {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            position: absolute;
+            white-space: nowrap;
+            text-align: center;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            animation: blessingRotate 12s infinite;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .blessing-item:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .blessing-item:nth-child(2) {
+            animation-delay: 4s;
+        }
+
+        .blessing-item:nth-child(3) {
+            animation-delay: 8s;
+        }
+
+        @keyframes blessingRotate {
+            0%,
+            8.33% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+
+            16.67%,
+            25% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            33.33%,
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        /* 按钮组 */
+        .button-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 56px;
+            border-radius: 28px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 底部装饰 */
+        .bottom-decoration {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bottom-decoration i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 动态背景粒子 -->
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <!-- Logo 区域 -->
+                <div class="logo-container">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h1 class="app-title">高考祈福</h1>
+                    <p class="app-subtitle">汇聚温暖祝福，点亮前程之路</p>
+                </div>
+
+                <!-- 祝福语轮播 -->
+                <div class="blessing-text">
+                    <div class="blessing-item">愿所有努力都开花结果 🌸</div>
+                    <div class="blessing-item">金榜题名，前程似锦 ✨</div>
+                    <div class="blessing-item">每一份祝福都有回音 🙏</div>
+                </div>
+
+                <!-- 按钮组 -->
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="startJourney()">
+                        <i class="fas fa-heart mr-2"></i>
+                        开始祈福之旅
+                    </button>
+                    <button class="btn btn-secondary" onclick="quickLogin()">
+                        <i class="fab fa-weixin mr-2"></i>
+                        微信快速登录
+                    </button>
+                </div>
+
+                <!-- 底部装饰 -->
+                <div class="bottom-decoration">
+                    <i class="fas fa-star"></i>
+                    传递温暖，收获希望
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载动画
+        window.addEventListener('load', function () {
+            document.body.style.opacity = '1';
+        });
+
+        // 开始祈福之旅
+        function startJourney() {
+            const btn = event.target;
+            btn.style.transform = 'scale(0.95)';
+
+            // 添加点击特效
+            createClickEffect(event);
+
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+                // 跳转到注册登录页面
+                window.location.href = 'register.html';
+            }, 200);
+        }
+
+        // 微信快速登录 (V2.0预留功能)
+        function quickLogin() {
+            const btn = event.target;
+            btn.style.transform = 'scale(0.95)';
+
+            createClickEffect(event);
+
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+                showToast('V2.0版本将支持微信快速登录');
+                // V2.0版本功能预告
+                setTimeout(() => {
+                    showToast('现在可以使用账号密码注册登录');
+                    setTimeout(() => {
+                        window.location.href = 'register.html';
+                    }, 1500);
+                }, 2000);
+            }, 200);
+        }
+
+        // 点击特效
+        function createClickEffect(e) {
+            const ripple = document.createElement('div');
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ripple.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translate(-50%, -50%);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                z-index: 1000;
+            `;
+
+            e.target.style.position = 'relative';
+            e.target.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // 添加涟漪动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 简单的消息提示
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 20px;
+                font-size: 14px;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // 动态调整粒子动画
+        function adjustParticleAnimation() {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const delay = Math.random() * 6;
+                particle.style.animationDelay = delay + 's';
+                particle.style.left = Math.random() * 100 + '%';
+            });
+        }
+
+        // 初始化动画
+        adjustParticleAnimation();
+
+        // 每隔一段时间重新调整粒子位置
+        setInterval(adjustParticleAnimation, 10000);
+    </script>
+</body>
+</html>

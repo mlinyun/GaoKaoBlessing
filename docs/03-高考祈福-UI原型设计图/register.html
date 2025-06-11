@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高考祈福 - 登录注册</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 动态背景粒子 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, #FFD700, #FF8C42);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 2px;
+            height: 2px;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 3px;
+            height: 3px;
+            left: 45%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 2px;
+            height: 2px;
+            left: 75%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            width: 4px;
+            height: 4px;
+            left: 25%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(50vh) rotate(180deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 导航栏 */
+        .nav-bar {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 100;
+        }
+
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-right: 40px;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: calc(100% - 107px);
+            margin-top: 107px;
+            padding: 40px 24px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Logo 区域 */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .mini-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow:
+                0 15px 30px rgba(255, 215, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mini-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .mini-logo i {
+            font-size: 32px;
+            color: #0f0f23;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .welcome-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+            transition: all 0.4s ease;
+        }
+
+        .welcome-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.4s ease;
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        /* 登录表单区域 */
+        .login-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-group.slide-out {
+            opacity: 0;
+            transform: translateY(-10px);
+            margin-bottom: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .input-group.slide-in {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+                height: 0;
+                margin-bottom: 0;
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                height: auto;
+                margin-bottom: 20px;
+            }
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 0 16px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-field:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .verification-group {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .verification-input {
+            flex: 1;
+        }
+
+        .password-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .mode-switch {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 4px;
+            margin-top: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            height: 40px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.active {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        .forgot-password {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 215, 0, 0.8);
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #FFD700;
+        }
+
+        .register-guide,
+        .login-guide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .guide-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .guide-btn {
+            background: none;
+            border: none;
+            color: #FFD700;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .guide-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFF;
+        }
+
+        .third-party-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .third-party-btn.disabled:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .verification-btn {
+            height: 48px;
+            padding: 0 16px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            color: #FFD700;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+
+        .verification-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .verification-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 登录按钮 */
+        .login-btn {
+            width: 100%;
+            height: 52px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            border: none;
+            border-radius: 26px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f0f23;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.5;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        /* 分割线 */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        /* 第三方登录 */
+        .third-party-login {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .third-party-btn {
+            flex: 1;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .third-party-btn.wechat {
+            border-color: rgba(7, 193, 96, 0.3);
+            color: #07C160;
+        }
+
+        .third-party-btn.wechat:hover {
+            background: rgba(7, 193, 96, 0.1);
+            border-color: rgba(7, 193, 96, 0.5);
+        }
+
+        .third-party-btn.qq {
+            border-color: rgba(18, 183, 245, 0.3);
+            color: #12B7F5;
+        }
+
+        .third-party-btn.qq:hover {
+            background: rgba(18, 183, 245, 0.1);
+            border-color: rgba(18, 183, 245, 0.5);
+        }
+
+        /* 底部协议 */
+        .agreement {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+            margin-top: auto;
+        }
+
+        .agreement a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .agreement a:hover {
+            text-decoration: underline;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 导航栏 -->
+            <div class="nav-bar">
+                <div class="nav-back" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-title">登录注册</div>
+            </div>
+
+            <!-- 动态背景粒子 -->
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <!-- Logo 区域 -->
+                <div class="logo-section">
+                    <div class="mini-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="welcome-text">欢迎来到高考祈福</div>
+                    <div class="welcome-subtitle">为考生送上最真挚的祝福</div>
+                </div>
+                <!-- 登录表单 -->
+                <div class="login-form">
+                    <div class="form-card">
+                        <div class="input-group">
+                            <label class="input-label">用户名</label>
+                            <input type="text" class="input-field" placeholder="请输入用户名 (4-20个字符)" id="usernameInput"
+                                maxlength="20">
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">密码</label>
+                            <div class="password-group">
+                                <input type="password" class="input-field" placeholder="请输入密码 (6-20位)"
+                                    id="passwordInput" maxlength="20">
+                                <button class="password-toggle" id="passwordToggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 邮箱输入框，默认隐藏，只在注册时显示 -->
+                        <div class="input-group" id="emailGroup" style="display: none;">
+                            <label class="input-label">邮箱 (可选，用于找回密码)</label>
+                            <input type="email" class="input-field" placeholder="请输入邮箱地址" id="emailInput">
+                        </div>
+                    </div>
+
+                    <button class="login-btn" id="submitBtn" onclick="handleSubmit()">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span id="submitBtnText">登录</span>
+                    </button>
+
+                    <!-- 忘记密码链接，只在登录模式显示 -->
+                    <div class="forgot-password" id="forgotPassword" onclick="forgotPassword()">
+                        忘记密码？
+                    </div>
+
+                    <!-- 注册引导，只在登录模式显示 -->
+                    <div class="register-guide" id="registerGuide">
+                        <span class="guide-text">还没有账号？</span>
+                        <button class="guide-btn" onclick="switchMode('register')">立即注册</button>
+                    </div>
+
+                    <!-- 登录引导，只在注册模式显示 -->
+                    <div class="login-guide" id="loginGuide" style="display: none;">
+                        <span class="guide-text">已有账号？</span>
+                        <button class="guide-btn" onclick="switchMode('login')">立即登录</button>
+                    </div>
+
+                    <div class="divider">
+                        <span>预留功能 (V2.0)</span>
+                    </div>
+
+                    <div class="third-party-login">
+                        <div class="third-party-btn wechat disabled" onclick="showToast('V2.0版本将支持微信登录')">
+                            <i class="fab fa-weixin"></i>
+                            微信登录
+                        </div>
+                        <div class="third-party-btn qq disabled" onclick="showToast('V2.0版本将支持QQ登录')">
+                            <i class="fab fa-qq"></i>
+                            QQ登录
+                        </div>
+                    </div>
+
+                    <div class="agreement">
+                        登录即表示同意
+                        <a href="#" onclick="showUserAgreement()">《用户协议》</a>
+                        和
+                        <a href="#" onclick="showPrivacyPolicy()">《隐私政策》</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentMode = 'login'; // 'login' 或 'register'
+
+        // 页面加载动画
+        window.addEventListener('load', function () {
+            document.body.style.opacity = '1';
+        });
+
+        // 返回上一页
+        function goBack() {
+            showToast('返回启动页面...');
+            // 跳转到启动页面
+            setTimeout(() => {
+                window.location.href = 'startup.html';
+            }, 800);
+        }
+
+        // 用户名输入验证
+        document.getElementById('usernameInput').addEventListener('input', function (e) {
+            let value = e.target.value;
+            // 只允许字母、数字、下划线
+            value = value.replace(/[^a-zA-Z0-9_]/g, '');
+            if (value.length <= 20) {
+                e.target.value = value;
+            }
+            validateForm();
+        });
+
+        // 密码输入验证
+        document.getElementById('passwordInput').addEventListener('input', function (e) {
+            validateForm();
+        });
+
+        // 邮箱输入验证
+        document.getElementById('emailInput').addEventListener('input', function (e) {
+            validateForm();
+        });
+
+        // 表单验证
+        function validateForm() {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const email = document.getElementById('emailInput').value;
+            const submitBtn = document.getElementById('submitBtn');
+
+            // 验证用户名 (4-20个字符)
+            const usernameValid = username.length >= 4 && username.length <= 20;
+
+            // 验证密码 (6-20位)
+            const passwordValid = password.length >= 6 && password.length <= 20;
+
+            // 邮箱验证 (可选，但如果填写了就要格式正确)
+            const emailValid = email === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+            // 登录模式：用户名+密码即可
+            // 注册模式：用户名+密码+邮箱(推荐)
+            let isValid = false;
+            if (currentMode === 'login') {
+                isValid = usernameValid && passwordValid;
+            } else {
+                isValid = usernameValid && passwordValid && emailValid;
+            }
+
+            submitBtn.disabled = !isValid;
+        }
+
+        // 切换密码显示/隐藏
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // 切换登录/注册模式
+        function switchMode(mode) {
+            currentMode = mode;
+            const submitBtnText = document.getElementById('submitBtnText');
+            const forgotPassword = document.getElementById('forgotPassword');
+            const emailGroup = document.getElementById('emailGroup');
+            const registerGuide = document.getElementById('registerGuide');
+            const loginGuide = document.getElementById('loginGuide');
+            const navTitle = document.querySelector('.nav-title');
+            const welcomeText = document.querySelector('.welcome-text');
+            const welcomeSubtitle = document.querySelector('.welcome-subtitle');
+
+            // 添加切换动画效果
+            const elements = [navTitle, welcomeText, welcomeSubtitle];
+            elements.forEach(el => {
+                el.style.opacity = '0.5';
+                el.style.transform = 'translateY(-5px)';
+            });
+
+            setTimeout(() => {
+                if (mode === 'login') {
+                    // 更新界面标题和欢迎文本
+                    navTitle.textContent = '用户登录';
+                    welcomeText.textContent = '欢迎回来';
+                    welcomeSubtitle.textContent = '登录后即可为考生送上祝福';
+
+                    // 更新按钮和显示元素
+                    submitBtnText.textContent = '登录';
+                    forgotPassword.style.display = 'block';
+
+                    // 动画隐藏邮箱输入框
+                    if (emailGroup.style.display !== 'none') {
+                        emailGroup.style.opacity = '0';
+                        emailGroup.style.transform = 'translateY(-10px)';
+                        setTimeout(() => {
+                            emailGroup.style.display = 'none';
+                            emailGroup.style.opacity = '1';
+                            emailGroup.style.transform = 'translateY(0)';
+                        }, 200);
+                    }
+
+                    registerGuide.style.display = 'flex';
+                    loginGuide.style.display = 'none';
+
+                    // 清空邮箱输入框
+                    document.getElementById('emailInput').value = '';
+                } else {
+                    // 更新界面标题和欢迎文本
+                    navTitle.textContent = '用户注册';
+                    welcomeText.textContent = '加入高考祈福';
+                    welcomeSubtitle.textContent = '创建账号，开始您的祈福之旅';
+
+                    // 更新按钮和显示元素
+                    submitBtnText.textContent = '注册';
+                    forgotPassword.style.display = 'none';
+
+                    // 动画显示邮箱输入框
+                    emailGroup.style.display = 'block';
+                    emailGroup.style.opacity = '0';
+                    emailGroup.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        emailGroup.style.opacity = '1';
+                        emailGroup.style.transform = 'translateY(0)';
+                    }, 100);
+
+                    registerGuide.style.display = 'none';
+                    loginGuide.style.display = 'flex';
+                }
+
+                // 恢复文本动画
+                setTimeout(() => {
+                    elements.forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    });
+                }, 100);
+
+                validateForm();
+            }, 150);
+        }
+
+        // 处理提交 (登录/注册)
+        function handleSubmit() {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const email = document.getElementById('emailInput').value;
+
+            if (currentMode === 'login') {
+                login(username, password);
+            } else {
+                register(username, password, email);
+            }
+        }
+
+        // 登录
+        function login(username, password) {
+            if (username.length < 4 || username.length > 20) {
+                showToast('用户名长度为4-20个字符');
+                return;
+            }
+
+            if (password.length < 6 || password.length > 20) {
+                showToast('密码长度为6-20位');
+                return;
+            }
+
+            // 模拟登录过程
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>登录中...';
+
+            setTimeout(() => {
+                showToast('登录成功！即将进入主页...');
+                // 这里可以跳转到主页
+                setTimeout(() => {
+                    window.location.href = 'blessing-main.html';
+                }, 1500);
+            }, 2000);
+        }
+
+        // 注册
+        function register(username, password, email) {
+            if (username.length < 4 || username.length > 20) {
+                showToast('用户名长度为4-20个字符');
+                return;
+            }
+
+            if (password.length < 6 || password.length > 20) {
+                showToast('密码长度为6-20位');
+                return;
+            }
+
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('请输入正确的邮箱格式');
+                return;
+            }
+
+            // 模拟注册过程
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>注册中...';
+
+            setTimeout(() => {
+                showToast('注册成功！欢迎加入高考祈福！');
+                // 注册成功后自动切换到登录模式
+                setTimeout(() => {
+                    switchMode('login');
+                    // 保留用户名，清空密码和邮箱，让用户重新登录
+                    document.getElementById('passwordInput').value = '';
+                    document.getElementById('emailInput').value = '';
+                    // 确保邮箱输入框被隐藏
+                    const emailGroup = document.getElementById('emailGroup');
+                    emailGroup.style.display = 'none';
+                    const submitBtn = document.getElementById('submitBtn');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-heart mr-2"></i><span id="submitBtnText">登录</span>';
+                    showToast('请使用刚才注册的账号密码登录');
+                }, 1500);
+            }, 2000);
+        }
+
+        // 忘记密码
+        function forgotPassword() {
+            const username = document.getElementById('usernameInput').value;
+            if (!username) {
+                showToast('请先输入用户名');
+                return;
+            }
+            showToast('密码重置链接已发送到您绑定的邮箱');
+        }
+
+        // 显示用户协议
+        function showUserAgreement() {
+            showToast('用户协议页面');
+        }
+
+        // 显示隐私政策
+        function showPrivacyPolicy() {
+            showToast('隐私政策页面');
+        }
+
+        // 添加点击特效
+        function createClickEffect(e) {
+            const ripple = document.createElement('div');
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ripple.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translate(-50%, -50%);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                z-index: 1000;
+            `;
+
+            e.target.style.position = 'relative';
+            e.target.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // 为所有按钮添加点击特效
+        document.addEventListener('click', function (e) {
+            if (e.target.matches('button, .third-party-btn, .nav-back')) {
+                createClickEffect(e);
+            }
+        });
+
+        // 涟漪动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 消息提示
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 20px;
+                font-size: 14px;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // 初始化页面
+        function initializePage() {
+            // 确保邮箱输入框初始状态为隐藏
+            const emailGroup = document.getElementById('emailGroup');
+            emailGroup.style.display = 'none';
+
+            // 设置默认为登录模式
+            switchMode('login');
+            // 初始化表单验证
+            validateForm();
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>

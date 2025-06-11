@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 高考祈福</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f0f23 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 星光粒子背景 */
+        .star-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star-particle {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 12px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .star-particle:nth-child(1) {
+            top: 15%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .star-particle:nth-child(2) {
+            top: 25%;
+            right: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .star-particle:nth-child(3) {
+            top: 45%;
+            left: 10%;
+            animation-delay: 1s;
+        }
+
+        .star-particle:nth-child(4) {
+            top: 65%;
+            right: 25%;
+            animation-delay: 1.5s;
+        }
+
+        .star-particle:nth-child(5) {
+            top: 75%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .star-particle:nth-child(6) {
+            top: 85%;
+            right: 20%;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* iPhone状态栏 */
+        .status-bar {
+            height: 47px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+        }
+
+        .signal-bar {
+            width: 3px;
+            background: white;
+            border-radius: 1px;
+        }
+
+        .signal-bar:nth-child(1) {
+            height: 4px;
+        }
+
+        .signal-bar:nth-child(2) {
+            height: 6px;
+        }
+
+        .signal-bar:nth-child(3) {
+            height: 8px;
+        }
+
+        .signal-bar:nth-child(4) {
+            height: 10px;
+        }
+
+        .wifi-icon {
+            font-size: 12px;
+        }
+
+        .battery-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .battery-level {
+            font-size: 12px;
+        }
+
+        .battery-icon {
+            width: 22px;
+            height: 11px;
+            border: 1px solid white;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 3px;
+            width: 2px;
+            height: 5px;
+            background: white;
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-fill {
+            width: 75%;
+            height: 100%;
+            background: white;
+            border-radius: 1px;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .nav-button i {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+        }
+
+        .nav-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+            /* 隐藏滚动条但保留滚动功能 */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge */
+        }
+
+        /* 隐藏 Webkit 浏览器的滚动条 */
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 应用Logo和标题 */
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .app-logo i {
+            font-size: 40px;
+            color: #000;
+        }
+
+        .app-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 8px;
+        }
+
+        .app-slogan {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* 版本信息卡片 */
+        .version-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .version-info h3 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .version-number {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .update-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .update-status.checking {
+            color: #87ceeb;
+        }
+
+        .update-status.latest {
+            color: #90ee90;
+        }
+
+        .update-status.available {
+            color: #ffd700;
+        }
+
+        .check-update-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .check-update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .check-update-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 功能列表 */
+        .feature-list {
+            margin-bottom: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(20px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .feature-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .feature-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 16px;
+        }
+
+        .feature-text h4 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .feature-text p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+        }
+
+        .feature-arrow {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        /* 统计信息 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 开发团队信息 */
+        .team-info {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .team-header h3 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .team-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* 联系方式 */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item i {
+            color: #ffd700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .contact-item span {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            display: block;
+        }
+
+        /* 版权信息 */
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 加载动画 */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 彩蛋提示 */
+        .easter-egg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            z-index: 10000;
+            display: none;
+        }
+
+        .easter-egg.show {
+            display: block;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            20%,
+            80% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- 星光粒子背景 -->
+            <div class="star-particles">
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+                <div class="star-particle"><i class="fas fa-star"></i></div>
+            </div>
+
+            <!-- iPhone状态栏 -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <div class="status-time" id="status-time">9:41</div>
+                </div>
+                <div class="status-right">
+                    <div class="signal-bars">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                    </div>
+                    <i class="fas fa-wifi wifi-icon"></i>
+                    <div class="battery-container">
+                        <span class="battery-level">75%</span>
+                        <div class="battery-icon">
+                            <div class="battery-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="nav-title">关于我们</div>
+                <div class="nav-button" onclick="showMenu()">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+
+            <!-- 主内容区域 -->
+            <div class="main-content">
+                <!-- 应用头部 -->
+                <div class="app-header" onclick="handleLogoClick()">
+                    <div class="app-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="app-name">高考祈福</div>
+                    <div class="app-slogan">为梦想加油，让祝福传递<br>愿每一份努力都能开花结果</div>
+                </div>
+
+                <!-- 版本信息 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <div class="version-info">
+                            <h3>当前版本</h3>
+                            <div class="version-number" id="current-version">v2.1.0</div>
+                        </div>
+                        <div class="update-status" id="update-status">
+                            <i class="fas fa-check-circle"></i>
+                            <span>已是最新版本</span>
+                        </div>
+                    </div>
+                    <button class="check-update-btn" onclick="checkForUpdates()" id="update-btn">
+                        检查更新
+                    </button>
+                </div>
+
+                <!-- 应用统计 -->
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="blessing-count">10,086</div>
+                        <div class="stat-label">累计祝福数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="user-count">2,024</div>
+                        <div class="stat-label">注册用户数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="days-count">365</div>
+                        <div class="stat-label">运营天数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="success-rate">98.6%</div>
+                        <div class="stat-label">祝福成功率</div>
+                    </div>
+                </div>
+
+                <!-- 功能列表 -->
+                <div class="feature-list">
+                    <div class="feature-item" onclick="showVersionHistory()">
+                        <div class="feature-content">
+                            <div class="feature-left">
+                                <div class="feature-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>版本历史</h4>
+                                    <p>查看应用更新记录</p>
+                                </div>
+                            </div>
+                            <div class="feature-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-item" onclick="showPrivacyPolicy()">
+                        <div class="feature-content">
+                            <div class="feature-left">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>隐私政策</h4>
+                                    <p>了解我们如何保护您的隐私</p>
+                                </div>
+                            </div>
+                            <div class="feature-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-item" onclick="showTermsOfService()">
+                        <div class="feature-content">
+                            <div class="feature-left">
+                                <div class="feature-icon">
+                                    <i class="fas fa-file-contract"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>服务条款</h4>
+                                    <p>查看使用条款和协议</p>
+                                </div>
+                            </div>
+                            <div class="feature-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-item" onclick="showFeedback()">
+                        <div class="feature-content">
+                            <div class="feature-left">
+                                <div class="feature-icon">
+                                    <i class="fas fa-comment-dots"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>意见反馈</h4>
+                                    <p>告诉我们您的想法和建议</p>
+                                </div>
+                            </div>
+                            <div class="feature-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-item" onclick="rateApp()">
+                        <div class="feature-content">
+                            <div class="feature-left">
+                                <div class="feature-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>给应用评分</h4>
+                                    <p>您的支持是我们前进的动力</p>
+                                </div>
+                            </div>
+                            <div class="feature-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-item" onclick="shareApp()">
+                        <div class="feature-content">
+                            <div class="feature-left">
+                                <div class="feature-icon">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>分享应用</h4>
+                                    <p>推荐给更多需要祝福的朋友</p>
+                                </div>
+                            </div>
+                            <div class="feature-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 开发团队信息 -->
+                <div class="team-info">
+                    <div class="team-header">
+                        <h3>开发团队</h3>
+                        <div class="team-description">
+                            我们是一群热爱教育事业的开发者，致力于为广大学子和家长提供温馨的祝福平台。
+                            每一行代码都承载着我们对教育的敬意和对未来的美好期待。
+                        </div>
+                    </div>
+
+                    <div class="contact-grid">
+                        <div class="contact-item" onclick="sendEmail()">
+                            <i class="fas fa-envelope"></i>
+                            <span>邮箱联系</span>
+                        </div>
+                        <div class="contact-item" onclick="openWeChat()">
+                            <i class="fab fa-weixin"></i>
+                            <span>微信客服</span>
+                        </div>
+                        <div class="contact-item" onclick="visitWebsite()">
+                            <i class="fas fa-globe"></i>
+                            <span>官方网站</span>
+                        </div>
+                        <div class="contact-item" onclick="callSupport()">
+                            <i class="fas fa-phone"></i>
+                            <span>电话咨询</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 版权信息 -->
+                <div class="copyright">
+                    © 2024 高考祈福团队 版权所有<br>
+                    让每一份祝福都能传递到心中
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 彩蛋提示 -->
+    <div class="easter-egg" id="easter-egg">
+        <div>🎉 恭喜发现彩蛋！🎉</div>
+        <div style="margin-top: 8px; font-size: 14px;">
+            愿所有考生都能金榜题名！
+        </div>
+    </div>
+
+    <script>
+        let logoClickCount = 0;
+        let logoClickTimer = null;
+
+        // 初始化
+        function init() {
+            updateStatusBarTime();
+            loadStats();
+            // 每分钟更新一次时间
+            setInterval(updateStatusBarTime, 60000);
+        }
+
+        // 更新状态栏时间
+        function updateStatusBarTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            document.getElementById('status-time').textContent = timeString;
+        }
+
+        // 加载统计数据
+        function loadStats() {
+            // 模拟从服务器加载统计数据
+            const stats = {
+                blessings: Math.floor(Math.random() * 5000) + 8000,
+                users: Math.floor(Math.random() * 1000) + 1500,
+                days: Math.floor((Date.now() - new Date('2023-06-07').getTime()) / (1000 * 60 * 60 * 24)),
+                successRate: (95 + Math.random() * 4).toFixed(1)
+            };
+
+            // 动画更新数字
+            animateNumber('blessing-count', stats.blessings);
+            animateNumber('user-count', stats.users);
+            animateNumber('days-count', stats.days);
+            document.getElementById('success-rate').textContent = stats.successRate + '%';
+        }
+
+        // 数字动画
+        function animateNumber(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const startValue = 0;
+            const duration = 2000;
+            const startTime = Date.now();
+
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
+
+                element.textContent = currentValue.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            update();
+        }
+
+        // 检查更新
+        function checkForUpdates() {
+            const btn = document.getElementById('update-btn');
+            const status = document.getElementById('update-status');
+
+            // 禁用按钮
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> 检查中...';
+
+            // 更新状态
+            status.className = 'update-status checking';
+            status.innerHTML = '<i class="fas fa-sync fa-spin"></i><span>正在检查...</span>';
+
+            // 模拟网络请求
+            setTimeout(() => {
+                const hasUpdate = Math.random() > 0.7; // 30% 概率有更新
+
+                if (hasUpdate) {
+                    status.className = 'update-status available';
+                    status.innerHTML = '<i class="fas fa-download"></i><span>发现新版本 v2.2.0</span>';
+                    btn.innerHTML = '立即更新';
+                    btn.onclick = downloadUpdate;
+                } else {
+                    status.className = 'update-status latest';
+                    status.innerHTML = '<i class="fas fa-check-circle"></i><span>已是最新版本</span>';
+                    btn.innerHTML = '检查更新';
+                }
+
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // 下载更新
+        function downloadUpdate() {
+            alert('正在跳转到应用商店下载最新版本...');
+        }
+
+        // Logo点击彩蛋
+        function handleLogoClick() {
+            logoClickCount++;
+
+            if (logoClickTimer) {
+                clearTimeout(logoClickTimer);
+            }
+
+            logoClickTimer = setTimeout(() => {
+                logoClickCount = 0;
+            }, 3000);
+
+            if (logoClickCount >= 7) {
+                showEasterEgg();
+                logoClickCount = 0;
+            }
+        }
+
+        // 显示彩蛋
+        function showEasterEgg() {
+            const easterEgg = document.getElementById('easter-egg');
+            easterEgg.classList.add('show');
+
+            setTimeout(() => {
+                easterEgg.classList.remove('show');
+            }, 3000);
+        }
+
+        // 版本历史
+        function showVersionHistory() {
+            alert('版本历史\n\nv2.1.0 (当前版本)\n- 优化祝福墙加载速度\n- 新增夜间模式\n- 修复已知问题\n\nv2.0.0\n- 全新UI设计\n- 新增社交功能\n- 支持多语言\n\nv1.0.0\n- 首次发布');
+        }
+
+        // 隐私政策
+        function showPrivacyPolicy() {
+            alert('隐私政策\n\n我们非常重视您的隐私保护：\n\n1. 我们只收集必要的用户信息\n2. 您的个人数据将被严格保密\n3. 我们不会向第三方分享您的信息\n4. 您可以随时删除您的账户和数据\n\n详细内容请访问官网查看完整隐私政策。');
+        }
+
+        // 服务条款
+        function showTermsOfService() {
+            alert('服务条款\n\n使用本应用即表示您同意：\n\n1. 遵守相关法律法规\n2. 不发布违法违规内容\n3. 尊重他人权益\n4. 理性使用应用功能\n\n我们保留对违规行为的处理权利。');
+        }
+
+        // 意见反馈
+        function showFeedback() {
+            const feedback = prompt('请输入您的意见或建议：');
+            if (feedback && feedback.trim()) {
+                alert('感谢您的反馈！我们会认真考虑您的建议。');
+            }
+        }
+
+        // 应用评分
+        function rateApp() {
+            if (confirm('您喜欢这个应用吗？\n\n点击确定前往应用商店评分，您的支持对我们很重要！')) {
+                alert('正在跳转到应用商店...');
+            }
+        }
+
+        // 分享应用
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '高考祈福',
+                    text: '一款温馨的高考祝福应用，为梦想加油！',
+                    url: window.location.href
+                });
+            } else {
+                // 复制链接到剪贴板
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('应用链接已复制到剪贴板，快去分享给朋友吧！');
+                });
+            }
+        }
+
+        // 联系方式
+        function sendEmail() {
+            window.location.href = 'mailto:support@gaokao-blessing.com?subject=高考祈福应用反馈';
+        }
+
+        function openWeChat() {
+            alert('微信客服号：GaoKaoBlessing\n\n请添加微信好友联系客服');
+        }
+
+        function visitWebsite() {
+            window.open('https://gaokao-blessing.com', '_blank');
+        }
+
+        function callSupport() {
+            if (confirm('拨打客服电话：400-123-4567')) {
+                window.location.href = 'tel:400-123-4567';
+            }
+        }
+
+        // 导航功能
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'personal-center.html';
+            }
+        }
+
+        function showMenu() {
+            alert('菜单功能\n\n• 刷新页面\n• 分享页面\n• 复制链接');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
