@@ -4,7 +4,8 @@
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">16dp</dimen>
-    <dimen name="spacing_lg">24dp</dimen>    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
     <dimen name="spacing_xxl">48dp</dimen>
 
     <!-- 状态栏高度 -->
@@ -50,4 +51,6 @@
     <dimen name="text_size_title">16sp</dimen>
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_xl">20sp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

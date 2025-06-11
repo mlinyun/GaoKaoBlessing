@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高考祈福 - 设置</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, 
+                #0f0f23 0%, 
+                #1a1a2e 30%, 
+                #16213e  60%, 
+                #0f0f23 100%);
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .spacer {
+            width: 40px;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: calc(100% - 107px);
+            margin-top: 107px;
+            padding: 20px 24px;
+            overflow-y: auto;
+        }
+
+        /* 滚动条样式 */
+        .main-content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 设置组 */
+        .settings-group {
+            margin-bottom: 32px;
+        }
+
+        .group-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-title i {
+            color: #FFD700;
+        }
+
+        .settings-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* 设置项 */
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 4px;
+        }
+
+        .setting-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+        }
+
+        /* 开关按钮 */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 11px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(18px);
+        }
+
+        /* 选择器 */
+        .select-control {
+            min-width: 100px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .select-control:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        /* 操作按钮 */
+        .action-button {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .action-button.primary {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .action-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .action-button.danger {
+            background: rgba(255, 82, 82, 0.1);
+            border-color: rgba(255, 82, 82, 0.3);
+            color: #ff5252;
+        }
+
+        .action-button.danger:hover {
+            background: rgba(255, 82, 82, 0.2);
+        }
+
+        /* 统计信息 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 版本信息 */
+        .version-info {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-group {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .settings-group:nth-child(2) { animation-delay: 0.1s; }
+        .settings-group:nth-child(3) { animation-delay: 0.2s; }
+        .settings-group:nth-child(4) { animation-delay: 0.3s; }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="back-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="page-title">设置</div>
+                <div class="spacer"></div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <!-- 数据统计 -->
+                <div class="settings-group">
+                    <div class="group-title">
+                        <i class="fas fa-chart-bar"></i>
+                        使用统计
+                    </div>
+                    <div class="settings-card">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="blessingCount">0</div>
+                                <div class="stat-label">祈福次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="studentCount">0</div>
+                                <div class="stat-label">关注学生</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 界面设置 -->
+                <div class="settings-group">
+                    <div class="group-title">
+                        <i class="fas fa-palette"></i>
+                        界面设置
+                    </div>
+                    <div class="settings-card">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">动画效果</div>
+                                <div class="setting-desc">启用页面切换和交互动画</div>
+                            </div>
+                            <div class="toggle-switch" id="animationsToggle" onclick="toggleSetting('animations', this)">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">触觉反馈</div>
+                                <div class="setting-desc">点击时产生震动反馈</div>
+                            </div>
+                            <div class="toggle-switch" id="hapticToggle" onclick="toggleSetting('hapticFeedback', this)">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">音效</div>
+                                <div class="setting-desc">启用按钮点击音效</div>
+                            </div>
+                            <div class="toggle-switch" id="soundToggle" onclick="toggleSetting('soundEnabled', this)">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知设置 -->
+                <div class="settings-group">
+                    <div class="group-title">
+                        <i class="fas fa-bell"></i>
+                        通知设置
+                    </div>
+                    <div class="settings-card">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">推送通知</div>
+                                <div class="setting-desc">接收祈福和系统消息通知</div>
+                            </div>
+                            <div class="toggle-switch" id="notificationsToggle" onclick="toggleSetting('notifications', this)">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">自动刷新</div>
+                                <div class="setting-desc">定期自动更新数据内容</div>
+                            </div>
+                            <div class="toggle-switch" id="autoRefreshToggle" onclick="toggleSetting('autoRefresh', this)">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 数据管理 -->
+                <div class="settings-group">
+                    <div class="group-title">
+                        <i class="fas fa-database"></i>
+                        数据管理
+                    </div>
+                    <div class="settings-card">
+                        <button class="action-button" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            导出数据
+                        </button>
+                        <button class="action-button" onclick="importData()">
+                            <i class="fas fa-upload"></i>
+                            导入数据
+                        </button>
+                        <button class="action-button danger" onclick="clearAllData()">
+                            <i class="fas fa-trash"></i>
+                            清除所有数据
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 关于 -->
+                <div class="settings-group">
+                    <div class="group-title">
+                        <i class="fas fa-info-circle"></i>
+                        关于应用
+                    </div>
+                    <div class="settings-card">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-title">应用版本</div>
+                                <div class="setting-desc">高考祈福 v1.0.0</div>
+                            </div>
+                            <button class="action-button" onclick="checkUpdate()" style="width: auto; padding: 8px 16px; margin: 0;">
+                                检查更新
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 版本信息 -->
+                <div class="version-info">
+                    © 2025 高考祈福应用<br>
+                    为所有考生加油！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面过渡动画
+        function pageTransition(targetPage, callback) {
+            const phoneScreen = document.querySelector('.phone-screen');
+            phoneScreen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            phoneScreen.style.transform = 'scale(0.95)';
+            phoneScreen.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        // 返回上一页
+        function goBack() {
+            pageTransition('personal-center.html');
+        }
+
+        // 数据管理器（简化版）
+        const SettingsDataManager = {
+            getUserPreferences() {
+                try {
+                    const saved = localStorage.getItem('blessing_user_preferences');
+                    return saved ? JSON.parse(saved) : {
+                        theme: 'dark',
+                        animations: true,
+                        notifications: true,
+                        hapticFeedback: true,
+                        autoRefresh: true,
+                        soundEnabled: false
+                    };
+                } catch (e) {
+                    return {
+                        theme: 'dark',
+                        animations: true,
+                        notifications: true,
+                        hapticFeedback: true,
+                        autoRefresh: true,
+                        soundEnabled: false
+                    };
+                }
+            },
+
+            saveUserPreferences(preferences) {
+                try {
+                    localStorage.setItem('blessing_user_preferences', JSON.stringify(preferences));
+                } catch (e) {
+                    console.warn('无法保存设置:', e);
+                }
+            },
+
+            getBlessingRecords() {
+                try {
+                    const saved = localStorage.getItem('blessing_records');
+                    return saved ? JSON.parse(saved) : [];
+                } catch (e) {
+                    return [];
+                }
+            },
+
+            getStudentData() {
+                try {
+                    const saved = localStorage.getItem('blessing_students');
+                    return saved ? JSON.parse(saved) : [];
+                } catch (e) {
+                    return [];
+                }
+            }
+        };
+
+        // 切换设置
+        function toggleSetting(settingKey, toggleElement) {
+            const preferences = SettingsDataManager.getUserPreferences();
+            preferences[settingKey] = !preferences[settingKey];
+            SettingsDataManager.saveUserPreferences(preferences);
+            
+            // 更新UI
+            if (preferences[settingKey]) {
+                toggleElement.classList.add('active');
+            } else {
+                toggleElement.classList.remove('active');
+            }
+            
+            // 触觉反馈
+            if (navigator.vibrate && preferences.hapticFeedback) {
+                navigator.vibrate(50);
+            }
+            
+            showToast(`${getSettingName(settingKey)}已${preferences[settingKey] ? '开启' : '关闭'}`);
+        }
+
+        // 获取设置名称
+        function getSettingName(key) {
+            const names = {
+                animations: '动画效果',
+                hapticFeedback: '触觉反馈',
+                soundEnabled: '音效',
+                notifications: '推送通知',
+                autoRefresh: '自动刷新'
+            };
+            return names[key] || key;
+        }
+
+        // 导出数据
+        function exportData() {
+            try {
+                const data = {
+                    preferences: SettingsDataManager.getUserPreferences(),
+                    blessings: SettingsDataManager.getBlessingRecords(),
+                    students: SettingsDataManager.getStudentData(),
+                    exportTime: new Date().toISOString(),
+                    version: '1.0.0'
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `高考祈福数据_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showToast('数据导出成功', 'success');
+            } catch (e) {
+                console.error('导出失败:', e);
+                showToast('数据导出失败', 'error');
+            }
+        }
+
+        // 导入数据
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        // 验证数据格式
+                        if (!data.preferences || !data.blessings || !data.students) {
+                            throw new Error('数据格式不正确');
+                        }
+                        
+                        // 导入数据
+                        if (data.preferences) {
+                            localStorage.setItem('blessing_user_preferences', JSON.stringify(data.preferences));
+                        }
+                        if (data.blessings) {
+                            localStorage.setItem('blessing_records', JSON.stringify(data.blessings));
+                        }
+                        if (data.students) {
+                            localStorage.setItem('blessing_students', JSON.stringify(data.students));
+                        }
+                        
+                        showToast('数据导入成功，即将刷新页面', 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                        
+                    } catch (e) {
+                        console.error('导入失败:', e);
+                        showToast('数据导入失败：' + e.message, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // 清除所有数据
+        function clearAllData() {
+            if (confirm('确定要清除所有数据吗？此操作不可恢复！')) {
+                try {
+                    localStorage.removeItem('blessing_user_preferences');
+                    localStorage.removeItem('blessing_records');
+                    localStorage.removeItem('blessing_students');
+                    localStorage.removeItem('blessing_notifications');
+                    
+                    showToast('数据已清除，即将重置应用', 'success');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } catch (e) {
+                    console.error('清除失败:', e);
+                    showToast('数据清除失败', 'error');
+                }
+            }
+        }
+
+        // 检查更新
+        function checkUpdate() {
+            showToast('正在检查更新...');
+            setTimeout(() => {
+                showToast('您已使用最新版本', 'success');
+            }, 2000);
+        }
+
+        // 提示功能
+        function showToast(message, type = 'info', duration = 2000) {
+            const toastContainer = document.getElementById('toast-container') || createToastContainer();
+            
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                padding: 12px 20px;
+                margin-bottom: 8px;
+                border-radius: 25px;
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                transform: translateX(100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            `;
+            
+            // 根据类型设置背景色
+            switch(type) {
+                case 'success':
+                    toast.style.background = 'rgba(76, 175, 80, 0.9)';
+                    break;
+                case 'error':
+                    toast.style.background = 'rgba(244, 67, 54, 0.9)';
+                    break;
+                case 'warning':
+                    toast.style.background = 'rgba(255, 152, 0, 0.9)';
+                    break;
+                default:
+                    toast.style.background = 'rgba(33, 150, 243, 0.9)';
+            }
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+                toast.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, duration);
+        }
+        
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            container.style.cssText = `
+                position: fixed;
+                top: 120px;
+                right: 20px;
+                z-index: 10001;
+                max-width: 300px;
+            `;
+            document.body.appendChild(container);
+            return container;
+        }
+
+        // 初始化页面
+        function initializeSettings() {
+            const preferences = SettingsDataManager.getUserPreferences();
+            const blessings = SettingsDataManager.getBlessingRecords();
+            const students = SettingsDataManager.getStudentData();
+            
+            // 更新统计数据
+            document.getElementById('blessingCount').textContent = blessings.length;
+            document.getElementById('studentCount').textContent = students.length;
+            
+            // 更新开关状态
+            const toggles = {
+                animationsToggle: preferences.animations,
+                hapticToggle: preferences.hapticFeedback,
+                soundToggle: preferences.soundEnabled,
+                notificationsToggle: preferences.notifications,
+                autoRefreshToggle: preferences.autoRefresh
+            };
+            
+            Object.entries(toggles).forEach(([id, active]) => {
+                const toggle = document.getElementById(id);
+                if (toggle && active) {
+                    toggle.classList.add('active');
+                }
+            });
+            
+            console.log('设置页面初始化完成');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加页面加载动画
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.style.opacity = '0';
+                mainContent.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    mainContent.style.transition = 'all 0.8s ease-out';
+                    mainContent.style.opacity = '1';
+                    mainContent.style.transform = 'translateY(0)';
+                }, 100);
+            }
+            
+            setTimeout(initializeSettings, 200);
+        });
+    </script>
+</body>
+</html>

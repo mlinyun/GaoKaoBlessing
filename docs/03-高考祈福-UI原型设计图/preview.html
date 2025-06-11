@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高考祈福 - 产品设计预览</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .main-title {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+        }
+
+        .project-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .info-icon {
+            color: #FFD700;
+        }
+
+        /* 用户流程图 */
+        .user-flow {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(20px);
+        }
+
+        .flow-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 16px 20px;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .flow-step-icon {
+            font-size: 24px;
+            color: #FFD700;
+            margin-bottom: 8px;
+        }
+
+        .flow-step-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .flow-arrow {
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 20px;
+        }
+
+        /* 页面网格 */
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .page-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FF8C42);
+            opacity: 0.8;
+        }
+
+        .page-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .page-preview {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 66, 0.1));
+            border-radius: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(255, 215, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+        }
+
+        .page-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .page-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .page-button {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 技术栈 */
+        .tech-stack {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+        }
+
+        .tech-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(4px);
+        }
+
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 66, 0.2));
+            border-radius: 12px;
+            color: #FFD700;
+            font-size: 18px;
+        }
+
+        .tech-info {
+            flex: 1;
+        }
+
+        .tech-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2px;
+        }
+
+        .tech-version {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 32px;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .pages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-info {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <div class="header">
+            <h1 class="main-title">高考祈福</h1>
+            <p class="subtitle">Android 应用产品设计 & 交互原型</p>            <div class="project-info">
+                <div class="info-item">
+                    <i class="fas fa-calendar info-icon"></i>
+                    <span>设计时间：2025年6月</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-mobile-alt info-icon"></i>
+                    <span>平台：Android / iPhone 15 Pro Max</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-users info-icon"></i>
+                    <span>目标用户：老师、家长、学生</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-heart info-icon"></i>
+                    <span>核心功能：祈福祝福社交</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-layer-group info-icon"></i>
+                    <span>页面总数：19个交互原型</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户流程图 -->
+        <div class="user-flow">
+            <h2 class="flow-title">用户体验流程</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-step-icon">🚀</div>
+                    <div class="flow-step-text">启动页面</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">📱</div>
+                    <div class="flow-step-text">登录注册</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">🏠</div>
+                    <div class="flow-step-text">主页浏览</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">🙏</div>
+                    <div class="flow-step-text">发送祝福</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">💫</div>
+                    <div class="flow-step-text">社交互动</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-step-icon">👑</div>
+                    <div class="flow-step-text">会员升级</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面预览网格 -->
+        <div class="pages-grid">
+            <!-- 启动页 -->
+            <div class="page-card">
+                <div class="page-preview">🚀</div>
+                <h3 class="page-title">启动页面</h3>
+                <p class="page-description">应用启动欢迎页面，展示品牌形象，提供流畅的加载体验和品牌认知建立。</p>
+                <div class="page-features">
+                    <span class="feature-tag">3D动画</span>
+                    <span class="feature-tag">粒子效果</span>
+                    <span class="feature-tag">品牌展示</span>
+                    <span class="feature-tag">渐变背景</span>
+                </div>
+                <div class="page-actions">
+                    <a href="startup.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('startup')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 注册登录页 -->
+            <div class="page-card">
+                <div class="page-preview">📱</div>
+                <h3 class="page-title">登录注册</h3>
+                <p class="page-description">V1.0版本采用账号+密码认证，支持用户名注册登录和邮箱找回密码，预留手机和第三方登录功能。</p>
+                <div class="page-features">
+                    <span class="feature-tag">账号密码</span>
+                    <span class="feature-tag">表单验证</span>
+                    <span class="feature-tag">邮箱找回</span>
+                    <span class="feature-tag">预留功能</span>
+                </div>
+                <div class="page-actions">
+                    <a href="register.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('register')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 祝福主页 -->
+            <div class="page-card">
+                <div class="page-preview">🏠</div>
+                <h3 class="page-title">祝福主页</h3>
+                <p class="page-description">应用主页面，展示个人信息、快捷操作和最新祝福动态，提供直观的功能入口。</p>
+                <div class="page-features">
+                    <span class="feature-tag">个性化</span>
+                    <span class="feature-tag">实时数据</span>
+                    <span class="feature-tag">快捷操作</span>
+                    <span class="feature-tag">动态更新</span>
+                </div>
+                <div class="page-actions">
+                    <a href="blessing-main.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('blessing-main')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 祝福墙 -->
+            <div class="page-card">
+                <div class="page-preview">💝</div>
+                <h3 class="page-title">祝福墙</h3>
+                <p class="page-description">社区祝福展示页面，用户可以浏览、点赞和分享各种祝福内容，增强社交互动。</p>
+                <div class="page-features">
+                    <span class="feature-tag">社交互动</span>
+                    <span class="feature-tag">筛选搜索</span>
+                    <span class="feature-tag">多样卡片</span>
+                    <span class="feature-tag">实时更新</span>
+                </div>
+                <div class="page-actions">
+                    <a href="blessing-wall.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('blessing-wall')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 学生管理 -->
+            <div class="page-card">
+                <div class="page-preview">👨‍🎓</div>
+                <h3 class="page-title">学生管理</h3>
+                <p class="page-description">学生信息管理页面，老师可以管理关注的考生，查看统计数据和发送定向祝福。</p>
+                <div class="page-features">
+                    <span class="feature-tag">智能搜索</span>
+                    <span class="feature-tag">统计概览</span>
+                    <span class="feature-tag">VIP特权</span>
+                    <span class="feature-tag">批量操作</span>
+                </div>
+                <div class="page-actions">
+                    <a href="student-management.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('student-management')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 个人中心 -->
+            <div class="page-card">
+                <div class="page-preview">👤</div>
+                <h3 class="page-title">个人中心</h3>
+                <p class="page-description">用户个人信息和设置页面，提供账户管理、VIP升级和个性化配置功能。</p>
+                <div class="page-features">
+                    <span class="feature-tag">圆形头像</span>
+                    <span class="feature-tag">VIP升级</span>
+                    <span class="feature-tag">设置选项</span>
+                    <span class="feature-tag">统计展示</span>
+                </div>
+                <div class="page-actions">
+                    <a href="personal-center.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('personal-center')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 金币商店 -->
+            <div class="page-card">
+                <div class="page-preview">🪙</div>
+                <h3 class="page-title">金币商店</h3>
+                <p class="page-description">虚拟货币商店页面，用户可以购买金币套餐，解锁高级功能和专属特效。</p>
+                <div class="page-features">
+                    <span class="feature-tag">套餐推荐</span>
+                    <span class="feature-tag">VIP特权</span>
+                    <span class="feature-tag">购买记录</span>
+                    <span class="feature-tag">动画效果</span>
+                </div>
+                <div class="page-actions">
+                    <a href="coin-shop.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('coin-shop')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 特效预览 -->
+            <div class="page-card">
+                <div class="page-preview">✨</div>
+                <h3 class="page-title">特效预览</h3>
+                <p class="page-description">祝福特效展示和选择页面，提供多种动画特效的实时预览和购买功能。</p>
+                <div class="page-features">
+                    <span class="feature-tag">实时预览</span>
+                    <span class="feature-tag">分类筛选</span>
+                    <span class="feature-tag">价格展示</span>
+                    <span class="feature-tag">动态效果</span>
+                </div>
+                <div class="page-actions">
+                    <a href="effect-preview.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('effect-preview')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 邀请分享 -->
+            <div class="page-card">
+                <div class="page-preview">🎁</div>
+                <h3 class="page-title">邀请分享</h3>
+                <p class="page-description">用户邀请奖励页面，通过邀请好友注册获得金币奖励，增强用户粘性。</p>
+                <div class="page-features">
+                    <span class="feature-tag">奖励机制</span>
+                    <span class="feature-tag">进度追踪</span>
+                    <span class="feature-tag">分享方式</span>
+                    <span class="feature-tag">好友管理</span>
+                </div>
+                <div class="page-actions">
+                    <a href="invite-share.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('invite-share')">设计说明</a>
+                </div>
+            </div>            <!-- 数据统计 -->
+            <div class="page-card">
+                <div class="page-preview">📊</div>
+                <h3 class="page-title">数据统计</h3>
+                <p class="page-description">用户数据分析页面，展示祝福发送、浏览、点赞等关键指标的可视化图表。</p>
+                <div class="page-features">
+                    <span class="feature-tag">数据可视化</span>
+                    <span class="feature-tag">时间筛选</span>
+                    <span class="feature-tag">趋势分析</span>
+                    <span class="feature-tag">排行榜</span>
+                </div>
+                <div class="page-actions">
+                    <a href="data-statistics.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('data-statistics')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 创建祝福 -->
+            <div class="page-card">
+                <div class="page-preview">✍️</div>
+                <h3 class="page-title">创建祝福</h3>
+                <p class="page-description">祝福创建页面，用户可以选择模板、编辑内容、添加特效，创建个性化祝福内容。</p>
+                <div class="page-features">
+                    <span class="feature-tag">模板选择</span>
+                    <span class="feature-tag">富文本编辑</span>
+                    <span class="feature-tag">特效预览</span>
+                    <span class="feature-tag">发布设置</span>
+                </div>
+                <div class="page-actions">
+                    <a href="create-blessing.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('create-blessing')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 我的祝福 -->
+            <div class="page-card">
+                <div class="page-preview">📝</div>
+                <h3 class="page-title">我的祝福</h3>
+                <p class="page-description">个人祝福管理页面，展示用户创建的所有祝福内容，支持编辑、删除和分享操作。</p>
+                <div class="page-features">
+                    <span class="feature-tag">祝福管理</span>
+                    <span class="feature-tag">状态筛选</span>
+                    <span class="feature-tag">批量操作</span>
+                    <span class="feature-tag">数据统计</span>
+                </div>
+                <div class="page-actions">
+                    <a href="my-blessings.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('my-blessings')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 我的收藏 -->
+            <div class="page-card">
+                <div class="page-preview">⭐</div>
+                <h3 class="page-title">我的收藏</h3>
+                <p class="page-description">收藏管理页面，用户可以查看收藏的祝福内容，支持分类管理和快速分享功能。</p>
+                <div class="page-features">
+                    <span class="feature-tag">收藏管理</span>
+                    <span class="feature-tag">分类标签</span>
+                    <span class="feature-tag">搜索过滤</span>
+                    <span class="feature-tag">快速分享</span>
+                </div>
+                <div class="page-actions">
+                    <a href="my-favorites.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('my-favorites')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 编辑资料 -->
+            <div class="page-card">
+                <div class="page-preview">✏️</div>
+                <h3 class="page-title">编辑资料</h3>
+                <p class="page-description">用户资料编辑页面，支持头像上传、个人信息修改和隐私设置管理。</p>
+                <div class="page-features">
+                    <span class="feature-tag">头像上传</span>
+                    <span class="feature-tag">信息编辑</span>
+                    <span class="feature-tag">隐私设置</span>
+                    <span class="feature-tag">实时验证</span>
+                </div>
+                <div class="page-actions">
+                    <a href="edit-profile.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('edit-profile')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 系统设置 -->
+            <div class="page-card">
+                <div class="page-preview">⚙️</div>
+                <h3 class="page-title">系统设置</h3>
+                <p class="page-description">应用设置页面，提供通知、隐私、安全、主题等系统配置选项。</p>
+                <div class="page-features">
+                    <span class="feature-tag">通知设置</span>
+                    <span class="feature-tag">隐私控制</span>
+                    <span class="feature-tag">安全选项</span>
+                    <span class="feature-tag">主题切换</span>
+                </div>
+                <div class="page-actions">
+                    <a href="settings.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('settings')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 励志语录 -->
+            <div class="page-card">
+                <div class="page-preview">💪</div>
+                <h3 class="page-title">励志语录</h3>
+                <p class="page-description">励志内容展示页面，为考生提供正能量语录和激励文章，增强心理支持。</p>
+                <div class="page-features">
+                    <span class="feature-tag">每日更新</span>
+                    <span class="feature-tag">分类浏览</span>
+                    <span class="feature-tag">收藏分享</span>
+                    <span class="feature-tag">名人名言</span>
+                </div>
+                <div class="page-actions">
+                    <a href="motivation-quotes.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('motivation-quotes')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 帮助中心 -->
+            <div class="page-card">
+                <div class="page-preview">❓</div>
+                <h3 class="page-title">帮助中心</h3>
+                <p class="page-description">用户帮助和支持页面，提供常见问题解答、使用教程和问题反馈入口。</p>
+                <div class="page-features">
+                    <span class="feature-tag">FAQ</span>
+                    <span class="feature-tag">使用教程</span>
+                    <span class="feature-tag">问题反馈</span>
+                    <span class="feature-tag">搜索功能</span>
+                </div>
+                <div class="page-actions">
+                    <a href="help.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('help')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 关于我们 -->
+            <div class="page-card">
+                <div class="page-preview">ℹ️</div>
+                <h3 class="page-title">关于我们</h3>
+                <p class="page-description">应用介绍页面，展示团队信息、产品理念、版本历史和联系方式。</p>
+                <div class="page-features">
+                    <span class="feature-tag">团队介绍</span>
+                    <span class="feature-tag">产品理念</span>
+                    <span class="feature-tag">版本信息</span>
+                    <span class="feature-tag">联系方式</span>
+                </div>
+                <div class="page-actions">
+                    <a href="about.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('about')">设计说明</a>
+                </div>
+            </div>
+
+            <!-- 联系客服 -->
+            <div class="page-card">
+                <div class="page-preview">📞</div>
+                <h3 class="page-title">联系客服</h3>
+                <p class="page-description">客服支持页面，提供在线客服聊天、常见问题和服务时间信息。</p>
+                <div class="page-features">
+                    <span class="feature-tag">在线客服</span>
+                    <span class="feature-tag">聊天界面</span>
+                    <span class="feature-tag">服务时间</span>
+                    <span class="feature-tag">联系方式</span>
+                </div>
+                <div class="page-actions">
+                    <a href="customer-service.html" class="page-button btn-primary" target="_blank">查看原型</a>
+                    <a href="#" class="page-button btn-secondary" onclick="showDetails('customer-service')">设计说明</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技术栈 -->
+        <div class="tech-stack">
+            <h2 class="tech-title">技术实现</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <div class="tech-info">
+                        <div class="tech-name">HTML5</div>
+                        <div class="tech-version">结构标记</div>
+                    </div>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <div class="tech-info">
+                        <div class="tech-name">CSS3</div>
+                        <div class="tech-version">样式动画</div>
+                    </div>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <div class="tech-info">
+                        <div class="tech-name">JavaScript</div>
+                        <div class="tech-version">交互逻辑</div>
+                    </div>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="tech-info">
+                        <div class="tech-name">Tailwind CSS</div>
+                        <div class="tech-version">v2.2.19</div>
+                    </div>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-icons"></i>
+                    </div>
+                    <div class="tech-info">
+                        <div class="tech-name">Font Awesome</div>
+                        <div class="tech-version">v6.0.0</div>
+                    </div>
+                </div>
+
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="tech-info">
+                        <div class="tech-name">响应式设计</div>
+                        <div class="tech-version">多设备适配</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>        // 显示设计说明
+        function showDetails(pageType) {
+            const details = {
+                'startup': '启动页采用3D动画和粒子效果，营造沉浸式的品牌体验，通过渐变背景和旋转文字展示产品特色。',
+                'register': '注册登录页面V1.0版本采用账号+密码认证方式，支持用户名注册、密码登录、邮箱找回密码功能。界面使用玻璃拟态设计风格，提供登录/注册模式切换，并预留手机号和第三方登录功能入口为V2.0版本做准备。',
+                'blessing-main': '主页面以个性化欢迎和快捷操作为核心，结合实时祝福动态，提供直观的功能导航体验。',
+                'blessing-wall': '祝福墙采用瀑布流布局，支持多种卡片类型和筛选功能，增强社区互动和内容发现。',
+                'student-management': '学生管理页面提供智能搜索和批量操作，VIP用户享有特殊权限和统计数据查看功能。',
+                'personal-center': '个人中心优化了头像显示为圆形，重新设计VIP升级卡片布局，提升视觉层次和用户体验。',
+                'coin-shop': '金币商店通过动画效果和套餐推荐，引导用户购买虚拟货币，解锁高级功能和特效。',
+                'effect-preview': '特效预览页面提供实时动画演示，支持分类筛选和价格对比，帮助用户选择合适的特效。',
+                'invite-share': '邀请分享页面通过奖励机制和进度可视化，激励用户邀请好友，增强用户获取和留存。',
+                'data-statistics': '数据统计页面采用图表可视化展示用户行为数据，提供时间筛选和趋势分析功能。',
+                'create-blessing': '创建祝福页面提供模板选择、富文本编辑和特效预览功能，支持用户创建个性化祝福内容，实现从创意到发布的完整流程。',
+                'my-blessings': '我的祝福页面采用卡片式布局展示用户创建的所有祝福，支持状态筛选、批量管理和数据统计，提供完整的内容管理体验。',
+                'my-favorites': '我的收藏页面通过分类标签和搜索过滤功能，帮助用户高效管理收藏的祝福内容，支持快速分享和重新发布。',
+                'edit-profile': '编辑资料页面提供头像上传、个人信息编辑和隐私设置功能，采用分步骤表单设计，确保用户信息的准确性和安全性。',
+                'settings': '系统设置页面采用分组卡片布局，提供通知、隐私、安全、主题等全面的个性化配置选项，优化用户使用体验。',
+                'motivation-quotes': '励志语录页面每日更新激励内容，通过分类浏览和名人名言展示，为考生提供心理支持和正能量引导。',
+                'help': '帮助中心页面提供常见问题解答、使用教程和问题反馈功能，采用搜索驱动的信息架构，快速解决用户疑问。',
+                'about': '关于我们页面展示团队理念、产品愿景和版本信息，通过时间线设计展现产品发展历程，增强用户信任度。',
+                'customer-service': '联系客服页面集成在线聊天界面，提供实时客服支持，聊天预览气泡位于手机容器内部，优化用户交互体验。'
+            };
+
+            alert(details[pageType] || '该页面的详细设计说明。');
+        }
+
+        // 页面卡片悬停效果增强
+        document.querySelectorAll('.page-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 流程步骤点击效果
+        document.querySelectorAll('.flow-step').forEach(step => {
+            step.addEventListener('click', function () {
+                const text = this.querySelector('.flow-step-text').textContent;
+                alert(`${text}：这个步骤展示了用户在应用中的关键操作流程。`);
+            });
+        });        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.page-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // 批量打开所有原型页面
+        function openAllPrototypes() {
+            const pages = [
+                'startup.html',
+                'register.html',
+                'blessing-main.html',
+                'blessing-wall.html',
+                'student-management.html',
+                'personal-center.html',
+                'coin-shop.html',
+                'effect-preview.html',
+                'invite-share.html',
+                'data-statistics.html',
+                'create-blessing.html',
+                'my-blessings.html',
+                'my-favorites.html',
+                'edit-profile.html',
+                'settings.html',
+                'motivation-quotes.html',
+                'help.html',
+                'about.html',
+                'customer-service.html'
+            ];
+
+            if (confirm(`确定要打开所有页面原型吗？这将打开${pages.length}个新标签页。`)) {
+                pages.forEach((page, index) => {
+                    setTimeout(() => {
+                        window.open(page, '_blank');
+                    }, index * 200);
+                });
+            }
+        }
+
+        // 添加批量打开按钮
+        document.addEventListener('DOMContentLoaded', function () {
+            const button = document.createElement('button');
+            button.textContent = '📱 查看所有原型';
+            button.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: linear-gradient(135deg, #FFD700, #FF8C42);
+                border: none;
+                border-radius: 50px;
+                padding: 16px 24px;
+                font-size: 16px;
+                font-weight: 700;
+                color: #0f0f23;
+                cursor: pointer;
+                box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+                transition: all 0.3s ease;
+                z-index: 1000;
+            `;
+
+            button.addEventListener('click', openAllPrototypes);
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 12px 35px rgba(255, 215, 0, 0.5)';
+            });
+
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 8px 25px rgba(255, 215, 0, 0.4)';
+            });
+
+            document.body.appendChild(button);
+        });
+    </script>
+</body>
+</html>

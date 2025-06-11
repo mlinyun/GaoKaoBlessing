@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高考祈福 - 励志语句</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 3D背景场景 */
+        .background-scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.4;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, #ffd700, #ff8c42);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float3d 12s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 80%;
+            top: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            left: 60%;
+            top: 40%;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(4) {
+            width: 4px;
+            height: 4px;
+            left: 25%;
+            top: 70%;
+            animation-delay: 6s;
+        }
+
+        .floating-element:nth-child(5) {
+            width: 7px;
+            height: 7px;
+            left: 90%;
+            top: 60%;
+            animation-delay: 8s;
+        }
+
+        @keyframes float3d {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: translateY(-20px) scale(1.1) rotate(90deg);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-10px) scale(0.9) rotate(180deg);
+                opacity: 0.5;
+            }
+
+            75% {
+                transform: translateY(-30px) scale(1.2) rotate(270deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 导航栏 */
+        .navigation-header {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 50;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .page-title {
+            flex: 1;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: calc(100% - 107px);
+            margin-top: 107px;
+            padding: 20px 24px 100px;
+            overflow-y: auto;
+        }
+
+        /* 滚动条样式 */
+        .main-content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 日历式励志语句卡片 */
+        .quote-calendar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .quote-date {
+            color: #FFD700;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quote-text {
+            color: white;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .quote-author {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* 类别标签 */
+        .category-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-tag {
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-tag.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .category-tag:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 励志语句收藏按钮 */
+        .quote-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .action-button {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        .action-button.liked {
+            background: rgba(255, 77, 77, 0.2);
+            color: #ff4d4d;
+        }
+
+        .action-button.favorited {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        /* 每日推送设置 */
+        .daily-settings {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .setting-label {
+            color: white;
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #FFD700;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        /* 添加浮动动画 */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* 页面加载动画 */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-in {
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .slide-in:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .slide-in:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .slide-in:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .slide-in:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .slide-in:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        /* 粒子背景 */
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #FFD700;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: particleFloat 6s infinite linear;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0px);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10px) translateX(50px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- iPhone 15 Pro Max 外壳 -->
+    <div class="phone-container">
+        <div class="phone-screen"> <!-- 3D背景场景 -->
+            <div class="background-scene">
+                <div class="floating-elements">
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                </div>
+            </div>
+
+            <!-- 粒子背景 -->
+            <div class="particle-bg" id="particleBg"></div>
+
+            <!-- 状态栏 -->
+            <div class="status-bar">
+                <div class="time" id="currentTime">14:23</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 导航栏 -->
+            <div class="navigation-header">
+                <div class="back-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="page-title">今日励志</div>
+                <div style="width: 40px;"></div>
+            </div>
+
+            <!-- 主要内容 -->
+            <div class="main-content">
+                <!-- 类别筛选 -->
+                <div class="category-tags">
+                    <div class="category-tag active" data-category="all">全部</div>
+                    <div class="category-tag" data-category="motivation">励志</div>
+                    <div class="category-tag" data-category="study">学习</div>
+                    <div class="category-tag" data-category="exam">考试</div>
+                    <div class="category-tag" data-category="life">生活</div>
+                </div>
+
+                <!-- 每日推送设置 -->
+                <div class="daily-settings">
+                    <div class="setting-row">
+                        <span class="setting-label">每日推送</span>
+                        <div class="toggle-switch active" data-setting="daily-push"></div>
+                    </div>
+                    <div class="setting-row">
+                        <span class="setting-label">推送时间</span>
+                        <span style="color: #FFD700; font-size: 12px;">每天 08:00</span>
+                    </div>
+                </div>
+
+                <!-- 励志语句列表 -->
+                <div id="quotesContainer">
+                    <!-- 动态生成的励志语句将在这里显示 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 励志语句数据库
+        const motivationalQuotes = {
+            motivation: [
+                { text: "成功不是终点，失败不是终结，只有勇气才是永恒。", author: "温斯顿·丘吉尔" },
+                { text: "你的努力，时间看得见；你的坚持，岁月会证明。", author: "佚名" },
+                { text: "不要害怕困难，困难是成功路上最好的老师。", author: "佚名" },
+                { text: "每一个不曾起舞的日子，都是对生命的辜负。", author: "尼采" },
+                { text: "星光不问赶路人，时光不负有心人。", author: "佚名" }
+            ],
+            study: [
+                { text: "学而时习之，不亦说乎？", author: "孔子" },
+                { text: "书山有路勤为径，学海无涯苦作舟。", author: "韩愈" },
+                { text: "今天的努力是为了明天更好的自己。", author: "佚名" },
+                { text: "知识改变命运，学习成就未来。", author: "佚名" },
+                { text: "读万卷书，行万里路。", author: "刘彝" }
+            ],
+            exam: [
+                { text: "宝剑锋从磨砺出，梅花香自苦寒来。", author: "佚名" },
+                { text: "高考不是终点，而是人生新的起点。", author: "佚名" },
+                { text: "十年磨一剑，六月试锋芒。", author: "佚名" },
+                { text: "细节决定成败，态度决定一切。", author: "佚名" },
+                { text: "相信自己，你已经准备好了。", author: "佚名" }
+            ],
+            life: [
+                { text: "生活不是等待暴风雨过去，而是学会在雨中舞蹈。", author: "佚名" },
+                { text: "每一天都是新的开始，每一刻都值得珍惜。", author: "佚名" },
+                { text: "做最好的自己，不负青春不负梦。", author: "佚名" },
+                { text: "心有多大，舞台就有多大。", author: "佚名" },
+                { text: "今天的你是明天回忆的珍贵。", author: "佚名" }
+            ]
+        };
+
+        // 用户偏好设置
+        const userSettings = {
+            dailyPush: true,
+            pushTime: '08:00',
+            favoriteQuotes: JSON.parse(localStorage.getItem('favoriteQuotes') || '[]'),
+            likedQuotes: JSON.parse(localStorage.getItem('likedQuotes') || '[]')
+        };
+
+        // 数据管理器
+        const DataManager = {
+            saveSettings: function () {
+                localStorage.setItem('motivationSettings', JSON.stringify(userSettings));
+            },
+
+            loadSettings: function () {
+                const saved = localStorage.getItem('motivationSettings');
+                if (saved) {
+                    Object.assign(userSettings, JSON.parse(saved));
+                }
+            },
+
+            saveFavorite: function (quoteId) {
+                if (!userSettings.favoriteQuotes.includes(quoteId)) {
+                    userSettings.favoriteQuotes.push(quoteId);
+                    localStorage.setItem('favoriteQuotes', JSON.stringify(userSettings.favoriteQuotes));
+                }
+            },
+
+            removeFavorite: function (quoteId) {
+                const index = userSettings.favoriteQuotes.indexOf(quoteId);
+                if (index > -1) {
+                    userSettings.favoriteQuotes.splice(index, 1);
+                    localStorage.setItem('favoriteQuotes', JSON.stringify(userSettings.favoriteQuotes));
+                }
+            },
+
+            toggleLike: function (quoteId) {
+                const index = userSettings.likedQuotes.indexOf(quoteId);
+                if (index > -1) {
+                    userSettings.likedQuotes.splice(index, 1);
+                } else {
+                    userSettings.likedQuotes.push(quoteId);
+                }
+                localStorage.setItem('likedQuotes', JSON.stringify(userSettings.likedQuotes));
+            }
+        };
+
+        // 动画管理器
+        const AnimationManager = {
+            createParticles: function () {
+                const container = document.getElementById('particleBg');
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDelay = Math.random() * 2 + 's';
+                        container.appendChild(particle);
+
+                        setTimeout(() => {
+                            if (particle.parentNode) {
+                                particle.parentNode.removeChild(particle);
+                            }
+                        }, 6000);
+                    }, i * 400);
+                }
+            },
+
+            showToast: function (message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: ${type === 'success' ? '#4CAF50' : '#ff4444'};
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    z-index: 1000;
+                    opacity: 0;
+                    transition: all 0.3s ease;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                setTimeout(() => toast.style.opacity = '1', 100);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => document.body.removeChild(toast), 300);
+                }, 2000);
+            },
+
+            rippleEffect: function (element, event) {
+                const rect = element.getBoundingClientRect();
+                const ripple = document.createElement('div');
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    border-radius: 50%;
+                    background: rgba(255, 215, 0, 0.3);
+                    transform: translate(${x}px, ${y}px) scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+
+                element.style.position = 'relative';
+                element.style.overflow = 'hidden';
+                element.appendChild(ripple);
+
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 600);
+            }
+        };        // 主要功能
+        function initializePage() {
+            // 加载用户设置
+            DataManager.loadSettings();
+
+            // 更新时间
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // 初始化3D背景场景
+            init3DBackground();
+
+            // 创建粒子效果
+            AnimationManager.createParticles();
+            setInterval(() => AnimationManager.createParticles(), 8000);
+
+            // 加载今日语句
+            loadQuotes('all');
+
+            // 绑定事件
+            bindEvents();
+        }
+
+        // 3D背景场景初始化
+        function init3DBackground() {
+            const floatingElements = document.querySelectorAll('.floating-element');
+
+            floatingElements.forEach((element, index) => {
+                // 设置随机初始位置
+                element.style.left = Math.random() * 80 + 10 + '%';
+                element.style.top = Math.random() * 80 + 10 + '%';
+
+                // 设置随机动画延迟
+                element.style.animationDelay = (index * 0.8) + 's';
+
+                // 设置随机大小
+                const size = 20 + Math.random() * 30;
+                element.style.width = size + 'px';
+                element.style.height = size + 'px';
+
+                // 添加鼠标交互效果
+                element.addEventListener('mouseenter', function () {
+                    this.style.transform = 'scale(1.5) rotate(180deg)';
+                    this.style.opacity = '0.9';
+                });
+
+                element.addEventListener('mouseleave', function () {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                    this.style.opacity = '0.1';
+                });
+            });
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        function loadQuotes(category) {
+            const container = document.getElementById('quotesContainer');
+            container.innerHTML = '';
+
+            let quotesToShow = [];
+            if (category === 'all') {
+                Object.values(motivationalQuotes).forEach(categoryQuotes => {
+                    quotesToShow = quotesToShow.concat(categoryQuotes);
+                });
+            } else {
+                quotesToShow = motivationalQuotes[category] || [];
+            }
+
+            // 打乱顺序
+            quotesToShow = quotesToShow.sort(() => Math.random() - 0.5);
+
+            quotesToShow.forEach((quote, index) => {
+                const quoteId = `${category}_${index}`;
+                const quoteCard = createQuoteCard(quote, quoteId, index);
+                container.appendChild(quoteCard);
+            });
+        }
+
+        function createQuoteCard(quote, quoteId, index) {
+            const card = document.createElement('div');
+            card.className = 'quote-calendar floating';
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            const isLiked = userSettings.likedQuotes.includes(quoteId);
+            const isFavorited = userSettings.favoriteQuotes.includes(quoteId);
+
+            card.innerHTML = `
+                <div class="quote-date">
+                    <i class="fas fa-calendar-day"></i>
+                    ${new Date().toLocaleDateString('zh-CN')}
+                    <span style="margin-left: auto; font-size: 12px;">第 ${index + 1} 条</span>
+                </div>
+                <div class="quote-text">${quote.text}</div>
+                <div class="quote-author">—— ${quote.author}</div>
+                <div class="quote-actions">
+                    <div class="action-button ${isLiked ? 'liked' : ''}" onclick="toggleLike('${quoteId}', this)" data-action="like">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="action-button ${isFavorited ? 'favorited' : ''}" onclick="toggleFavorite('${quoteId}', this)" data-action="favorite">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="action-button" onclick="shareQuote('${quote.text}', '${quote.author}')" data-action="share">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function bindEvents() {
+            // 类别切换
+            document.querySelectorAll('.category-tag').forEach(tag => {
+                tag.addEventListener('click', function (e) {
+                    AnimationManager.rippleEffect(this, e);
+
+                    document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const category = this.dataset.category;
+                    loadQuotes(category);
+                });
+            });
+
+            // 设置开关
+            document.querySelectorAll('.toggle-switch').forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    const setting = this.dataset.setting;
+
+                    if (setting === 'daily-push') {
+                        userSettings.dailyPush = this.classList.contains('active');
+                        DataManager.saveSettings();
+
+                        AnimationManager.showToast(
+                            userSettings.dailyPush ? '每日推送已开启' : '每日推送已关闭'
+                        );
+                    }
+                });
+            });
+        }
+
+        function toggleLike(quoteId, button) {
+            DataManager.toggleLike(quoteId);
+            button.classList.toggle('liked');
+
+            const isLiked = button.classList.contains('liked');
+            AnimationManager.showToast(isLiked ? '已点赞' : '取消点赞');
+
+            // 添加动画效果
+            button.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function toggleFavorite(quoteId, button) {
+            const isFavorited = button.classList.contains('favorited');
+
+            if (isFavorited) {
+                DataManager.removeFavorite(quoteId);
+                button.classList.remove('favorited');
+                AnimationManager.showToast('已取消收藏');
+            } else {
+                DataManager.saveFavorite(quoteId);
+                button.classList.add('favorited');
+                AnimationManager.showToast('已添加到收藏');
+            }
+
+            // 添加动画效果
+            button.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function shareQuote(text, author) {
+            const shareText = `"${text}" —— ${author}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '励志语句分享',
+                    text: shareText
+                });
+            } else {
+                // 复制到剪贴板
+                navigator.clipboard.writeText(shareText).then(() => {
+                    AnimationManager.showToast('已复制到剪贴板');
+                });
+            }
+        }
+
+        function goBack() {
+            // 返回到主页面或个人中心
+            if (document.referrer.includes('personal-center.html')) {
+                window.location.href = 'personal-center.html';
+            } else {
+                window.location.href = 'blessing-main.html';
+            }
+        }
+
+        // 添加CSS动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: translate(var(--x), var(--y)) scale(1);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>

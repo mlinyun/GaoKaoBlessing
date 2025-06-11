@@ -1,0 +1,2628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高考祈福 - 考生管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg,
+                    #0f0f23 0%,
+                    #1a1a2e 30%,
+                    #16213e 60%,
+                    #0f0f23 100%);
+        }
+
+        /* 毕业帽粒子背景 */
+        .graduation-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .graduation-particle {
+            position: absolute;
+            color: #FFD700;
+            font-size: 16px;
+            opacity: 0.4;
+            animation: floatGraduation 10s infinite ease-in-out;
+        }
+
+        .graduation-particle:nth-child(1) {
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .graduation-particle:nth-child(2) {
+            left: 45%;
+            animation-delay: 2s;
+        }
+
+        .graduation-particle:nth-child(3) {
+            left: 75%;
+            animation-delay: 4s;
+        }
+
+        .graduation-particle:nth-child(4) {
+            left: 30%;
+            animation-delay: 6s;
+        }
+
+        .graduation-particle:nth-child(5) {
+            left: 60%;
+            animation-delay: 8s;
+        }
+
+        @keyframes floatGraduation {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            80% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-20px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 47px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            z-index: 100;
+        }
+
+        .time {
+            letter-spacing: 0.5px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons i {
+            font-size: 16px;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            position: absolute;
+            top: 47px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .add-student-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .add-student-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        /* 搜索栏 */
+        .search-section {
+            position: absolute;
+            top: 107px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            background: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            z-index: 90;
+        }
+
+        .search-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 0 40px 0 16px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* 统计区域 */
+        .stats-section {
+            position: absolute;
+            top: 217px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            margin-top: 8px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            z-index: 80;
+        }
+
+        .stats-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: calc(100% - 297px);
+            margin-top: 300px;
+            overflow-y: auto;
+        }
+
+        /* 滚动条样式 */
+        .main-content::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* 考生列表 */
+        .student-list {
+            padding: 20px 24px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .student-card:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .student-card.vip {
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 66, 0.1));
+        }
+
+        .student-card.vip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FFD700, #FF8C42, #FFD700);
+        }
+
+        .vip-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0f23;
+            font-size: 24px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .online-indicator {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            background: #4CAF50;
+            border: 2px solid #0f0f23;
+            border-radius: 8px;
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 4px;
+        }
+
+        .student-school {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 4px;
+        }
+
+        .countdown-text {
+            font-size: 12px;
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.15);
+            padding: 2px 8px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .student-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .mini-stat {
+            text-align: center;
+        }
+
+        .mini-stat-number {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .mini-stat-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-button {
+            flex: 1;
+            height: 36px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .danger-btn {
+            background: rgba(244, 67, 54, 0.15);
+            border-color: rgba(244, 67, 54, 0.3);
+            color: rgba(244, 67, 54, 0.9);
+            flex: 0.8;
+        }
+
+        .danger-btn:hover {
+            background: rgba(244, 67, 54, 0.25);
+            border-color: rgba(244, 67, 54, 0.5);
+            color: #f44336;
+            transform: translateY(-1px);
+        }
+
+        /* 底部导航 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 83px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 24px 34px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active .nav-icon {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        .nav-item.active .nav-label {
+            color: #FFD700;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .empty-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+
+        .empty-action {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .empty-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        /* 批量操作样式 */
+        .batch-mode .student-card {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .batch-mode .student-card::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .batch-mode .student-card.selected::before {
+            background: #FFD700;
+            border-color: #FFD700;
+        }
+
+        .batch-mode .student-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #0f0f23;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .batch-mode .student-card.selected {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            transform: scale(0.98);
+        }
+
+        /* 批量操作工具栏 */
+        .batch-toolbar {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 15, 35, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 12px 20px;
+            display: flex;
+            gap: 12px;
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            opacity: 0;
+            animation: slideUpFade 0.3s ease forwards;
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .batch-toolbar button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .batch-toolbar .delete-btn {
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+        }
+
+        .batch-toolbar .cancel-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .batch-toolbar .export-btn {
+            background: rgba(76, 175, 80, 0.8);
+            color: white;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        /* 拖拽排序样式 */
+        .student-card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+            z-index: 1000;
+        }
+
+        .drag-indicator {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.3);
+            cursor: grab;
+            font-size: 16px;
+        }
+
+        .drag-indicator:active {
+            cursor: grabbing;
+        }
+
+        /* 高级搜索样式 */
+        .filter-pills {
+            display: flex;
+            gap: 8px;
+            padding: 8px 24px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filter-pills::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-pill {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-pill.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C42);
+            color: #0f0f23;
+            border-color: transparent;
+        }
+
+        .filter-pill:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 拖拽排序样式 */
+        .student-card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+            z-index: 1000;
+        }
+
+        .drag-indicator {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.3);
+            cursor: grab;
+            font-size: 16px;
+        }
+
+        .drag-indicator:active {
+            cursor: grabbing;
+        }
+
+        /* 筛选条件区域 */
+        .filter-section {
+            position: absolute;
+            top: 167px;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            z-index: 70;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 高对比度模式支持 */
+        .high-contrast .student-card {
+            border: 2px solid #ffffff;
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .high-contrast .student-card:hover {
+            border-color: #ffff00;
+            background: #333333;
+        }
+
+        .high-contrast .action-button {
+            border: 2px solid #ffffff;
+            font-weight: bold;
+        }
+
+        .high-contrast .primary-btn {
+            background: #ffff00;
+            color: #000000;
+        }
+
+        .high-contrast .danger-btn {
+            background: #ff0000;
+            color: #ffffff;
+        }
+
+        /* 焦点指示器增强 */
+        .student-card:focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+        .filter-pill:focus,
+        .action-button:focus,
+        .nav-item:focus {
+            outline: 2px solid #FFD700;
+            outline-offset: 1px;
+        }
+
+        /* 动画性能优化 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 毕业帽粒子背景 -->
+            <div class="graduation-particles">
+                <div class="graduation-particle">🎓</div>
+                <div class="graduation-particle">📚</div>
+                <div class="graduation-particle">✏️</div>
+                <div class="graduation-particle">🏆</div>
+                <div class="graduation-particle">🌟</div>
+            </div>
+
+            <!-- 顶部导航 -->
+            <div class="top-nav">
+                <div class="nav-back" onclick="goBack()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-title">考生管理</div>
+                <div class="nav-actions" style="display: flex; gap: 8px;">
+                    <div class="nav-action-btn" onclick="showImportDialog()" title="导入数据">
+                        <i class="fas fa-upload" style="font-size: 16px; color: rgba(255, 255, 255, 0.8);"></i>
+                    </div>
+                    <div class="add-student-btn" onclick="addStudent()">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                </div>
+            </div> <!-- 搜索栏 -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="搜索考生姓名或学校" id="searchInput"
+                        oninput="searchStudents()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+
+            <!-- 筛选条件区域 -->
+            <div class="filter-section">
+                <div class="filter-pills">
+                    <div class="filter-pill active" data-filter="all">全部</div>
+                    <div class="filter-pill" data-filter="理科">理科</div>
+                    <div class="filter-pill" data-filter="文科">文科</div>
+                    <div class="filter-pill" data-filter="艺术">艺术</div>
+                    <div class="filter-pill" data-filter="体育">体育</div>
+                    <div class="filter-pill" data-filter="关注">已关注</div>
+                </div>
+            </div>
+
+            <!-- 统计区域 -->
+            <div class="stats-section">
+                <div class="stats-card">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">关注考生</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">36</div>
+                        <div class="stat-label">倒计时天数</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">总祝福数</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容 -->
+            <div class="main-content">
+                <div class="student-list" id="studentList">
+                    <!-- 学生卡片将通过JavaScript动态渲染 -->
+                </div>
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="goToHome()">
+                    <div class="nav-icon"><i class="fas fa-home"></i></div>
+                    <div class="nav-label">首页</div>
+                </div>
+                <div class="nav-item" onclick="goToBlessingWall()">
+                    <div class="nav-icon"><i class="fas fa-comments"></i></div>
+                    <div class="nav-label">祈福墙</div>
+                </div>
+                <div class="nav-item active">
+                    <div class="nav-icon"><i class="fas fa-users"></i></div>
+                    <div class="nav-label">考生</div>
+                </div>
+                <div class="nav-item" onclick="goToProfile()">
+                    <div class="nav-icon"><i class="fas fa-user"></i></div>
+                    <div class="nav-label">我的</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== 数据同步和检查功能 =====
+        const DataSyncManager = {
+            // 检查数据一致性
+            checkDataConsistency() {
+                const students = localStorage.getItem('blessing_students');
+                const records = localStorage.getItem('blessing_records');
+                const preferences = localStorage.getItem('blessing_user_preferences');
+
+                const report = {
+                    studentsExists: !!students,
+                    recordsExists: !!records,
+                    preferencesExists: !!preferences,
+                    studentsCount: students ? JSON.parse(students).length : 0,
+                    recordsCount: records ? JSON.parse(records).length : 0
+                };
+
+                console.log('📊 数据一致性检查:', report);
+                return report;
+            },
+
+            // 修复数据结构
+            fixDataStructure() {
+                try {
+                    // 确保所有必要的存储键都存在
+                    const students = StudentDataManager.getStudentData();
+                    const records = JSON.parse(localStorage.getItem('blessing_records') || '[]');
+                    const preferences = JSON.parse(localStorage.getItem('blessing_user_preferences') || '{}');
+
+                    // 标准化学生数据结构
+                    const standardizedStudents = students.map(student => ({
+                        id: student.id || Date.now() + Math.random(),
+                        name: student.name || '未知学生',
+                        school: student.school || '未知学校',
+                        grade: student.grade || '高三',
+                        subjects: student.subjects || '文理综合',
+                        avatar: student.avatar || student.name?.charAt(0) || '?',
+                        blessingCount: student.blessingCount || 0,
+                        averageScore: student.averageScore || '待录入',
+                        examRank: student.examRank || '待测试',
+                        countdownDays: student.countdownDays || 36,
+                        isVip: student.isVip || false,
+                        isOnline: student.isOnline !== false,
+                        lastActive: student.lastActive || new Date().toISOString(),
+                        joinDate: student.joinDate || new Date().toISOString()
+                    }));
+
+                    // 保存标准化数据
+                    StudentDataManager.saveStudentData(standardizedStudents);
+
+                    showToast('数据结构已修复', 'success', 2000);
+                    console.log('✅ 数据结构已标准化');
+
+                    return true;
+                } catch (error) {
+                    console.error('❌ 数据修复失败:', error);
+                    showToast('数据修复失败', 'error', 3000);
+                    return false;
+                }
+            },
+
+            // 数据同步到其他页面
+            syncToAllPages() {
+                try {
+                    const students = StudentDataManager.getStudentData();
+
+                    // 触发存储事件，通知其他打开的页面
+                    window.dispatchEvent(new StorageEvent('storage', {
+                        key: 'blessing_students',
+                        oldValue: null,
+                        newValue: JSON.stringify(students),
+                        url: window.location.href,
+                        storageArea: localStorage
+                    }));
+
+                    console.log('🔄 已触发数据同步事件');
+                    return true;
+                } catch (error) {
+                    console.error('❌ 数据同步失败:', error);
+                    return false;
+                }
+            }
+        };
+
+        // ===== 数据管理器 =====
+        const StudentDataManager = {
+            // 获取学生数据
+            getStudentData() {
+                try {
+                    const saved = localStorage.getItem('blessing_students');
+                    return saved ? JSON.parse(saved) : this.getDefaultStudents();
+                } catch (e) {
+                    console.warn('无法获取学生数据:', e);
+                    return this.getDefaultStudents();
+                }
+            },
+
+            // 保存学生数据
+            saveStudentData(students) {
+                try {
+                    localStorage.setItem('blessing_students', JSON.stringify(students));
+                    console.log('✅ 学生数据已保存');
+                } catch (e) {
+                    console.warn('⚠️ 无法保存学生数据:', e);
+                }
+            },
+
+            // 获取默认学生数据
+            getDefaultStudents() {
+                return [{
+                    id: 1,
+                    name: '李明',
+                    school: '北京市第一中学',
+                    grade: '高三(1)班',
+                    subjects: '理科',
+                    avatar: '李',
+                    examDate: '2025-06-07',
+                    isVip: true,
+                    isOnline: true,
+                    blessingCount: 42,
+                    averageScore: 98,
+                    examRank: 3,
+                    countdownDays: 36,
+                    isFollowed: true
+                },
+                {
+                    id: 2,
+                    name: '王小华',
+                    school: '上海市实验中学',
+                    grade: '高三(2)班',
+                    subjects: '文科',
+                    avatar: '王',
+                    examDate: '2025-06-07',
+                    isVip: false,
+                    isOnline: true,
+                    blessingCount: 28,
+                    averageScore: 92,
+                    examRank: 8,
+                    countdownDays: 36
+                },
+                {
+                    id: 3,
+                    name: '张小萌',
+                    school: '广州市重点中学',
+                    grade: '高三(3)班',
+                    subjects: '理科',
+                    avatar: '张',
+                    examDate: '2025-06-07',
+                    isVip: false,
+                    isOnline: false,
+                    blessingCount: 35,
+                    averageScore: 95,
+                    examRank: 5,
+                    countdownDays: 36
+                },
+                {
+                    id: 4,
+                    name: '陈浩然',
+                    school: '深圳外国语学校',
+                    grade: '高三(4)班',
+                    subjects: '理科',
+                    avatar: '陈',
+                    examDate: '2025-06-07',
+                    isVip: false,
+                    isOnline: true,
+                    blessingCount: 21,
+                    averageScore: 89,
+                    examRank: 12,
+                    countdownDays: 36
+                },
+                {
+                    id: 5,
+                    name: '刘艺涵',
+                    school: '杭州艺术学校',
+                    grade: '高三(5)班',
+                    subjects: '艺术',
+                    avatar: '刘',
+                    examDate: '2025-06-07',
+                    isVip: true,
+                    isOnline: true,
+                    blessingCount: 33,
+                    averageScore: 91,
+                    examRank: 7,
+                    countdownDays: 36,
+                    isFollowed: true
+                },
+                {
+                    id: 6,
+                    name: '林体强',
+                    school: '成都体育中学',
+                    grade: '高三(6)班',
+                    subjects: '体育',
+                    avatar: '林',
+                    examDate: '2025-06-07',
+                    isVip: false,
+                    isOnline: true,
+                    blessingCount: 25,
+                    averageScore: 85,
+                    examRank: 15,
+                    countdownDays: 36
+                }
+                ];
+            },
+
+            // 更新学生祝福数量
+            updateBlessingCount(studentName, increment = 1) {
+                const students = this.getStudentData();
+                const student = students.find(s => s.name === studentName || s.name === studentName + '同学');
+                if (student) {
+                    student.blessingCount += increment;
+                    this.saveStudentData(students);
+                    return student;
+                }
+                return null;
+            },
+
+            // 添加新学生
+            addStudent(studentData) {
+                const students = this.getStudentData();
+                const newStudent = {
+                    id: Date.now(),
+                    blessingCount: 0,
+                    countdownDays: 36,
+                    isVip: false,
+                    isOnline: true,
+                    ...studentData
+                };
+                students.push(newStudent);
+                this.saveStudentData(students);
+                return newStudent;
+            },
+
+            // 删除学生
+            removeStudent(studentId) {
+                const students = this.getStudentData();
+                const filteredStudents = students.filter(s => s.id !== studentId);
+                this.saveStudentData(filteredStudents);
+                return filteredStudents;
+            },
+
+            // 获取统计数据
+            getStatistics() {
+                const students = this.getStudentData();
+                return {
+                    totalStudents: students.length,
+                    totalBlessings: students.reduce((sum, s) => sum + s.blessingCount, 0),
+                    vipStudents: students.filter(s => s.isVip).length,
+                    onlineStudents: students.filter(s => s.isOnline).length
+                };
+            }
+        };
+        
+        // 全局变量
+        let studentsData = [];
+        let filteredStudents = [];
+        let currentFilter = 'all';
+
+        // ===== 高级筛选功能 =====
+        function applyFilter(filterType) {
+            currentFilter = filterType;
+
+            // 更新筛选按钮状态
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.classList.toggle('active', pill.dataset.filter === filterType);
+            });
+            
+            // 应用筛选条件
+            switch (filterType) {
+                case 'all':
+                    filteredStudents = [...studentsData];
+                    break;
+                case '理科':
+                    filteredStudents = studentsData.filter(s => s.subjects === '理科' || s.type === '理科');
+                    break;
+                case '文科':
+                    filteredStudents = studentsData.filter(s => s.subjects === '文科' || s.type === '文科');
+                    break;
+                case '艺术':
+                    filteredStudents = studentsData.filter(s => s.subjects === '艺术' || s.type === '艺术');
+                    break;
+                case '体育':
+                    filteredStudents = studentsData.filter(s => s.subjects === '体育' || s.type === '体育');
+                    break;
+                case '关注':
+                    filteredStudents = studentsData.filter(s => s.isFollowed || s.isVip);
+                    break;
+                default:
+                    filteredStudents = [...studentsData];
+            }
+
+            // 如果有搜索条件，同时应用搜索
+            const searchValue = document.getElementById('searchInput').value;
+            if (searchValue.trim()) {
+                applySearch(searchValue, false);
+            } else {
+                renderStudentList();
+            }
+
+            showToast(`筛选结果：${filteredStudents.length} 位考生`);
+        }
+
+        // ===== 拖拽排序功能 =====
+        let draggedElement = null;
+        let draggedIndex = -1;
+
+        function enableDragSort() {
+            document.querySelectorAll('.student-card').forEach((card, index) => {
+                // 添加拖拽指示器
+                if (!card.querySelector('.drag-indicator')) {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'drag-indicator';
+                    indicator.innerHTML = '<i class="fas fa-grip-vertical"></i>';
+                    card.insertBefore(indicator, card.firstChild);
+                }
+
+                card.draggable = true;
+                card.addEventListener('dragstart', (e) => {
+                    draggedElement = card;
+                    draggedIndex = index;
+                    card.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+
+                card.addEventListener('dragend', () => {
+                    card.classList.remove('dragging');
+                    draggedElement = null;
+                    draggedIndex = -1;
+                });
+
+                card.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+
+                card.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (draggedElement && draggedElement !== card) {
+                        const cards = Array.from(document.querySelectorAll('.student-card'));
+                        const dropIndex = cards.indexOf(card);
+
+                        // 重新排序数据
+                        const [movedStudent] = filteredStudents.splice(draggedIndex, 1);
+                        filteredStudents.splice(dropIndex, 0, movedStudent);
+
+                        // 更新主数据
+                        studentsData = [...filteredStudents];
+                        StudentDataManager.saveStudentData(studentsData);
+
+                        renderStudentList();
+                        showToast('排序已更新', 'success');
+                    }
+                });
+            });
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', function () {
+            document.body.style.opacity = '1';
+
+            // 执行数据一致性检查
+            DataSyncManager.checkDataConsistency();
+
+            // 修复数据结构（如有必要）
+            DataSyncManager.fixDataStructure();
+
+            initializePage();
+        });
+
+        // 初始化页面
+        function initializePage() {
+            loadStudentsData();
+            renderStudentList();
+            updateStatistics();
+            initializeEventListeners();
+        }
+
+        // 加载学生数据
+        function loadStudentsData() {
+            studentsData = StudentDataManager.getStudentData();
+            filteredStudents = [...studentsData];
+            console.log('📚 已加载学生数据:', studentsData.length, '位学生');
+        }
+        
+        // 渲染学生列表
+        function renderStudentList() {
+            const container = document.getElementById('studentList');
+            if (!container) return;
+
+            if (filteredStudents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="text-align: center; padding: 40px 20px; color: rgba(255, 255, 255, 0.6);">
+                        <i class="fas fa-user-plus" style="font-size: 48px; margin-bottom: 16px; color: #FFD700;"></i>
+                        <h3 style="margin: 0 0 8px; color: rgba(255, 255, 255, 0.8);">暂无考生信息</h3>
+                        <p style="margin: 0; font-size: 14px;">点击右上角 + 号添加考生</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const studentsHTML = filteredStudents.map(student => `
+                <div class="student-card ${student.isVip ? 'vip' : ''}" data-student-id="${student.id}">
+                    ${student.isVip ? '<div class="vip-badge">VIP</div>' : ''}
+                    <div class="student-header">
+                        <div class="student-avatar">
+                            ${student.avatar}
+                            ${student.isOnline ? '<div class="online-indicator"></div>' : ''}
+                        </div>
+                        <div class="student-info">
+                            <div class="student-name">${student.name}同学</div>
+                            <div class="student-school">${student.school} · ${student.subjects}</div>
+                            <div class="countdown-text">距离高考还有${student.countdownDays}天</div>
+                        </div>
+                    </div>
+                    <div class="student-stats">
+                        <div class="mini-stat">
+                            <div class="mini-stat-number">${student.blessingCount}</div>
+                            <div class="mini-stat-label">收到祝福</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-stat-number">${student.averageScore}</div>
+                            <div class="mini-stat-label">平均分</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-stat-number">${student.examRank}</div>
+                            <div class="mini-stat-label">模考排名</div>
+                        </div>
+                    </div>
+                    <div class="student-actions">
+                        <div class="action-button primary-btn" onclick="sendBlessing('${student.name}')">
+                            <i class="fas fa-heart"></i>
+                            发送祝福
+                        </div>
+                        <div class="action-button secondary-btn" onclick="viewDetails('${student.name}')">
+                            <i class="fas fa-chart-line"></i>
+                            查看详情
+                        </div>
+                        <div class="action-button danger-btn" onclick="removeStudent('${student.id}', '${student.name}')">
+                            <i class="fas fa-trash"></i>
+                            删除
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = studentsHTML;
+
+            // 重新绑定事件
+            bindStudentCardEvents();
+            enableDragSort();
+        }
+
+        // 更新统计数据
+        function updateStatistics() {
+            const stats = StudentDataManager.getStatistics();
+
+            // 更新统计卡片
+            const statElements = document.querySelectorAll('.stat-number');
+            if (statElements.length >= 3) {
+                statElements[0].textContent = stats.totalStudents;
+                statElements[1].textContent = 36; // 倒计时天数固定
+                statElements[2].textContent = stats.totalBlessings;
+            }
+
+            console.log('📊 统计数据已更新:', stats);
+        }
+
+        // 绑定学生卡片事件
+        function bindStudentCardEvents() {
+            document.querySelectorAll('.student-card').forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-4px) scale(1.02)';
+                    this.style.boxShadow = '0 15px 40px rgba(255, 215, 0, 0.2)';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        }
+        
+        // 初始化事件监听器
+        function initializeEventListeners() {
+            // 搜索框事件
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('focus', function () {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+
+                searchInput.addEventListener('blur', function () {
+                    this.parentElement.style.transform = '';
+                });
+            }
+
+            // 筛选条件事件
+            const filterPills = document.querySelectorAll('.filter-pill');
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function () {
+                    const filterType = this.dataset.filter;
+                    applyFilter(filterType);
+                });
+            });
+        }
+
+        // 返回上一页
+        function goBack() {
+            showToast('返回上一页...');
+            pageTransition('blessing-main.html');
+        }
+
+        // ===== 数据导入功能 =====
+        function showImportDialog() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: rgba(15, 15, 35, 0.95);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 16px;
+                    padding: 24px;
+                    width: 90%;
+                    max-width: 400px;
+                    backdrop-filter: blur(20px);
+                ">
+                    <h3 style="margin: 0 0 20px; color: #FFD700; text-align: center;">导入学生数据</h3>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.8); font-size: 14px;">
+                            选择JSON文件：
+                        </label>
+                        <input type="file" id="importFile" accept=".json" style="
+                            width: 100%;
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            color: white;
+                            font-size: 14px;
+                        ">
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.8); font-size: 14px;">
+                            或粘贴JSON数据：
+                        </label>
+                        <textarea id="importData" placeholder="粘贴学生数据的JSON格式..." style="
+                            width: 100%;
+                            height: 120px;
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            color: white;
+                            font-size: 12px;
+                            resize: vertical;
+                            font-family: monospace;
+                        "></textarea>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="closeImportDialog()" style="
+                            flex: 1;
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.1);
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            border-radius: 8px;
+                            color: rgba(255, 255, 255, 0.7);
+                            cursor: pointer;
+                        ">取消</button>
+                        <button onclick="processImport()" style="
+                            flex: 1;
+                            padding: 12px;
+                            background: linear-gradient(135deg, #FFD700, #FF8C42);
+                            border: none;
+                            border-radius: 8px;
+                            color: #0f0f23;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">导入</button>
+                    </div>
+                </div>
+            `;
+
+            modal.onclick = (e) => {
+                if (e.target === modal) closeImportDialog();
+            };
+
+            document.body.appendChild(modal);
+
+            // 文件选择处理
+            document.getElementById('importFile').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('importData').value = e.target.result;
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            window.closeImportDialog = function () {
+                modal.remove();
+            };
+
+            window.processImport = function () {
+                const data = document.getElementById('importData').value.trim();
+                if (!data) {
+                    showToast('请选择文件或粘贴数据', 'warning');
+                    return;
+                }
+
+                if (AdvancedDataManager.importData(data)) {
+                    closeImportDialog();
+                }
+            };
+        }
+
+        // 添加学生 - 增强功能
+        function addStudent() {
+            // 获取手机屏幕容器
+            const phoneScreen = document.querySelector('.phone-screen');
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border-radius: 47px;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: rgba(15, 15, 35, 0.95);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 16px;
+                    padding: 24px;
+                    width: 85%;
+                    max-width: 320px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    backdrop-filter: blur(20px);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+                ">
+                    <h3 style="margin: 0 0 20px; color: #FFD700; text-align: center; font-size: 18px;">添加考生</h3>
+                    <form id="addStudentForm" style="display: flex; flex-direction: column; gap: 14px;">
+                        <input type="text" id="studentName" placeholder="姓名" required style="
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            color: white;
+                            font-size: 14px;
+                            outline: none;
+                            transition: border-color 0.3s ease;
+                        " onfocus="this.style.borderColor='rgba(255, 215, 0, 0.5)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.1)'">
+                        <input type="text" id="studentSchool" placeholder="学校" required style="
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            color: white;
+                            font-size: 14px;
+                            outline: none;
+                            transition: border-color 0.3s ease;
+                        " onfocus="this.style.borderColor='rgba(255, 215, 0, 0.5)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.1)'">
+                        <input type="text" id="studentGrade" placeholder="班级 (如: 高三(1)班)" required style="
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            color: white;
+                            font-size: 14px;
+                            outline: none;
+                            transition: border-color 0.3s ease;
+                        " onfocus="this.style.borderColor='rgba(255, 215, 0, 0.5)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.1)'">
+                        <select id="studentSubjects" required style="
+                            padding: 12px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            color: white;
+                            font-size: 14px;
+                            outline: none;
+                            transition: border-color 0.3s ease;
+                        " onfocus="this.style.borderColor='rgba(255, 215, 0, 0.5)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.1)'">
+                            <option value="" style="background: rgba(15, 15, 35, 0.95); color: white;">选择科目类别</option>
+                            <option value="理科" style="background: rgba(15, 15, 35, 0.95); color: white;">理科</option>
+                            <option value="文科" style="background: rgba(15, 15, 35, 0.95); color: white;">文科</option>
+                            <option value="艺术" style="background: rgba(15, 15, 35, 0.95); color: white;">艺术</option>
+                            <option value="体育" style="background: rgba(15, 15, 35, 0.95); color: white;">体育</option>
+                        </select>
+                        <div style="display: flex; gap: 12px; margin-top: 8px;">
+                            <button type="button" onclick="closeAddStudentModal()" style="
+                                flex: 1;
+                                padding: 12px;
+                                background: rgba(255, 255, 255, 0.1);
+                                border: 1px solid rgba(255, 255, 255, 0.2);
+                                border-radius: 8px;
+                                color: rgba(255, 255, 255, 0.7);
+                                cursor: pointer;
+                                font-size: 14px;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">取消</button>
+                            <button type="submit" style="
+                                flex: 1;
+                                padding: 12px;
+                                background: linear-gradient(135deg, #FFD700, #FF8C42);
+                                border: none;
+                                border-radius: 8px;
+                                color: #0f0f23;
+                                font-weight: 600;
+                                cursor: pointer;
+                                font-size: 14px;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">添加</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    closeAddStudentModal();
+                }
+            };
+
+            // 将弹出框添加到手机屏幕容器内，而不是document.body
+            phoneScreen.appendChild(modal);
+
+            // 添加进入动画
+            modal.style.animation = 'modalFadeIn 0.3s ease-out';
+
+            // 添加CSS动画（如果不存在）
+            if (!document.querySelector('#modal-animations')) {
+                const style = document.createElement('style');
+                style.id = 'modal-animations';
+                style.textContent = `
+                    @keyframes modalFadeIn {
+                        from {
+                            opacity: 0;
+                            transform: scale(0.9);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+                    }
+                    @keyframes modalFadeOut {
+                        from {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+                        to {
+                            opacity: 0;
+                            transform: scale(0.9);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            // 绑定表单提交事件
+            document.getElementById('addStudentForm').onsubmit = function (e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const name = document.getElementById('studentName').value.trim();
+                const school = document.getElementById('studentSchool').value.trim();
+                const grade = document.getElementById('studentGrade').value.trim();
+                const subjects = document.getElementById('studentSubjects').value;
+
+                if (!name || !school || !grade || !subjects) {
+                    showToast('请填写完整信息', 'error');
+                    return;
+                }
+
+                const newStudent = StudentDataManager.addStudent({
+                    name,
+                    school,
+                    grade,
+                    subjects,
+                    avatar: name.charAt(0),
+                    examDate: '2025-06-07',
+                    averageScore: Math.floor(Math.random() * 20) + 80, // 80-100分
+                    examRank: Math.floor(Math.random() * 20) + 1 // 1-20名
+                });
+
+                studentsData = StudentDataManager.getStudentData();
+                filteredStudents = [...studentsData];
+                renderStudentList();
+                updateStatistics(); closeAddStudentModal();
+                showToast('成功添加考生 ' + name + '!', 'success');
+            };
+
+            window.closeAddStudentModal = function () {
+                modal.remove();
+            };
+        }        // 搜索考生 - 增强功能
+        function searchStudents() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase().trim();
+            applySearch(searchValue, true);
+        }
+
+        function applySearch(searchValue, updateFilter = false) {
+            // 首先应用当前筛选条件
+            let baseData = studentsData;
+            if (currentFilter !== 'all') {
+                switch (currentFilter) {
+                    case 'vip':
+                        baseData = studentsData.filter(s => s.isVip);
+                        break;
+                    case 'online':
+                        baseData = studentsData.filter(s => s.isOnline);
+                        break;
+                    case '理科':
+                    case '文科':
+                        baseData = studentsData.filter(s => s.subjects === currentFilter);
+                        break;
+                    case 'high-blessing':
+                        baseData = studentsData.filter(s => s.blessingCount >= 30);
+                        break;
+                }
+            }
+
+            // 然后应用搜索条件
+            if (!searchValue) {
+                filteredStudents = [...baseData];
+            } else {
+                filteredStudents = baseData.filter(student =>
+                    student.name.toLowerCase().includes(searchValue) ||
+                    student.school.toLowerCase().includes(searchValue) ||
+                    student.grade.toLowerCase().includes(searchValue) ||
+                    student.subjects.toLowerCase().includes(searchValue)
+                );
+            }
+
+            renderStudentList();
+
+            // 显示搜索结果提示
+            if (searchValue && updateFilter) {
+                showToast('找到 ' + filteredStudents.length + ' 位考生');
+            }
+        }
+
+        // 发送祝福 - 增强功能
+        function sendBlessing(studentName) {
+            showToast('正在为' + studentName + '发送祝福...');
+
+            // 模拟发送成功后更新祝福数量
+            setTimeout(() => {
+                const updatedStudent = StudentDataManager.updateBlessingCount(studentName);
+
+                if (updatedStudent) {
+                    // 更新UI中的祝福数量
+                    const card = document.querySelector('[data-student-id="' + updatedStudent.id + '"]');
+                    if (card) {
+                        const blessingCount = card.querySelector('.mini-stat-number');
+                        blessingCount.textContent = updatedStudent.blessingCount;
+
+                        // 添加发送成功的视觉反馈
+                        const sendBtn = card.querySelector('.primary-btn');
+                        const originalText = sendBtn.innerHTML;
+                        sendBtn.innerHTML = '<i class="fas fa-check"></i> 已发送';
+                        sendBtn.style.background = '#4CAF50';
+
+                        setTimeout(() => {
+                            sendBtn.innerHTML = originalText;
+                            sendBtn.style.background = '';
+                        }, 2000);
+                    }
+
+                    // 更新统计数据
+                    updateStatistics();
+                }
+                showToast('祝福发送成功！💫', 'success');
+            }, 1000);
+        }
+
+        // 查看详情
+        function viewDetails(studentName) {
+            const student = studentsData.find(s => s.name === studentName);
+            if (!student) {
+                showToast('未找到学生信息', 'error');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: rgba(15, 15, 35, 0.95);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 16px;
+                    padding: 24px;
+                    width: 90%;
+                    max-width: 400px;
+                    backdrop-filter: blur(20px);
+                ">
+                    <h3 style="margin: 0 0 20px; color: #FFD700; text-align: center;">${student.name}同学详情</h3>
+                    <div style="display: grid; gap: 16px;">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+                            <div style="text-align: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <div style="font-size: 20px; font-weight: 600; color: #FFD700;">${student.blessingCount}</div>
+                                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">收到祝福</div>
+                            </div>
+                            <div style="text-align: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <div style="font-size: 20px; font-weight: 600; color: #FFD700;">${student.averageScore}</div>
+                                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">平均分</div>
+                            </div>
+                            <div style="text-align: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <div style="font-size: 20px; font-weight: 600; color: #FFD700;">第${student.examRank}名</div>
+                                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">模考排名</div>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 8px;">
+                            <div style="color: rgba(255, 255, 255, 0.8); margin-bottom: 8px;"><strong>基本信息</strong></div>
+                            <div style="color: rgba(255, 255, 255, 0.6); font-size: 14px; line-height: 1.5;">
+                                <div>学校：${student.school}</div>
+                                <div>班级：${student.grade}</div>
+                                <div>科目：${student.subjects}</div>
+                                <div>在线状态：${student.isOnline ? '在线' : '离线'}</div>
+                                ${student.isVip ? '<div style="color: #FFD700;">⭐ VIP考生</div>' : ''}
+                            </div>
+                        </div>
+                        <button onclick="closeStudentDetails()" style="
+                            padding: 12px;
+                            background: linear-gradient(135deg, #FFD700, #FF8C42);
+                            border: none;
+                            border-radius: 8px;
+                            color: #0f0f23;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">关闭</button>
+                    </div>
+                </div>
+            `;
+
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            };
+
+            document.body.appendChild(modal);
+
+            // 添加关闭函数到全局作用域
+            window.closeStudentDetails = function () {
+                modal.remove();
+            };
+        }
+
+        // 页面过渡效果
+        function pageTransition(targetPage, callback) {
+            const phoneScreen = document.querySelector('.phone-screen');
+            phoneScreen.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            phoneScreen.style.transform = 'scale(0.95)';
+            phoneScreen.style.opacity = '0.7';
+
+            setTimeout(() => {
+                if (callback) callback();
+                window.location.href = targetPage;
+            }, 150);
+        }
+
+        // 导航功能
+        function goToHome() {
+            updateNavState(0);
+            showToast('切换到首页...');
+            pageTransition('blessing-main.html');
+        }
+
+        function goToBlessingWall() {
+            updateNavState(1);
+            showToast('切换到祈福墙...');
+            pageTransition('blessing-wall.html');
+        }
+
+        function goToProfile() {
+            updateNavState(3);
+            showToast('切换到个人中心...');
+            pageTransition('personal-center.html');
+        }
+
+        // 更新导航状态
+        function updateNavState(activeIndex) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, index) => {
+                item.classList.toggle('active', index === activeIndex);
+            });
+        }
+
+        // Toast 提示 - 增强版本
+        function showToast(message, type = 'info', duration = 2000) {
+            const toast = document.createElement('div');
+
+            let backgroundColor, textColor, icon;
+            switch (type) {
+                case 'success':
+                    backgroundColor = 'rgba(76, 175, 80, 0.9)';
+                    textColor = 'white';
+                    icon = 'fas fa-check-circle';
+                    break;
+                case 'error':
+                    backgroundColor = 'rgba(244, 67, 54, 0.9)';
+                    textColor = 'white';
+                    icon = 'fas fa-exclamation-circle';
+                    break;
+                case 'warning':
+                    backgroundColor = 'rgba(255, 193, 7, 0.9)';
+                    textColor = '#0f0f23';
+                    icon = 'fas fa-exclamation-triangle';
+                    break;
+                default:
+                    backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                    textColor = 'white';
+                    icon = 'fas fa-info-circle';
+            }
+
+            toast.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${backgroundColor};
+                color: ${textColor};
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+
+            toast.innerHTML = `
+                <i class="${icon}" style="font-size: 16px;"></i>
+                ${message}
+            `;
+
+            document.body.appendChild(toast);
+
+            // 显示动画
+            setTimeout(() => {
+                toast.style.opacity = '1';
+            }, 10);
+
+            // 隐藏动画
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }        // 模拟实时数据更新
+        function updateStats() {
+            setInterval(() => {
+                // 随机更新祝福数量
+                const randomStudentIndex = Math.floor(Math.random() * studentsData.length);
+                if (Math.random() > 0.9) { // 10% 的概率更新
+                    const student = studentsData[randomStudentIndex];
+                    StudentDataManager.updateBlessingCount(student.name);
+
+                    // 重新加载数据并更新UI
+                    studentsData = StudentDataManager.getStudentData();
+                    if (filteredStudents.length === studentsData.length) {
+                        filteredStudents = [...studentsData];
+                        renderStudentList();
+                        updateStatistics();
+                    }
+                }
+            }, 30000); // 30秒更新一次
+        }        // 初始化实时数据更新
+        updateStats();
+
+        // ===== 底部导航功能 =====
+        function goToHome() {
+            showToast('跳转到首页...');
+            pageTransition('blessing-main.html');
+        }
+
+        function goToBlessingWall() {
+            showToast('跳转到祈福墙...');
+            pageTransition('blessing-wall.html');
+        }
+
+        function goToProfile() {
+            showToast('跳转到个人中心...');
+            pageTransition('personal-center.html');
+        }
+
+        // 页面跳转动画
+        function pageTransition(url) {
+            document.body.style.transition = 'opacity 0.3s ease';
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // ===== 页面卸载时同步数据 =====
+        window.addEventListener('beforeunload', function () {
+            // 确保在页面关闭前同步数据
+            DataSyncManager.syncToAllPages();
+        });
+
+        // ===== 监听存储变化 =====
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'blessing_students') {
+                // 当其他页面更新学生数据时，重新加载当前页面数据
+                console.log('📡 检测到学生数据更新，重新加载...');
+                loadStudentsData();
+                renderStudentList();
+                updateStatistics();
+            }
+        });
+
+        // 删除学生
+        function removeStudent(studentId, studentName) {
+            if (confirm(`确定要删除学生 ${studentName} 吗？此操作无法撤销。`)) {
+                try {
+                    const remainingStudents = StudentDataManager.removeStudent(studentId);
+
+                    // 更新本地数据
+                    studentsData = remainingStudents;
+                    filteredStudents = [...studentsData];
+
+                    // 重新渲染列表
+                    renderStudentList();
+                    updateStatistics();
+
+                    // 同步到其他页面
+                    DataSyncManager.syncToAllPages();
+
+                    showToast(`已删除学生 ${studentName}`, 'success');
+                    console.log(`✅ 成功删除学生: ${studentName}`);
+                } catch (error) {
+                    console.error('❌ 删除学生失败:', error);
+                    showToast('删除学生失败', 'error');
+                }
+            }
+        }
+
+        // 批量删除学生
+        function batchDeleteStudents() {
+            const selectedCards = document.querySelectorAll('.student-card.selected');
+            if (selectedCards.length === 0) {
+                showToast('请先选择要删除的学生', 'warning');
+                return;
+            }
+
+            const studentNames = Array.from(selectedCards).map(card => {
+                const nameElement = card.querySelector('.student-name');
+                return nameElement.textContent.replace('同学', '');
+            });
+
+            if (confirm(`确定要删除选中的 ${studentNames.length} 位学生吗？此操作无法撤销。\n\n学生列表：\n${studentNames.join(', ')}`)) {
+                let deletedCount = 0;
+                selectedCards.forEach(card => {
+                    const studentId = card.dataset.studentId;
+                    const studentName = studentNames[deletedCount];
+
+                    try {
+                        StudentDataManager.removeStudent(parseInt(studentId));
+                        deletedCount++;
+                    } catch (error) {
+                        console.error(`删除学生 ${studentName} 失败:`, error);
+                    }
+                });
+
+                // 重新加载数据
+                studentsData = StudentDataManager.getStudentData();
+                filteredStudents = [...studentsData];
+                renderStudentList();
+                updateStatistics();
+                DataSyncManager.syncToAllPages();
+
+                showToast(`成功删除 ${deletedCount} 位学生`, 'success');
+                toggleBatchMode(false);
+            }
+        }
+
+        // 导出学生数据
+        function exportStudentData() {
+            try {
+                const students = StudentDataManager.getStudentData();
+                const exportData = {
+                    exportDate: new Date().toISOString(),
+                    totalStudents: students.length,
+                    students: students.map(student => ({
+                        ...student,
+                        exportNote: '来自高考祈福应用'
+                    }))
+                };
+
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `学生数据导出_${new Date().toLocaleDateString()}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+
+                showToast(`成功导出 ${students.length} 位学生数据`, 'success');
+            } catch (error) {
+                console.error('导出数据失败:', error);
+                showToast('导出数据失败', 'error');
+            }
+        }
+
+        // 批量操作模式切换
+        function toggleBatchMode(enable = null) {
+            const isEnabled = enable !== null ? enable : !document.body.classList.contains('batch-mode');
+
+            if (isEnabled) {
+                document.body.classList.add('batch-mode');
+                showToast('进入批量操作模式，点击学生卡片选择', 'info');
+
+                // 添加批量操作工具栏
+                showBatchToolbar();
+            } else {
+                document.body.classList.remove('batch-mode');
+                document.querySelectorAll('.student-card.selected').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                hideBatchToolbar();
+            }
+        }
+
+        // 显示批量操作工具栏
+        function showBatchToolbar() {
+            // 移除现有工具栏
+            const existing工具栏 = document.querySelector('.batch-toolbar');
+            if (existingToolbar) {
+                existingToolbar.remove();
+            }
+
+            const toolbar = document.createElement('div');
+            toolbar.className = 'batch-toolbar';
+            toolbar.innerHTML = `
+                <button class="delete-btn" onclick="batchDeleteStudents()">
+                    <i class="fas fa-trash"></i> 删除选中
+                </button>
+                <button class="export-btn" onclick="exportStudentData()">
+                    <i class="fas fa-download"></i> 导出数据
+                </button>
+                <button class="cancel-btn" onclick="toggleBatchMode(false)">
+                    <i class="fas fa-times"></i> 取消
+                </button>
+            `;
+
+            document.body.appendChild(toolbar);
+        }
+
+        // 隐藏批量操作工具栏
+        function hideBatchToolbar() {
+            const toolbar = document.querySelector('.batch-toolbar');
+            if (toolbar) {
+                toolbar.style.animation = 'slideDownFade 0.3s ease forwards';
+                setTimeout(() => toolbar.remove(), 300);
+            }
+        }
+
+        // 添加一个长按启动批量模式的功能
+        function addLongPressSupport() {
+            let longPressTimer;
+            const longPressDuration = 800; // 800ms 长按
+
+            document.addEventListener('touchstart', function (e) {
+                const studentCard = e.target.closest('.student-card');
+                if (studentCard && !document.body.classList.contains('batch-mode')) {
+                    longPressTimer = setTimeout(() => {
+                        toggleBatchMode(true);
+                        studentCard.classList.add('selected');
+                        navigator.vibrate && navigator.vibrate(50); // 触觉反馈
+                    }, longPressDuration);
+                }
+            });
+
+            document.addEventListener('touchend', function () {
+                clearTimeout(longPressTimer);
+            });
+
+            document.addEventListener('touchmove', function () {
+                clearTimeout(longPressTimer);
+            });
+        }        // 初始化学生卡片选择事件
+        function bindStudentCardSelectEvents() {
+            document.addEventListener('click', function (e) {
+                const studentCard = e.target.closest('.student-card');
+                if (studentCard && document.body.classList.contains('batch-mode')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    studentCard.classList.toggle('selected');
+
+                    // 更新工具栏按钮状态
+                    const selectedCount = document.querySelectorAll('.student-card.selected').length;
+                    const deleteBtn = document.querySelector('.batch-toolbar .delete-btn');
+                    if (deleteBtn) {
+                        deleteBtn.innerHTML = `<i class="fas fa-trash"></i> 删除选中 (${selectedCount})`;
+                    }
+                }
+            });
+        }
+
+        // 高级数据管理功能
+        const AdvancedDataManager = {
+            // 数据验证
+            validateStudentData(student) {
+                const required = ['name', 'school', 'grade', 'subjects'];
+                return required.every(field => student[field] && student[field].trim());
+            },
+
+            // 数据清理
+            cleanupData() {
+                const students = StudentDataManager.getStudentData();
+                const cleaned = students.filter(student => this.validateStudentData(student));
+
+                if (cleaned.length !== students.length) {
+                    StudentDataManager.saveStudentData(cleaned);
+                    showToast(`清理了 ${students.length - cleaned.length} 条无效数据`, 'info');
+                }
+
+                return cleaned;
+            },
+
+            // 导入数据
+            importData(jsonData) {
+                try {
+                    const data = JSON.parse(jsonData);
+                    if (data.students && Array.isArray(data.students)) {
+                        const validStudents = data.students.filter(s => this.validateStudentData(s));
+                        StudentDataManager.saveStudentData(validStudents);
+                        loadStudentsData();
+                        renderStudentList();
+                        updateStatistics();
+                        showToast(`成功导入 ${validStudents.length} 位学生`, 'success');
+                        return true;
+                    }
+                } catch (error) {
+                    console.error('导入数据失败:', error);
+                    showToast('导入数据格式错误', 'error');
+                }
+                return false;
+            }
+        };
+
+        // 定期数据清理
+        setInterval(() => {
+            AdvancedDataManager.cleanupData();
+        }, 300000); // 5分钟清理一次
+
+        bindStudentCardSelectEvents();
+
+        // 页面加载完成后启动长按支持
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', addLongPressSupport);
+        } else {
+            addLongPressSupport();
+        }
+
+        // ===== 性能优化和用户体验增强 =====
+        const PerformanceOptimizer = {
+            // 虚拟滚动优化（当学生数量很多时）
+            virtualScrollThreshold: 50,
+            visibleItemsCount: 10,
+
+            enableVirtualScroll() {
+                if (filteredStudents.length < this.virtualScrollThreshold) {
+                    return false; // 数据量不大，不需要虚拟滚动
+                }
+
+                console.log('📊 启用虚拟滚动优化');
+                // 这里可以实现虚拟滚动逻辑
+                return true;
+            },
+
+            // 防抖搜索
+            debounceSearch: null,
+
+            optimizedSearch(searchTerm) {
+                clearTimeout(this.debounceSearch);
+                this.debounceSearch = setTimeout(() => {
+                    applySearch(searchTerm, true);
+                }, 300);
+            },
+
+            // 图片懒加载（如果有头像图片）
+            enableLazyLoad() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.removeAttribute('data-src');
+                                observer.unobserve(img);
+                            }
+                        }
+                    });
+                });
+
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    observer.observe(img);
+                });
+            }
+        };
+
+        // ===== 用户偏好设置 =====
+        const UserPreferences = {
+            getSettings() {
+                return JSON.parse(localStorage.getItem('student_management_settings') || '{}');
+            },
+
+            saveSetting(key, value) {
+                const settings = this.getSettings();
+                settings[key] = value;
+                localStorage.setItem('student_management_settings', JSON.stringify(settings));
+            },
+
+            getSetting(key, defaultValue = null) {
+                const settings = this.getSettings();
+                return settings[key] !== undefined ? settings[key] : defaultValue;
+            },
+
+            // 应用用户偏好
+            applyPreferences() {
+                // 恢复上次的筛选条件
+                const lastFilter = this.getSetting('lastFilter', 'all');
+                if (lastFilter !== 'all') {
+                    setTimeout(() => applyFilter(lastFilter), 100);
+                }
+
+                // 恢复排序偏好
+                const sortOrder = this.getSetting('sortOrder', 'default');
+                if (sortOrder !== 'default') {
+                    this.applySorting(sortOrder);
+                }
+            },
+
+            // 应用排序
+            applySorting(order) {
+                switch (order) {
+                    case 'name':
+                        filteredStudents.sort((a, b) => a.name.localeCompare(b.name));
+                        break;
+                    case 'blessing':
+                        filteredStudents.sort((a, b) => b.blessingCount - a.blessingCount);
+                        break;
+                    case 'score':
+                        filteredStudents.sort((a, b) => b.averageScore - a.averageScore);
+                        break;
+                    default:
+                        return;
+                }
+                renderStudentList();
+                this.saveSetting('sortOrder', order);
+            }
+        };
+
+        // ===== 无障碍访问支持 =====
+        const AccessibilityEnhancer = {
+            init() {
+                // 键盘导航支持
+                this.enableKeyboardNavigation();
+
+                // 屏幕阅读器支持
+                this.enhanceScreenReaderSupport();
+
+                // 高对比度模式检测
+                this.detectHighContrast();
+            },
+
+            enableKeyboardNavigation() {
+                document.addEventListener('keydown', (e) => {
+                    const focusedCard = document.querySelector('.student-card:focus');
+
+                    switch (e.key) {
+                        case 'ArrowDown':
+                            this.focusNextCard(focusedCard);
+                            e.preventDefault();
+                            break;
+                        case 'ArrowUp':
+                            this.focusPrevCard(focusedCard);
+                            e.preventDefault();
+                            break;
+                        case 'Enter':
+                        case ' ':
+                            if (focusedCard) {
+                                focusedCard.click();
+                                e.preventDefault();
+                            }
+                            break;
+                        case 'Escape':
+                            if (document.body.classList.contains('batch-mode')) {
+                                toggleBatchMode(false);
+                            }
+                            break;
+                    }
+                });
+            },
+
+            focusNextCard(current) {
+                const cards = Array.from(document.querySelectorAll('.student-card'));
+                const index = cards.indexOf(current);
+                const next = cards[index + 1] || cards[0];
+                if (next) {
+                    next.focus();
+                    next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            },
+
+            focusPrevCard(current) {
+                const cards = Array.from(document.querySelectorAll('.student-card'));
+                const index = cards.indexOf(current);
+                const prev = cards[index - 1] || cards[cards.length - 1];
+                if (prev) {
+                    prev.focus();
+                    prev.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            },
+
+            enhanceScreenReaderSupport() {
+                // 为学生卡片添加aria标签
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.querySelectorAll('.student-card').forEach((card, index) => {
+                        card.setAttribute('tabindex', '0');
+                        card.setAttribute('role', 'button');
+                        card.setAttribute('aria-label', `学生卡片 ${index + 1}`);
+                    });
+                });
+            },
+
+            detectHighContrast() {
+                if (window.matchMedia('(prefers-contrast: high)').matches) {
+                    document.body.classList.add('high-contrast');
+                }
+            }
+        };
+
+        // ===== 初始化所有功能 =====
+        function initializeAdvancedFeatures() {
+            // 应用用户偏好
+            UserPreferences.applyPreferences();
+
+            // 初始化无障碍功能
+            AccessibilityEnhancer.init();
+
+            // 优化搜索输入
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.removeEventListener('input', searchStudents);
+                searchInput.addEventListener('input', (e) => {
+                    PerformanceOptimizer.optimizedSearch(e.target.value.toLowerCase().trim());
+                });
+            }
+
+            console.log('🚀 高级功能已初始化');
+        }
+
+        // ===== 数据统计和分析 =====
+        const AnalyticsManager = {
+            generateReport() {
+                const students = StudentDataManager.getStudentData();
+                const stats = StudentDataManager.getStatistics();
+
+                const report = {
+                    totalStudents: students.length,
+                    vipStudents: stats.vipStudents,
+                    onlineStudents: stats.onlineStudents,
+                    totalBlessings: stats.totalBlessings,
+                    averageBlessings: Math.round(stats.totalBlessings / students.length),
+                    subjects: this.getSubjectDistribution(students),
+                    schools: this.getSchoolDistribution(students),
+                    topStudents: this.getTopStudents(students)
+                };
+
+                return report;
+            },
+
+            getSubjectDistribution(students) {
+                const distribution = {};
+                students.forEach(student => {
+                    distribution[student.subjects] = (distribution[student.subjects] || 0) + 1;
+                });
+                return distribution;
+            },
+
+            getSchoolDistribution(students) {
+                const distribution = {};
+                students.forEach(student => {
+                    distribution[student.school] = (distribution[student.school] || 0) + 1;
+                });
+                return Object.entries(distribution)
+                    .sort(([, a], [, b]) => b - a)
+                    .slice(0, 5)
+                    .reduce((acc, [school, count]) => {
+                        acc[school] = count;
+                        return acc;
+                    }, {});
+            },
+
+            getTopStudents(students) {
+                return students
+                    .sort((a, b) => b.blessingCount - a.blessingCount)
+                    .slice(0, 3)
+                    .map(s => ({ name: s.name, blessings: s.blessingCount }));
+            },
+
+            showReport() {
+                const report = this.generateReport();
+                console.log('📈 学生管理统计报告:', report);
+
+                showToast(`统计完成：${report.totalStudents}位学生，${report.totalBlessings}个祝福`, 'success', 3000);
+            }
+        };
+
+        // 在页面加载完成后初始化高级功能
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeAdvancedFeatures();
+        });
+
+        // 页面卸载前保存用户偏好
+        window.addEventListener('beforeunload', function () {
+            UserPreferences.saveSetting('lastFilter', currentFilter);
+            UserPreferences.saveSetting('lastSearch', document.getElementById('searchInput')?.value || '');
+        });
+    </script>
+</body>
+</html>

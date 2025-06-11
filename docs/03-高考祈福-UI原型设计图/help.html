@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用帮助 - 高考祈福</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f0f23 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* iPhone 15 Pro Max 外壳 */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            margin: 20px auto;
+            position: relative;
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 55px;
+            padding: 8px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 30%, #16213e 60%, #0f0f23 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 动态背景粒子 */
+        .help-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .help-particle {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.4);
+            font-size: 14px;
+            animation: helpFloat 8s ease-in-out infinite;
+        }
+
+        .help-particle:nth-child(1) {
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .help-particle:nth-child(2) {
+            top: 30%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .help-particle:nth-child(3) {
+            top: 50%;
+            left: 25%;
+            animation-delay: 2s;
+        }
+
+        .help-particle:nth-child(4) {
+            top: 70%;
+            right: 15%;
+            animation-delay: 3s;
+        }
+
+        .help-particle:nth-child(5) {
+            top: 85%;
+            left: 35%;
+            animation-delay: 4s;
+        }
+
+        @keyframes helpFloat {
+            0%, 100% {
+                opacity: 0.2;
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translateY(-15px) rotate(180deg);
+            }
+        }
+
+        /* iPhone状态栏 */
+        .status-bar {
+            height: 47px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+        }
+
+        .signal-bar {
+            width: 3px;
+            background: white;
+            border-radius: 1px;
+        }
+
+        .signal-bar:nth-child(1) { height: 4px; }
+        .signal-bar:nth-child(2) { height: 6px; }
+        .signal-bar:nth-child(3) { height: 8px; }
+        .signal-bar:nth-child(4) { height: 10px; }
+
+        .wifi-icon { font-size: 12px; }
+
+        .battery-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .battery-level { font-size: 12px; }
+
+        .battery-icon {
+            width: 22px;
+            height: 11px;
+            border: 1px solid white;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 3px;
+            width: 2px;
+            height: 5px;
+            background: white;
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-fill {
+            width: 82%;
+            height: 100%;
+            background: white;
+            border-radius: 1px;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .nav-button i {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+        }
+
+        .nav-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 帮助页面头部 */
+        .help-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .help-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff8c42, #ffd700);
+        }
+
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .help-icon i {
+            font-size: 32px;
+            color: #000;
+        }
+
+        .help-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 8px;
+        }
+
+        .help-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* 搜索框 */
+        .search-container {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .search-box:focus {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+        }
+
+        /* 快速入门卡片 */
+        .quick-start {
+            margin-bottom: 25px;
+        }
+
+        .quick-start-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-start-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd700, #ff8c42);
+        }
+
+        .quick-start-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .quick-start-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 18px;
+        }
+
+        .quick-start-title {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .quick-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quick-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-step:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 24px;
+        }
+
+        .step-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* 功能分类 */
+        .feature-categories {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-title i {
+            color: #ffd700;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c42);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .category-icon::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #ff8c42, #ffd700);
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover .category-icon::after {
+            opacity: 0.3;
+        }
+
+        .category-name {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .category-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            line-height: 1.3;
+        }
+
+        /* 常见问题 */
+        .faq-section {
+            margin-bottom: 25px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-q-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .faq-arrow {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-a-text {
+            padding: 16px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* 联系支持 */
+        .support-section {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .support-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .support-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .support-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .support-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .support-option {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .support-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .support-option i {
+            color: #ffd700;
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .support-option span {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            display: block;
+        }
+
+        /* 底部提示 */
+        .help-footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        /* 响应式调整 */
+        @media (max-height: 900px) {
+            .phone-container {
+                transform: scale(0.9);
+                margin: 10px auto;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-card, .faq-item, .quick-step {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <!-- 动态背景粒子 -->
+            <div class="help-particles">
+                <div class="help-particle"><i class="fas fa-question-circle"></i></div>
+                <div class="help-particle"><i class="fas fa-lightbulb"></i></div>
+                <div class="help-particle"><i class="fas fa-graduation-cap"></i></div>
+                <div class="help-particle"><i class="fas fa-heart"></i></div>
+                <div class="help-particle"><i class="fas fa-star"></i></div>
+            </div>
+
+            <!-- iPhone状态栏 -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <div class="status-time" id="status-time">9:41</div>
+                </div>
+                <div class="status-right">
+                    <div class="signal-bars">
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                        <div class="signal-bar"></div>
+                    </div>
+                    <i class="fas fa-wifi wifi-icon"></i>
+                    <div class="battery-container">
+                        <span class="battery-level">82%</span>
+                        <div class="battery-icon">
+                            <div class="battery-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="nav-title">使用帮助</div>
+                <div class="nav-button" onclick="showMenu()">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+
+            <!-- 主内容区域 -->
+            <div class="main-content">
+                <!-- 帮助页面头部 -->
+                <div class="help-header">
+                    <div class="help-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="help-title">使用帮助中心</div>
+                    <div class="help-subtitle">快速掌握高考祈福的所有功能<br>让您的祝福传递更加顺畅</div>
+                </div>
+
+                <!-- 搜索框 -->
+                <div class="search-container">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input type="text" class="search-box" placeholder="搜索帮助内容..." 
+                           onkeyup="searchHelp(event)" id="search-input">
+                </div>
+
+                <!-- 快速入门 -->
+                <div class="quick-start">
+                    <div class="quick-start-card">
+                        <div class="quick-start-header">
+                            <div class="quick-start-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="quick-start-title">快速入门指南</div>
+                        </div>
+                        <div class="quick-steps">
+                            <div class="quick-step" onclick="showTutorial('register')">
+                                <div class="step-number">1</div>
+                                <div class="step-text">注册账号并完善个人信息</div>
+                            </div>
+                            <div class="quick-step" onclick="showTutorial('blessing')">
+                                <div class="step-number">2</div>
+                                <div class="step-text">创建您的第一个祝福</div>
+                            </div>
+                            <div class="quick-step" onclick="showTutorial('manage')">
+                                <div class="step-number">3</div>
+                                <div class="step-text">管理考生信息和祝福记录</div>
+                            </div>
+                            <div class="quick-step" onclick="showTutorial('share')">
+                                <div class="step-number">4</div>
+                                <div class="step-text">分享祝福传递正能量</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 功能分类 -->
+                <div class="feature-categories">
+                    <div class="category-title">
+                        <i class="fas fa-th-large"></i>
+                        功能指南
+                    </div>
+                    <div class="category-grid">
+                        <div class="category-card" onclick="showCategory('blessing')">
+                            <div class="category-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="category-name">祝福功能</div>
+                            <div class="category-desc">创建、编辑、分享祝福</div>
+                        </div>
+                        <div class="category-card" onclick="showCategory('student')">
+                            <div class="category-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="category-name">考生管理</div>
+                            <div class="category-desc">添加、关注、管理考生</div>
+                        </div>
+                        <div class="category-card" onclick="showCategory('wall')">
+                            <div class="category-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="category-name">祝福墙</div>
+                            <div class="category-desc">浏览、互动、收藏</div>
+                        </div>
+                        <div class="category-card" onclick="showCategory('profile')">
+                            <div class="category-icon">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <div class="category-name">个人中心</div>
+                            <div class="category-desc">设置、统计、偏好</div>
+                        </div>
+                        <div class="category-card" onclick="showCategory('motivation')">
+                            <div class="category-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="category-name">励志语句</div>
+                            <div class="category-desc">每日正能量推送</div>
+                        </div>
+                        <div class="category-card" onclick="showCategory('coins')">
+                            <div class="category-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="category-name">金币商城</div>
+                            <div class="category-desc">获取、使用、兑换</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 常见问题 -->
+                <div class="faq-section">
+                    <div class="category-title">
+                        <i class="fas fa-question"></i>
+                        常见问题
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <div class="faq-q-text">如何创建第一个祝福？</div>
+                            <div class="faq-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-a-text">
+                                点击首页的"+"按钮或"创建祝福"卡片，选择祝福对象，输入祝福内容，选择祝福特效，最后点击发送即可。您可以选择模板或自定义祝福语。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <div class="faq-q-text">如何添加和管理考生信息？</div>
+                            <div class="faq-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-a-text">
+                                进入"考生管理"页面，点击"添加考生"按钮，填写考生姓名、学校、联系方式等信息。您可以为每个考生设置备注和关注级别。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <div class="faq-q-text">金币如何获得和使用？</div>
+                            <div class="faq-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-a-text">
+                                通过每日签到、创建祝福、邀请好友等方式获得金币。金币可用于购买祝福特效、个性化头像框、专属祝福模板等道具。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <div class="faq-q-text">如何查看我的祝福统计数据？</div>
+                            <div class="faq-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-a-text">
+                                在个人中心点击"数据统计"，可以查看您的祝福数量、获得点赞数、活跃天数等详细统计信息，还能看到月度和年度趋势图表。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <div class="faq-q-text">忘记密码怎么办？</div>
+                            <div class="faq-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-a-text">
+                                在登录页面点击"忘记密码"，输入注册时的手机号码或邮箱，系统会发送重置密码的验证码，按照提示重新设置密码即可。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系支持 -->
+                <div class="support-section">
+                    <div class="support-header">
+                        <div class="support-title">需要更多帮助？</div>
+                        <div class="support-desc">我们的客服团队随时为您提供专业支持</div>
+                    </div>
+                    <div class="support-options">
+                        <div class="support-option" onclick="contactSupport('online')">
+                            <i class="fas fa-comments"></i>
+                            <span>在线客服</span>
+                        </div>
+                        <div class="support-option" onclick="contactSupport('phone')">
+                            <i class="fas fa-phone"></i>
+                            <span>电话咨询</span>
+                        </div>
+                        <div class="support-option" onclick="contactSupport('email')">
+                            <i class="fas fa-envelope"></i>
+                            <span>邮件反馈</span>
+                        </div>
+                        <div class="support-option" onclick="contactSupport('feedback')">
+                            <i class="fas fa-comment-dots"></i>
+                            <span>意见建议</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部提示 -->
+                <div class="help-footer">
+                    高考祈福 v2.1.0 | 用心传递每一份祝福<br>
+                    如有其他问题，请随时联系我们
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化
+        function init() {
+            updateStatusBarTime();
+            setInterval(updateStatusBarTime, 60000);
+        }
+
+        // 更新状态栏时间
+        function updateStatusBarTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            document.getElementById('status-time').textContent = timeString;
+        }
+
+        // 搜索帮助内容
+        function searchHelp(event) {
+            const query = event.target.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            const categoryCards = document.querySelectorAll('.category-card');
+            
+            // 搜索FAQ
+            faqItems.forEach(item => {
+                const questionText = item.querySelector('.faq-q-text').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-a-text').textContent.toLowerCase();
+                
+                if (questionText.includes(query) || answerText.includes(query)) {
+                    item.style.display = 'block';
+                    if (query.length > 0) {
+                        item.style.border = '1px solid rgba(255, 215, 0, 0.4)';
+                        item.style.background = 'rgba(255, 215, 0, 0.05)';
+                    } else {
+                        item.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                        item.style.background = 'rgba(255, 255, 255, 0.06)';
+                    }
+                } else {
+                    item.style.display = query.length > 0 ? 'none' : 'block';
+                    item.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                    item.style.background = 'rgba(255, 255, 255, 0.06)';
+                }
+            });
+
+            // 搜索功能分类
+            categoryCards.forEach(card => {
+                const categoryText = card.querySelector('.category-name').textContent.toLowerCase();
+                const descText = card.querySelector('.category-desc').textContent.toLowerCase();
+                
+                if (categoryText.includes(query) || descText.includes(query)) {
+                    card.style.display = 'block';
+                    if (query.length > 0) {
+                        card.style.border = '1px solid rgba(255, 215, 0, 0.4)';
+                        card.style.background = 'rgba(255, 215, 0, 0.05)';
+                    } else {
+                        card.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                        card.style.background = 'rgba(255, 255, 255, 0.06)';
+                    }
+                } else {
+                    card.style.display = query.length > 0 ? 'none' : 'block';
+                    card.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                    card.style.background = 'rgba(255, 255, 255, 0.06)';
+                }
+            });
+        }
+
+        // 切换FAQ显示
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            
+            // 关闭所有FAQ
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 如果当前项目不是激活状态，则激活它
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // 显示教程
+        function showTutorial(type) {
+            const tutorials = {
+                register: '注册教程\n\n1. 点击"立即注册"按钮\n2. 输入手机号码\n3. 获取并输入验证码\n4. 设置登录密码\n5. 完善个人信息\n6. 开始使用应用',
+                blessing: '创建祝福教程\n\n1. 点击首页"+"按钮\n2. 选择祝福对象\n3. 选择祝福模板或自定义\n4. 添加祝福特效\n5. 预览祝福效果\n6. 发送祝福',
+                manage: '考生管理教程\n\n1. 进入"考生"页面\n2. 点击"添加考生"\n3. 填写考生信息\n4. 设置关注级别\n5. 保存考生信息\n6. 查看和编辑考生',
+                share: '分享祝福教程\n\n1. 在祝福详情页点击分享\n2. 选择分享方式\n3. 添加分享文案\n4. 发送给好友\n5. 邀请更多人加入'
+            };
+            
+            alert(tutorials[type] || '教程内容正在完善中...');
+        }
+
+        // 显示功能分类详情
+        function showCategory(category) {
+            const categoryInfo = {
+                blessing: '祝福功能详情\n\n• 创建个性化祝福\n• 选择精美模板\n• 添加动画特效\n• 定时发送祝福\n• 批量祝福功能\n• 祝福历史记录',
+                student: '考生管理详情\n\n• 添加考生信息\n• 设置关注优先级\n• 考生分组管理\n• 考试日程提醒\n• 成绩跟踪记录\n• 联系方式管理',
+                wall: '祝福墙功能\n\n• 浏览所有祝福\n• 点赞和评论\n• 收藏喜欢的祝福\n• 搜索特定祝福\n• 分享到社交平台\n• 举报不当内容',
+                profile: '个人中心功能\n\n• 个人信息设置\n• 隐私权限管理\n• 通知偏好设置\n• 数据统计查看\n• 账号安全设置\n• 主题样式选择',
+                motivation: '励志语句功能\n\n• 每日励志推送\n• 分类励志内容\n• 收藏励志语句\n• 分享励志内容\n• 自定义推送时间\n• 设置提醒频率',
+                coins: '金币商城功能\n\n• 每日签到获得金币\n• 完成任务赚取金币\n• 购买祝福特效\n• 兑换个性化道具\n• 查看消费记录\n• 金币使用统计'
+            };
+            
+            alert(categoryInfo[category] || '功能详情正在完善中...');
+        }
+
+        // 联系支持
+        function contactSupport(type) {
+            const supportActions = {
+                online: '正在连接在线客服...\n\n工作时间：9:00-22:00\n平均响应时间：2分钟',
+                phone: '客服热线：400-123-4567\n\n工作时间：9:00-18:00\n节假日正常服务',
+                email: '邮件反馈：support@gaokao-blessing.com\n\n我们会在24小时内回复您的邮件',
+                feedback: '正在打开意见反馈页面...\n\n您的建议对我们很重要！'
+            };
+            
+            alert(supportActions[type] || '功能正在开发中...');
+        }
+
+        // 导航功能
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'personal-center.html';
+            }
+        }
+
+        function showMenu() {
+            alert('帮助菜单\n\n• 刷新页面\n• 分享帮助\n• 打印帮助\n• 反馈问题');
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
